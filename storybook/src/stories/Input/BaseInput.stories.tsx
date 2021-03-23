@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import BaseInput, { IBaseInput } from './BaseInput';
 
@@ -7,11 +7,15 @@ export default {
     title: 'Input/BaseInput',
 };
 
-export const BaseInputStory = (args: IBaseInput) => <BaseInput {...args} />;
+export const BaseInputStory = (args: IBaseInput) => {
+    const [value, setValue] = useState('');
+
+    return <BaseInput value={value} onChange={(e) => setValue(e.target.value)} {...args} />;
+};
 
 const args = {
     placeholder: 'Placeholder text',
-    disabled: false,
+    label: 'Label:',
 };
 
 BaseInputStory.args = args;
