@@ -4,7 +4,7 @@ import BaseButton, { IBaseButton } from './BaseButton';
 
 export default {
     component: BaseButton,
-    title: 'Button/BaseButton',
+    title: 'Button/Base Button',
 };
 
 export const BaseButtonItem = (args: IBaseButton) => {

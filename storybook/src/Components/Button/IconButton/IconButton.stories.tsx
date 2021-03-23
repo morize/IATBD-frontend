@@ -6,7 +6,7 @@ import { HomeIcon, UserIcon, PetIcon } from '../../../Utils/Icons';
 
 export default {
     component: IconButton,
-    title: 'Button/IconButton',
+    title: 'Button/Icon Button',
 };
 
 export const IconButtonItem = (args: IIconButton) => {
