@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import BaseButton, { IBaseButton } from './BaseButton';
 
 export default {
     component: BaseButton,
-    title: 'Input/BaseButton',
+    title: 'Button/BaseButton',
 };
 
-export const BaseButtonStory = (args: IBaseButton) => {
-    const [value, setValue] = useState(false);
-
-    return <BaseButton variant={args.variant} onChange={(e) => setValue(!value)} {...args} />;
+export const BaseButtonItem = (args: IBaseButton) => {
+    return <BaseButton variant={args.variant} {...args} />;
 };
 
 const args = {
@@ -22,5 +20,5 @@ const argTypes = {
     variant: { control: { type: 'select', options: ['primary', 'secondary', 'danger', 'card'] } },
 };
 
-BaseButtonStory.argTypes = argTypes;
-BaseButtonStory.args = args;
+BaseButtonItem.argTypes = argTypes;
+BaseButtonItem.args = args;
