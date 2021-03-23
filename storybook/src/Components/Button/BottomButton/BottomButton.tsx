@@ -14,8 +14,10 @@ const StBottomButton = styled(BaseButton)`
     align-items: center;
     position: fixed;
     bottom: 0;
-    width: 100%;
-    height: 80px;
+    left: 0;
+    right: 0;
+    height: 12%;
+    padding: 0;
     border-radius: 0;
     background: ${Variants.primary};
     font-size: 18px;

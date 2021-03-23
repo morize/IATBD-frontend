@@ -20,18 +20,26 @@ const StButton = styled.button<{ variant: TVariants }>`
     outline: 0;
 `;
 
+const StEndIcon = styled.div`
+    position: absolute;
+    width: 50px;
+    right: 0;
+`;
+
 export interface IBaseButton extends ButtonHTMLAttributes<HTMLButtonElement> {
-    label?: string;
+    label?: string | ReactNode;
     icon?: ReactNode;
+    endIcon?: ReactNode;
     variant?: TVariants;
 }
 
-const BaseButton = ({ label, icon, variant = 'primary', ...rest }: IBaseButton) => {
+const BaseButton = ({ label, icon, endIcon, variant = 'primary', ...rest }: IBaseButton) => {
     const labelText = label !== '' ? label : 'Press me!';
     const iconJsx = icon && icon;
+    const endIconJsx = endIcon && <StEndIcon>{endIcon}</StEndIcon>;
     return (
         <StButton variant={variant} {...rest}>
-            {labelText} {iconJsx}
+            {labelText} {iconJsx} {endIconJsx}
         </StButton>
     );
 };
