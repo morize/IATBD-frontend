@@ -23,7 +23,7 @@ const StButton = styled.button<{ variant: TVariants }>`
 const StEndIcon = styled.div`
     position: absolute;
     width: 50px;
-    right: 0;
+    right: 10px;
 `;
 
 export interface IBaseButton extends ButtonHTMLAttributes<HTMLButtonElement> {
