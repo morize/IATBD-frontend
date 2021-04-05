@@ -9,7 +9,7 @@ const PODRoutes = () => (
     <Route path="/" element={<Layout />}>
       <Route path="/login" element={<Login />} />
 
-      <Route path="*" element={<Home />} />
+      <Route path="/" element={<Home />} />
     </Route>
   </Routes>
 );

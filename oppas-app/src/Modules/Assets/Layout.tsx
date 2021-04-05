@@ -7,7 +7,6 @@ import Nav from "../Assets/Nav";
 const RootLayout = styled.section`
   display: flex;
   height: 100vh;
-  background: red;
 `;
 
 const StContent = styled.section``;
