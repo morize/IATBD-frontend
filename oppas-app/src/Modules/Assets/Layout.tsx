@@ -2,18 +2,31 @@ import { FC } from "react";
 import { Outlet, BrowserRouterProps } from "react-router-dom";
 import styled from "styled-components";
 
-import Nav from "../Assets/Nav";
+import Navigation from "../Assets/Navigation";
 
 const RootLayout = styled.section`
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
+  font-family: "Fira Sans", sans-serif;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
 `;
 
-const StContent = styled.section``;
+const StContent = styled.section`
+  width: 100%;
+  overflow-y: auto;
+  background-image: url("./img/bg_pattern.png");
+
+  @media (max-width: 900px) {
+    min-height: 100vh;
+  }
+`;
 
 const Layout: FC<BrowserRouterProps> = () => (
   <RootLayout>
-    <Nav />
+    <Navigation />
 
     <StContent>
       <Outlet />

@@ -7,9 +7,11 @@ import Login from "../Modules/Pages/Login";
 const PODRoutes = () => (
   <Routes>
     <Route path="/" element={<Layout />}>
-      <Route path="/login" element={<Login />} />
+      <Route path="/home" element={<Home />} />
 
-      <Route path="/" element={<Home />} />
+      <Route path="/account/inloggen" element={<Login />} />
+      <Route path="/register" element={<Login />} />
+      <Route path="/overzicht" element={<Login />} />
     </Route>
   </Routes>
 );
