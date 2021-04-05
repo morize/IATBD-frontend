@@ -1,14 +1,18 @@
-import React from "react";
 import { Route, Switch } from "react-router-dom";
 
-import App from "../App";
+import Home from "../Modules/Pages/Home";
+import Login from "../Modules/Pages/Login";
 
-const MRBRoutes = () => (
+const Routes = () => (
   <Switch>
+    <Route path="/login">
+      <Login />
+    </Route>
+
     <Route path="/">
-      <App />
+      <Home />
     </Route>
   </Switch>
 );
 
-export default MRBRoutes;
+export default Routes;

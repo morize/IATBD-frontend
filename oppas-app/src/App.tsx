@@ -1,7 +1,10 @@
+import Routes from "./Routes/Routes";
+import RootLayout from "./Modules/Assets/RootLayout";
+
 const App = () => (
-  <section>
-    <h1>Hi lol</h1>
-  </section>
+  <RootLayout>
+    <Routes />
+  </RootLayout>
 );
 
 export default App;
