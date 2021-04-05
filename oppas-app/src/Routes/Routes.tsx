@@ -1,18 +1,17 @@
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
+import Layout from "../Modules/Assets/Layout";
 import Home from "../Modules/Pages/Home";
 import Login from "../Modules/Pages/Login";
 
-const Routes = () => (
-  <Switch>
-    <Route path="/login">
-      <Login />
-    </Route>
+const PODRoutes = () => (
+  <Routes>
+    <Route path="/" element={<Layout />}>
+      <Route path="/login" element={<Login />} />
 
-    <Route path="/">
-      <Home />
+      <Route path="*" element={<Home />} />
     </Route>
-  </Switch>
+  </Routes>
 );
 
-export default Routes;
+export default PODRoutes;

@@ -1,10 +1,6 @@
 import Routes from "./Routes/Routes";
-import RootLayout from "./Modules/Assets/RootLayout";
+import RootLayout from "./Modules/Assets/Layout";
 
-const App = () => (
-  <RootLayout>
-    <Routes />
-  </RootLayout>
-);
+const App = () => <Routes />;
 
 export default App;
