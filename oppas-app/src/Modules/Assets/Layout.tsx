@@ -9,7 +9,7 @@ const RootLayout = styled.section`
   min-height: 100vh;
   font-family: "Fira Sans", sans-serif;
 
-  @media (max-width: 900px) {
+  @media (max-width: 800px) {
     flex-direction: column;
   }
 `;

@@ -151,11 +151,12 @@ const StBottom = styled.section`
 `;
 
 const Navigation = () => {
-  const [respState, setRespState] = useState("mobile");
+  const [respState, setRespState] = useState("");
 
   const checkIfDifferentViewport = () => {
-    window.innerWidth < 800 && setRespState("mobile");
-    window.innerWidth > 800 && setRespState("desktop");
+    let detectedViewport = window.innerWidth <= 800 ? "mobile" : "desktop";
+
+    detectedViewport !== respState && setRespState(detectedViewport);
   };
 
   const activeButtonStyle =
@@ -171,7 +172,6 @@ const Navigation = () => {
     window.onresize = checkIfDifferentViewport;
   }, []);
 
-  console.log("render");
   return (
     <StNavigation>
       <StLogoFigure>
