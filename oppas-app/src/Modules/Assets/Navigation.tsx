@@ -5,7 +5,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import PersonIcon from "@material-ui/icons/Person";
 import PetsIcon from "@material-ui/icons/Pets";
 import GroupIcon from "@material-ui/icons/Group";
-import { useEffect, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 
 const StNavLink = styled(NavLink)`
   text-decoration: none;
@@ -150,27 +150,44 @@ const StBottom = styled.section`
   }
 `;
 
-const Navigation = () => {
-  const [respState, setRespState] = useState("");
+interface INavigationItem {
+  name: string;
+  portrait: string;
+  routeTo: string;
+  icon: ReactNode;
+}
 
-  const checkIfDifferentViewport = () => {
-    let detectedViewport = window.innerWidth <= 800 ? "mobile" : "desktop";
-
-    detectedViewport !== respState && setRespState(detectedViewport);
-  };
-
-  const activeButtonStyle =
-    respState === "desktop"
+const NavigationItem = (props: INavigationItem) => {
+  let activeButtonState =
+    props.portrait === "desktop"
       ? {
           borderTop: "0.3vh solid rgba(255,255,255,0.8)",
           borderBottom: "0.3vh solid rgba(255,255,255,0.8)",
         }
       : { background: "#593412", borderRadius: "50%" };
 
+  return (
+    <li>
+      <StNavLink to={props.routeTo} activeStyle={activeButtonState}>
+        {props.portrait === "desktop" ? props.name : props.icon}
+      </StNavLink>
+    </li>
+  );
+};
+
+const Navigation = () => {
+  const [respState, setRespState] = useState("");
+
+  const checkIfDifferentViewport = useCallback(() => {
+    let detectedViewport = window.innerWidth <= 800 ? "mobile" : "desktop";
+
+    detectedViewport !== respState && setRespState(detectedViewport);
+  }, [respState]);
+
   useEffect(() => {
     checkIfDifferentViewport();
     window.onresize = checkIfDifferentViewport;
-  }, []);
+  }, [checkIfDifferentViewport]);
 
   return (
     <StNavigation>
@@ -180,29 +197,33 @@ const Navigation = () => {
       </StLogoFigure>
 
       <StUl>
-        <li>
-          <StNavLink to="home" activeStyle={activeButtonStyle}>
-            {respState === "desktop" ? "Home" : <HomeIcon />}
-          </StNavLink>
-        </li>
+        <NavigationItem
+          name="Home"
+          routeTo="home"
+          portrait={respState}
+          icon={<HomeIcon />}
+        ></NavigationItem>
 
-        <li>
-          <StNavLink to="account/inloggen" activeStyle={activeButtonStyle}>
-            {respState === "desktop" ? "Account" : <PersonIcon />}
-          </StNavLink>
-        </li>
+        <NavigationItem
+          name="Account"
+          routeTo="account/inloggen"
+          portrait={respState}
+          icon={<PersonIcon />}
+        ></NavigationItem>
 
-        <li>
-          <StNavLink to="overzicht/huisdieren" activeStyle={activeButtonStyle}>
-            {respState === "desktop" ? "Overzicht\nHuisdieren" : <PetsIcon />}
-          </StNavLink>
-        </li>
+        <NavigationItem
+          name={"Overzicht\nHuisdieren"}
+          routeTo="overzicht/huisdieren"
+          portrait={respState}
+          icon={<PetsIcon />}
+        ></NavigationItem>
 
-        <li>
-          <StNavLink to="overzicht/opassers" activeStyle={activeButtonStyle}>
-            {respState === "desktop" ? "Overzicht\nOpassers" : <GroupIcon />}
-          </StNavLink>
-        </li>
+        <NavigationItem
+          name={"Overzicht\nOpassers"}
+          routeTo="overzicht/opassers"
+          portrait={respState}
+          icon={<GroupIcon />}
+        ></NavigationItem>
       </StUl>
 
       <StBottom>
