@@ -16,12 +16,11 @@ const RootLayout = styled.section`
 
 const StContent = styled.section`
   width: 100%;
+  height: 100vh;
+  padding: 60px 0;
+  box-sizing: border-box;
   overflow-y: auto;
   background-image: url("./img/bg_pattern.png");
-
-  @media (max-width: 900px) {
-    min-height: 100vh;
-  }
 `;
 
 const Layout: FC<BrowserRouterProps> = () => (
