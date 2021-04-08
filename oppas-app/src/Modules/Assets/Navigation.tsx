@@ -1,3 +1,4 @@
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
@@ -5,7 +6,9 @@ import HomeIcon from "@material-ui/icons/Home";
 import PersonIcon from "@material-ui/icons/Person";
 import PetsIcon from "@material-ui/icons/Pets";
 import GroupIcon from "@material-ui/icons/Group";
-import { ReactNode, useCallback, useEffect, useState } from "react";
+
+import bgNavigation from "../Assets/img/bg_navigation.jpg";
+import dogIcon from "../Assets/img/logo_pojd.png";
 
 const StNavLink = styled(NavLink)`
   text-decoration: none;
@@ -20,7 +23,7 @@ const StNavigation = styled.nav`
   height: 100vh;
   overflow: hidden;
   box-sizing: border-box;
-  background: url("img/bg_navigation.jpg");
+  background-image: url(${bgNavigation});
   background-position: center;
   background-size: cover;
   box-shadow: inset 0 0 0 2000px rgba(21, 16, 9, 0.75);
@@ -192,7 +195,7 @@ const Navigation = () => {
   return (
     <StNavigation>
       <StLogoFigure>
-        <img src="img/logo_pojd.png" alt="site logo"></img>
+        <img src={dogIcon} alt="site logo"></img>
         <figcaption>{"Passen op\nje dier"}</figcaption>
       </StLogoFigure>
 

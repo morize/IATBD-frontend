@@ -17,3 +17,8 @@ export const StP = styled.p`
 export const StSection = styled.section`
   margin-bottom: 84px;
 `;
+
+export const StArticle = styled.article`
+  width: 800px;
+  margin: 0 auto;
+`;

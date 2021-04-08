@@ -1,15 +1,16 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-import { StH1, StH2, StP, StSection } from "../../Utils/HTMLComponents";
+import {
+  StH1,
+  StH2,
+  StP,
+  StSection,
+  StArticle,
+} from "../../Utils/HTMLComponents";
 import CardButton from "../../Components/Card/CardButton/CardButton";
 
-const StHomeArticle = styled.article`
-  width: 800px;
-  margin: 0 auto;
-`;
-
-const StFigure = styled.figure`
+const StCardFigure = styled.figure`
   width: 100%;
   height: 450px;
   margin: 32px 0;
@@ -20,7 +21,7 @@ const StFigure = styled.figure`
 `;
 
 const Home = () => (
-  <StHomeArticle>
+  <StArticle>
     <StH1>Home</StH1>
     <StSection>
       <StH2>Hoe werkt het?</StH2>
@@ -38,12 +39,12 @@ const Home = () => (
       </StP>
 
       <NavLink to="overzicht/opassers">
-        <StFigure>
+        <StCardFigure>
           <CardButton
             src="https://dogtime.com/assets/uploads/2018/10/how-to-get-pet-sitter-job.jpg"
             buttonText="Neem een kijk naar onze opassers!"
           />
-        </StFigure>
+        </StCardFigure>
       </NavLink>
     </StSection>
 
@@ -71,7 +72,7 @@ const Home = () => (
         massa.
       </StP>
     </StSection>
-  </StHomeArticle>
+  </StArticle>
 );
 
 export default Home;
