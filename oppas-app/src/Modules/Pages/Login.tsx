@@ -1,14 +1,10 @@
 import styled from "styled-components";
+import axios from "axios";
 
-import {
-  StH1,
-  StH2,
-  StP,
-  StSection,
-  StArticle,
-} from "../../Utils/HTMLComponents";
+import { StH1, StArticle } from "../../Utils/HTMLComponents";
 import BaseInput from "../../Components/Input/BaseInput";
 import BaseButton from "../../Components/Button/BaseButton";
+import { useEffect } from "react";
 
 const StForm = styled.form`
   & div {
@@ -21,6 +17,21 @@ const StForm = styled.form`
 `;
 
 const Login = () => {
+  useEffect(() => {
+    let payload = {
+      email: "mauricemr@outlook.com",
+      password: "hilol123",
+      cookie: "xd",
+    };
+    axios
+      .post("http://127.0.0.1:8000/api/login", payload, {
+        headers: { "Access-Control-Allow-Origin": "http://172.21.1.8:3000" },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  }, []);
+
   return (
     <StArticle>
       <StH1>Login</StH1>
