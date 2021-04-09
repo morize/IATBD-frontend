@@ -1,5 +1,18 @@
-import Routes from "./Routes/Routes";
+import { useEffect } from "react";
 
-const App = () => <Routes />;
+import Routes from "./Routes/Routes";
+import { useSetIfToken } from "./Hooks/Auth";
+
+const App = () => {
+  const checkIfLoggedIn = useSetIfToken(
+    localStorage.getItem("activeToken") ? "loggedIn" : "loggedOut"
+  );
+
+  useEffect(() => {
+    checkIfLoggedIn();
+  }, [checkIfLoggedIn]);
+
+  return <Routes />;
+};
 
 export default App;
