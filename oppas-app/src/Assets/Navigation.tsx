@@ -1,6 +1,6 @@
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState, MouseEvent } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
 
 import HomeIcon from "@material-ui/icons/Home";
 import PersonIcon from "@material-ui/icons/Person";
@@ -9,6 +9,9 @@ import GroupIcon from "@material-ui/icons/Group";
 
 import bgNavigation from "../Assets/Images/bg_navigation.jpg";
 import dogIcon from "../Assets/Images/logo_pojd.png";
+
+import api from "../Hooks/Api";
+import { useLogout, useLoginStatus } from "../Hooks/Auth";
 
 const StNavLink = styled(NavLink)`
   text-decoration: none;
@@ -136,16 +139,23 @@ const StBottom = styled.section`
   justify-content: center;
   align-items: center;
   width: 80%;
-  height: 15%;
+  height: 16%;
   margin-top: auto;
   text-align: center;
-  font-size: 0.8vw;
+  font-size: 0.9vw;
   white-space: pre-wrap;
 
   & ${StNavLink} {
     margin-top: 0.4vh;
     text-decoration: underline;
     color: #95f9ff;
+  }
+
+  & a {
+    margin-top: 0.4vh;
+    text-decoration: underline;
+    color: #95f9ff;
+    cursor: pointer;
   }
 
   @media screen and (max-width: 800px) {
@@ -187,6 +197,18 @@ const Navigation = () => {
     detectedViewport !== respState && setRespState(detectedViewport);
   }, [respState]);
 
+  const navigate = useNavigate();
+  const logoutHook = useLogout();
+
+  const onLogoutClicked = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    api.post("api/account/logout").then(() => {
+      localStorage.removeItem("activeToken");
+      logoutHook();
+      navigate("../../home");
+    });
+  };
+
   useEffect(() => {
     checkIfDifferentViewport();
     window.onresize = checkIfDifferentViewport;
@@ -209,7 +231,7 @@ const Navigation = () => {
 
         <NavigationItem
           name="Account"
-          routeTo="account/inloggen"
+          routeTo="account"
           portrait={respState}
           icon={<PersonIcon />}
         ></NavigationItem>
@@ -229,12 +251,19 @@ const Navigation = () => {
         ></NavigationItem>
       </StUl>
 
-      <StBottom>
-        Nog geen account?
-        <StNavLink to="account/aanmelden">
-          Klik hier om aan te melden!
-        </StNavLink>
-      </StBottom>
+      {!useLoginStatus() ? (
+        <StBottom>
+          Nog geen account?
+          <StNavLink to="account/aanmelden">
+            Klik hier om aan te melden!
+          </StNavLink>
+        </StBottom>
+      ) : (
+        <StBottom>
+          Welkom Mauriccio
+          <a onClick={onLogoutClicked}>Uitloggen</a>
+        </StBottom>
+      )}
     </StNavigation>
   );
 };

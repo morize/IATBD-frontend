@@ -1,6 +1,6 @@
 import { Route, Navigate } from "react-router-dom";
 
-import { useCheckAuth } from "../Hooks/Auth";
+import { useLoginStatus } from "../Hooks/Auth";
 
 interface IPrivateRoute {
   element: JSX.Element;
@@ -14,9 +14,7 @@ const PrivateRoute: React.FC<IPrivateRoute> = ({
   path,
   children,
 }) => {
-  const condition = useCheckAuth();
-
-  if (condition === "loggedOut") {
+  if (!useLoginStatus()) {
     return <Navigate to="../../account/inloggen" />;
   }
 

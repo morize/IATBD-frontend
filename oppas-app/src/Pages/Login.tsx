@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { StH1, StArticle } from "../Utils/HTMLComponents";
 import BaseInput from "../Components/Input/BaseInput";
 import BaseButton from "../Components/Button/BaseButton";
-import { useLoginAuth, useLogoutAuth } from "../Hooks/Auth";
+import { useLogin } from "../Hooks/Auth";
 import api from "../Hooks/Api";
 
 const StErrorMessage = styled.p`
@@ -25,12 +25,12 @@ const StForm = styled.form`
 
 const Login = () => {
   const navigate = useNavigate();
+
   const [formEmail, setFormEmail] = useState("mauricemr@outlook.com");
   const [formPassword, setFormPassword] = useState("hilol123");
   const [formError, setFormError] = useState(false);
 
-  let login = useLoginAuth();
-  let logout = useLogoutAuth();
+  let loginHook = useLogin();
 
   const submitLoginData = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -47,7 +47,7 @@ const Login = () => {
             "activeToken",
             response.config.headers["X-XSRF-TOKEN"]
           );
-          login();
+          loginHook();
           navigate("../../account");
         })
         .catch(() => {
@@ -79,19 +79,6 @@ const Login = () => {
         )}
 
         <BaseButton type="submit" label="Login" onClick={submitLoginData} />
-
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            api.post("api/account/logout").then(() => {
-              localStorage.removeItem("activeToken");
-              logout();
-              navigate("../../home");
-            });
-          }}
-        >
-          logout
-        </button>
       </StForm>
     </StArticle>
   );
