@@ -1,5 +1,4 @@
-import { FC } from "react";
-import { Outlet, BrowserRouterProps } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 import Navigation from "../Assets/Navigation";
@@ -24,7 +23,7 @@ const StContent = styled.section`
   background-image: url(${bgLayout});
 `;
 
-const Layout: FC<BrowserRouterProps> = () => (
+const Layout = () => (
   <RootLayout>
     <Navigation />
 

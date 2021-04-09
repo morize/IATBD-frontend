@@ -8,7 +8,7 @@ const StButton = styled.button<{ variant: TVariants }>`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 50px;
+  height: 60px;
   background: ${(props) => Variants[props.variant]};
   border-radius: 10px;
   border: none;
