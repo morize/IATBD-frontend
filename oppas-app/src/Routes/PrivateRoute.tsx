@@ -1,7 +1,5 @@
 import { Route, Navigate } from "react-router-dom";
 
-import { useLoginStatus } from "../Hooks/Auth";
-
 interface IPrivateRoute {
   element: JSX.Element;
   admin?: boolean;
@@ -14,7 +12,9 @@ const PrivateRoute: React.FC<IPrivateRoute> = ({
   path,
   children,
 }) => {
-  if (!useLoginStatus()) {
+  let token = localStorage.getItem("activeToken");
+
+  if (!token) {
     return <Navigate to="../../account/inloggen" />;
   }
 
@@ -24,4 +24,5 @@ const PrivateRoute: React.FC<IPrivateRoute> = ({
     </Route>
   );
 };
+
 export default PrivateRoute;

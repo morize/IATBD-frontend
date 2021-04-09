@@ -1,10 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import api from "../Hooks/Api";
+import { useNavigate } from "react-router-dom";
 import { StH1, StArticle } from "../Utils/HTMLComponents";
 import BaseInput from "../Components/Input/BaseInput";
 import BaseButton from "../Components/Button/BaseButton";
+
+import { customApi } from "../Hooks/Api";
 
 const StForm = styled.form`
   & div {
@@ -22,10 +24,12 @@ const Register = () => {
   const [formPassword, setFormPassword] = useState("");
   const [formConfPassword, setFormConfPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const submitRegisterData = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    api.get("sanctum/csrf-cookie").then((response) => {
+    customApi.get("sanctum/csrf-cookie").then(() => {
       let formData = {
         name: formUsername,
         email: formEmail,
@@ -33,15 +37,16 @@ const Register = () => {
         password_confirmation: formConfPassword,
       };
 
-      api.post("api/account/register", formData).then((response) => {
+      customApi.post("api/account/register", formData).then((response) => {
         console.log(response.data);
+        navigate("../../account");
       });
     });
   };
 
   return (
     <StArticle>
-      <StH1>Login</StH1>
+      <StH1>Aanmelden</StH1>
       <StForm>
         <BaseInput
           label="Gebruikersnaam:"
@@ -72,6 +77,15 @@ const Register = () => {
           onClick={submitRegisterData}
         />
       </StForm>
+      {/* <button
+        onClick={() => {
+          api.get("api/show").then((response) => {
+            console.log(response.data);
+          });
+        }}
+      >
+        test lol xD
+      </button> */}
     </StArticle>
   );
 };

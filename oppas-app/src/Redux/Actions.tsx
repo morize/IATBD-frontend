@@ -1,15 +1,18 @@
 export const SET_AUTH_STATUS = "SET_AUTH_STATUS";
+export const SET_USER_DETAILS = "SET_USER_DETAILS";
 
-export interface IAuthReducer {
-  auth: string;
+export interface IUserDetailsReducer {
+  userDetails: { username?: string; isAdmin?: number; isBlocked?: number };
 }
 
-export type AuthActionType = {
-  type: "SET_AUTH_STATUS";
-  payload: IAuthReducer;
+export type UserDetailsActionType = {
+  type: "SET_USER_DETAILS";
+  payload: IUserDetailsReducer["userDetails"];
 };
 
-export const setAuthStatus = (authStatus: IAuthReducer): AuthActionType => ({
-  type: SET_AUTH_STATUS,
-  payload: authStatus,
+export const setUserDetails = (
+  userDetails: IUserDetailsReducer
+): UserDetailsActionType => ({
+  type: SET_USER_DETAILS,
+  payload: userDetails.userDetails,
 });

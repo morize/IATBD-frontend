@@ -12,7 +12,8 @@ const StLabel = styled.label`
 
 const StInput = styled.input`
   width: 100%;
-  padding: 0;
+  height: 100%;
+  padding: 8px;
   color: #494949;
   border: 0;
   outline: none;
@@ -27,7 +28,6 @@ const StInputContainer = styled.div`
   display: flex;
   align-items: center;
   height: 50px;
-  padding: 8px;
   border: 1px solid #b3b3c2;
   font-size: 16px;
   border-radius: 5px;

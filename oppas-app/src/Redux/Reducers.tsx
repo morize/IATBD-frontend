@@ -1,15 +1,15 @@
-import { SET_AUTH_STATUS, AuthActionType, IAuthReducer } from "./Actions";
+import {
+  SET_USER_DETAILS,
+  UserDetailsActionType,
+  IUserDetailsReducer,
+} from "./Actions";
 
-const initialAuthState = {
-  auth: "",
-};
-
-export const authReducer = (
-  state: IAuthReducer = initialAuthState,
-  action: AuthActionType
+export const userDetailsReducer = (
+  state: IUserDetailsReducer = { userDetails: {} },
+  action: UserDetailsActionType
 ) => {
   switch (action.type) {
-    case SET_AUTH_STATUS:
+    case SET_USER_DETAILS:
       return action.payload;
     default:
       return state;

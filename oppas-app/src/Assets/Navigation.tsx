@@ -10,8 +10,7 @@ import GroupIcon from "@material-ui/icons/Group";
 import bgNavigation from "../Assets/Images/bg_navigation.jpg";
 import dogIcon from "../Assets/Images/logo_pojd.png";
 
-import api from "../Hooks/Api";
-import { useLogout, useLoginStatus } from "../Hooks/Auth";
+import { customApi } from "../Hooks/Api";
 
 const StNavLink = styled(NavLink)`
   text-decoration: none;
@@ -29,7 +28,7 @@ const StNavigation = styled.nav`
   background-image: url(${bgNavigation});
   background-position: center;
   background-size: cover;
-  box-shadow: inset 0 0 0 2000px rgba(21, 16, 9, 0.75);
+  box-shadow: inset 0 0 0 2000px rgba(21, 16, 9, 0.7);
   color: white;
 
   @media screen and (max-width: 800px) {
@@ -190,6 +189,9 @@ const NavigationItem = (props: INavigationItem) => {
 
 const Navigation = () => {
   const [respState, setRespState] = useState("");
+  const localUserDetails = JSON.parse(localStorage.getItem("userDetails")!);
+
+  const navigate = useNavigate();
 
   const checkIfDifferentViewport = useCallback(() => {
     let detectedViewport = window.innerWidth <= 800 ? "mobile" : "desktop";
@@ -197,14 +199,11 @@ const Navigation = () => {
     detectedViewport !== respState && setRespState(detectedViewport);
   }, [respState]);
 
-  const navigate = useNavigate();
-  const logoutHook = useLogout();
-
-  const onLogoutClicked = (e: MouseEvent<HTMLAnchorElement>) => {
+  const onLogoutClicked = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    api.post("api/account/logout").then(() => {
-      localStorage.removeItem("activeToken");
-      logoutHook();
+
+    customApi.post("api/account/logout").then(() => {
+      localStorage.clear();
       navigate("../../home");
     });
   };
@@ -251,7 +250,7 @@ const Navigation = () => {
         ></NavigationItem>
       </StUl>
 
-      {!useLoginStatus() ? (
+      {!localUserDetails ? (
         <StBottom>
           Nog geen account?
           <StNavLink to="account/aanmelden">
@@ -260,8 +259,8 @@ const Navigation = () => {
         </StBottom>
       ) : (
         <StBottom>
-          Welkom Mauriccio
-          <a onClick={onLogoutClicked}>Uitloggen</a>
+          Welkom {localUserDetails.username}
+          <button onClick={onLogoutClicked}>Uitloggen</button>
         </StBottom>
       )}
     </StNavigation>

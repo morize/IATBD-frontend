@@ -1,14 +1,27 @@
 import styled from "styled-components";
-import { StH1, StArticle } from "../Utils/HTMLComponents";
-import BaseInput from "../Components/Input/BaseInput";
+import {
+  StH1,
+  StH2,
+  StArticle,
+  StSection,
+  StP,
+  StLabel,
+} from "../Utils/HTMLComponents";
 
-const StForm = styled.form`
-  & div {
-    margin-bottom: 30px;
+import BaseButton from "../Components/Button/BaseButton";
 
-    & input {
-      font-family: "Fira Sans", sans-serif;
-    }
+const StAccountDetails = styled.section`
+  display: flex;
+  flex-direction: column;
+  margin: 32px 0;
+
+  & label {
+    margin-right: auto;
+  }
+
+  & p {
+    margin-top: -22px;
+    margin-left: auto;
   }
 `;
 
@@ -16,13 +29,24 @@ const Account = () => {
   return (
     <StArticle>
       <StH1>Account</StH1>
-      <StForm>
-        <BaseInput
-          label="Gebruikersnaam:"
-          placeholder="Voer uw gebruikersnaam in"
-        />
-        <BaseInput label="Email:" placeholder="Voer uw email in" />
-      </StForm>
+      <StSection>
+        <StH2>Algemene Gegevens:</StH2>
+        <StAccountDetails>
+          <StLabel>Gebruikersnaam:</StLabel>
+          <StP>Mauriccio Rodrigo</StP>
+
+          <StLabel>Email:</StLabel>
+          <StP>mauricemr@outlook.com</StP>
+
+          <StLabel>Telefoonnummer:</StLabel>
+          <StP>18923812845</StP>
+
+          <StLabel>Opasser Status:</StLabel>
+          <StP>Actief</StP>
+        </StAccountDetails>
+
+        <BaseButton label="Uitloggen" variant="danger" />
+      </StSection>
     </StArticle>
   );
 };
