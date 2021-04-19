@@ -6,7 +6,7 @@ import { StH1, StArticle } from "../Utils/HTMLComponents";
 import BaseInput from "../Components/Input/BaseInput";
 import BaseButton from "../Components/Button/BaseButton";
 
-import { customApi } from "../Hooks/Api";
+import { login } from "../Hooks/Api";
 
 const StErrorMessage = styled.p`
   color: red;
@@ -26,7 +26,7 @@ const StForm = styled.form`
 const Login = () => {
   const navigate = useNavigate();
   const [formEmail, setFormEmail] = useState("mauricemr@outlook.com");
-  const [formPassword, setFormPassword] = useState("hilol123");
+  const [formPassword, setFormPassword] = useState("Hilol123.");
   const [formError, setFormError] = useState(false);
 
   // Redux storechange logic
@@ -53,33 +53,13 @@ const Login = () => {
   const submitLoginData = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    customApi.get("sanctum/csrf-cookie").then((response) => {
-      customApi
-        .post("api/account/login", {
-          email: formEmail,
-          password: formPassword,
-          token: response.config.headers["X-XSRF-TOKEN"],
-        })
-        .then((response) => {
-          localStorage.setItem(
-            "userDetails",
-            JSON.stringify({
-              username: response.data.username,
-              isAdmin: response.data.admin,
-              isBlocked: response.data.blocked,
-            })
-          );
-
-          localStorage.setItem(
-            "activeToken",
-            response.config.headers["X-XSRF-TOKEN"]
-          );
-        })
-        .catch((e) => {
-          console.log(e);
-          setFormError(true);
-        });
-    });
+    login(formEmail, formPassword)
+      .then(() => {
+        navigate("../../account");
+      })
+      .catch(() => {
+        setFormError(true);
+      });
   };
 
   return (

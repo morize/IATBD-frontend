@@ -26,6 +26,8 @@ const StAccountDetails = styled.section`
 `;
 
 const Account = () => {
+  const localUserDetails = JSON.parse(localStorage.getItem("userDetails")!);
+
   return (
     <StArticle>
       <StH1>Account</StH1>
@@ -33,10 +35,10 @@ const Account = () => {
         <StH2>Algemene Gegevens:</StH2>
         <StAccountDetails>
           <StLabel>Gebruikersnaam:</StLabel>
-          <StP>Mauriccio Rodrigo</StP>
+          <StP>{localUserDetails.username}</StP>
 
           <StLabel>Email:</StLabel>
-          <StP>mauricemr@outlook.com</StP>
+          <StP>{localUserDetails.email}</StP>
 
           <StLabel>Telefoonnummer:</StLabel>
           <StP>18923812845</StP>
