@@ -9,6 +9,7 @@ import {
 } from "../Utils/HTMLComponents";
 
 import BaseButton from "../Components/Button/BaseButton";
+import { sendEmailVerificationLink } from "../Hooks/Api";
 
 const StAccountDetails = styled.section`
   display: flex;
@@ -26,6 +27,12 @@ const StAccountDetails = styled.section`
 `;
 
 const Account = () => {
+  const localUserDetails = JSON.parse(localStorage.getItem("userDetails")!);
+
+  const onVerificationClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
+    sendEmailVerificationLink("mauricemr@outlook.com", "Hilol123.");
+  };
+
   return (
     <StArticle>
       <StH1>Account</StH1>
@@ -33,10 +40,10 @@ const Account = () => {
         <StH2>Algemene Gegevens:</StH2>
         <StAccountDetails>
           <StLabel>Gebruikersnaam:</StLabel>
-          <StP>Mauriccio Rodrigo</StP>
+          <StP>{localUserDetails.username}</StP>
 
           <StLabel>Email:</StLabel>
-          <StP>mauricemr@outlook.com</StP>
+          <StP>{localUserDetails.email}</StP>
 
           <StLabel>Telefoonnummer:</StLabel>
           <StP>18923812845</StP>
@@ -45,6 +52,12 @@ const Account = () => {
           <StP>Actief</StP>
         </StAccountDetails>
 
+        <BaseButton
+          label="Stuur email verificatie link"
+          variant="secondary"
+          onClick={onVerificationClicked}
+        />
+        <br></br>
         <BaseButton label="Uitloggen" variant="danger" />
       </StSection>
     </StArticle>

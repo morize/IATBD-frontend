@@ -10,7 +10,7 @@ import GroupIcon from "@material-ui/icons/Group";
 import bgNavigation from "../Assets/Images/bg_navigation.jpg";
 import dogIcon from "../Assets/Images/logo_pojd.png";
 
-import { customApi } from "../Hooks/Api";
+import { logout } from "../Hooks/Api";
 
 const StNavLink = styled(NavLink)`
   text-decoration: none;
@@ -202,8 +202,7 @@ const Navigation = () => {
   const onLogoutClicked = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    customApi.post("api/account/logout").then(() => {
-      localStorage.clear();
+    logout().then(() => {
       navigate("../../home");
     });
   };

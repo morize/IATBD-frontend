@@ -6,7 +6,7 @@ import { StH1, StArticle } from "../Utils/HTMLComponents";
 import BaseInput from "../Components/Input/BaseInput";
 import BaseButton from "../Components/Button/BaseButton";
 
-import { customApi } from "../Hooks/Api";
+import { register, login } from "../Hooks/Api";
 
 const StForm = styled.form`
   & div {
@@ -19,28 +19,27 @@ const StForm = styled.form`
 `;
 
 const Register = () => {
-  const [formUsername, setFormUsername] = useState("");
-  const [formEmail, setFormEmail] = useState("");
-  const [formPassword, setFormPassword] = useState("");
-  const [formConfPassword, setFormConfPassword] = useState("");
+  const [formUsername, setFormUsername] = useState("mauri985");
+  const [formEmail, setFormEmail] = useState("mauricemr@outlook.com");
+  const [formPassword, setFormPassword] = useState("Hilol123.");
+  const [formConfPassword, setFormConfPassword] = useState("Hilol123.");
 
   const navigate = useNavigate();
 
   const submitRegisterData = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    customApi.get("sanctum/csrf-cookie").then(() => {
-      let formData = {
-        name: formUsername,
-        email: formEmail,
-        password: formPassword,
-        password_confirmation: formConfPassword,
-      };
+    let formData = {
+      name: formUsername,
+      email: formEmail,
+      password: formPassword,
+      password_confirmation: formConfPassword,
+    };
 
-      customApi.post("api/account/register", formData).then((response) => {
-        console.log(response.data);
-        navigate("../../account");
-      });
+    register(formData).then(() => {
+      login(formData.email, formData.password).then(() =>
+        navigate("../../account")
+      );
     });
   };
 
