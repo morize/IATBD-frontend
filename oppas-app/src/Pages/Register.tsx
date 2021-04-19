@@ -19,8 +19,8 @@ const StForm = styled.form`
 `;
 
 const Register = () => {
-  const [formUsername, setFormUsername] = useState("aaaa");
-  const [formEmail, setFormEmail] = useState("ayylmao985@gmail.com");
+  const [formUsername, setFormUsername] = useState("mauri985");
+  const [formEmail, setFormEmail] = useState("mauricemr@outlook.com");
   const [formPassword, setFormPassword] = useState("Hilol123.");
   const [formConfPassword, setFormConfPassword] = useState("Hilol123.");
 

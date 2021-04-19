@@ -57,3 +57,16 @@ export const register = async function (formData: {
     await laravelApi.post("api/account/register", formData);
   }
 };
+
+export const sendEmailVerificationLink = async function (
+  formEmail: string,
+  formPassword: string
+) {
+  // const sanctumToken = await getSanctumToken.then((token: string) => token);
+
+  await laravelApi.post("api/account/email/verification/send", {
+    email: formEmail,
+    password: formPassword,
+    token: localStorage.getItem("activeToken"),
+  });
+};
