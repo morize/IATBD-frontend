@@ -6,6 +6,7 @@ import { StH1, StArticle, StLabel } from "../Utils/HTMLComponents";
 import Variants from "../Utils/Variants";
 import BaseInput from "../Components/Input/BaseInput";
 import BaseButton from "../Components/Button/BaseButton";
+import Checkbox from "../Components/Checkbox/Checkbox";
 
 import { login } from "../Hooks/Api";
 
@@ -37,6 +38,7 @@ const StPasswordAnchor = styled.a`
     text-decoration: underline;
   }
 `;
+
 const Login = () => {
   const [formEmail, setFormEmail] = useState("mauricemr@outlook.com");
   const [formPassword, setFormPassword] = useState("Hilol123.");
@@ -81,7 +83,7 @@ const Login = () => {
 
   return (
     <StArticle>
-      <StH1>Login</StH1>
+      <StH1>Inloggen</StH1>
       <StForm>
         <BaseInput
           label="Email:"
@@ -105,7 +107,9 @@ const Login = () => {
           </StErrorMessage>
         )}
 
-        <BaseButton type="submit" label="Login" onClick={submitLoginData} />
+        <Checkbox label="Ingelogd blijven" margin="-25px 0 15px -8px" />
+
+        <BaseButton type="submit" label="Inloggen" onClick={submitLoginData} />
       </StForm>
     </StArticle>
   );
