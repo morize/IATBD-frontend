@@ -9,7 +9,7 @@ const getSanctumToken = laravelApi
   .get("sanctum/csrf-cookie")
   .then((response) => response.config.headers["X-XSRF-TOKEN"]);
 
-export const login = async function (formEmail: string, formPassword: string) {
+export const login = async (formEmail: string, formPassword: string) => {
   const sanctumToken = await getSanctumToken.then((token: string) => token);
 
   if (sanctumToken) {
@@ -24,9 +24,9 @@ export const login = async function (formEmail: string, formPassword: string) {
           "userDetails",
           JSON.stringify({
             username: response.data.name,
+            email: response.data.email,
             isAdmin: response.data.admin,
             isBlocked: response.data.blocked,
-            email: response.data.email,
           })
         );
 
@@ -34,23 +34,20 @@ export const login = async function (formEmail: string, formPassword: string) {
           "activeToken",
           response.config.headers["X-XSRF-TOKEN"]
         );
-
-        // console.log(response.config.headers["X-XSRF-TOKEN"]);
-        // console.log(localStorage.getItem("userDetails"));
       });
   }
 };
 
-export const logout = async function () {
+export const logout = async () => {
   await laravelApi.post("api/account/logout").then(() => localStorage.clear());
 };
 
-export const register = async function (formData: {
+export const register = async (formData: {
   name: string;
   email: string;
   password: string;
   password_confirmation: string;
-}) {
+}) => {
   const sanctumToken = await getSanctumToken.then((token: string) => token);
 
   if (sanctumToken) {
@@ -58,15 +55,26 @@ export const register = async function (formData: {
   }
 };
 
-export const sendEmailVerificationLink = async function (
-  formEmail: string,
-  formPassword: string
-) {
-  // const sanctumToken = await getSanctumToken.then((token: string) => token);
-
+export const sendEmailVerificationLink = async () => {
   await laravelApi.post("api/account/email/verification/send", {
-    email: formEmail,
-    password: formPassword,
     token: localStorage.getItem("activeToken"),
   });
+};
+
+export const getUserDetails = async (): Promise<{
+  uuid: number;
+  name: string;
+  email: string;
+  email_verified_at: string;
+  updated_at: string;
+  blocked: number;
+  admin: number;
+}> => {
+  const apiUserData = await laravelApi
+    .post("api/account/user/details", {
+      token: localStorage.getItem("activeToken"),
+    })
+    .then((response) => response.data);
+
+  return apiUserData;
 };

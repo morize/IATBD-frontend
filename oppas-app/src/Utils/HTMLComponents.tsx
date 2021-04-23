@@ -1,20 +1,29 @@
 import styled from "styled-components";
 
+import Variants, { TVariants } from "./Variants";
+
 export const StH1 = styled.h1`
   margin: 0 0 32px 0;
   font-size: 44px;
-  color: #494949;
+  color: ${Variants.default};
 `;
 
 export const StH2 = styled.h2`
   margin: 16px 0;
   font-size: 34px;
-  color: #494949;
+  color: ${Variants.default};
 `;
 
-export const StP = styled.p`
+interface IStP {
+  variant?: TVariants;
+  bold?: boolean;
+}
+
+export const StP = styled.p<IStP>`
   font-size: 18px;
-  color: #494949;
+  color: ${(props) => Variants[props.variant!]};
+  font-weight: ${(props) => (props.bold ? 600 : 500)};
+  white-space: pre-wrap;
 `;
 
 export const StLabel = styled.label`

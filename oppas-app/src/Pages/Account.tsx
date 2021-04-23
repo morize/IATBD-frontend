@@ -1,4 +1,8 @@
+import { useEffect, useState, MouseEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
+import BaseButton from "../Components/Button/BaseButton";
 import {
   StH1,
   StH2,
@@ -7,9 +11,11 @@ import {
   StP,
   StLabel,
 } from "../Utils/HTMLComponents";
-
-import BaseButton from "../Components/Button/BaseButton";
-import { sendEmailVerificationLink } from "../Hooks/Api";
+import {
+  sendEmailVerificationLink,
+  getUserDetails,
+  logout,
+} from "../Hooks/Api";
 
 const StAccountDetails = styled.section`
   display: flex;
@@ -26,12 +32,59 @@ const StAccountDetails = styled.section`
   }
 `;
 
+const StSectionVerify = styled(StSection)`
+  margin-bottom: 30px;
+  text-align: center;
+`;
+
 const Account = () => {
-  const localUserDetails = JSON.parse(localStorage.getItem("userDetails")!);
+  const [userDetails, setUserDetails] = useState<{
+    name: string;
+    email: string;
+    verified: string;
+    telephoneNumber: string;
+    isAdmin: string;
+    isBlocked: string;
+  }>({
+    name: "-",
+    email: "-",
+    verified: "-",
+    telephoneNumber: "-",
+    isAdmin: "-",
+    isBlocked: "-",
+  });
+
+  const navigate = useNavigate();
 
   const onVerificationClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
-    sendEmailVerificationLink("mauricemr@outlook.com", "Hilol123.");
+    e.preventDefault();
+    sendEmailVerificationLink();
   };
+
+  const onLogoutClicked = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    logout().then(() => {
+      navigate("../../home");
+    });
+  };
+
+  useEffect(() => {
+    if (userDetails.name === "-") {
+      getUserDetails().then((response) => {
+        setUserDetails({
+          name: response.name,
+          email: response.email,
+          verified: response.email_verified_at
+            ? "Geverifieerd"
+            : "Niet geverifieerd",
+          telephoneNumber: "06466709788",
+          isBlocked: response.blocked === 1 ? "Geblokkeerd" : "Actief",
+          isAdmin: response.blocked === 1 ? "Ja" : "Nee",
+        });
+      });
+    }
+  }, [setUserDetails, userDetails]);
 
   return (
     <StArticle>
@@ -40,25 +93,45 @@ const Account = () => {
         <StH2>Algemene Gegevens:</StH2>
         <StAccountDetails>
           <StLabel>Gebruikersnaam:</StLabel>
-          <StP>{localUserDetails.username}</StP>
+          <StP>{userDetails.name}</StP>
 
           <StLabel>Email:</StLabel>
-          <StP>{localUserDetails.email}</StP>
+          <StP>{userDetails.email}</StP>
 
-          <StLabel>Telefoonnummer:</StLabel>
-          <StP>18923812845</StP>
+          <StLabel>Email Status:</StLabel>
+          <StP>{userDetails.verified}</StP>
 
-          <StLabel>Opasser Status:</StLabel>
-          <StP>Actief</StP>
+          <StLabel>Account Status:</StLabel>
+          <StP>{userDetails.isBlocked}</StP>
+
+          {userDetails.isAdmin === "Ja" && (
+            <>
+              <StLabel>Admin:</StLabel>
+              <StP>{userDetails.isAdmin}</StP>
+            </>
+          )}
         </StAccountDetails>
 
+        {userDetails.verified === "Niet geverifieerd" && (
+          <StSectionVerify>
+            <StP variant="info" bold={true}>
+              {
+                "Verifieer uw account om verder gebruik te maken van Passen op je Dier.\nU ontvangt zo een verificatielink op uw geregistreerde email."
+              }
+            </StP>
+            <BaseButton
+              label="Emailverificatie opnieuw sturen"
+              variant="secondary"
+              onClick={onVerificationClicked}
+            />
+          </StSectionVerify>
+        )}
+
         <BaseButton
-          label="Stuur email verificatie link"
-          variant="secondary"
-          onClick={onVerificationClicked}
+          label="Uitloggen"
+          variant="danger"
+          onClick={onLogoutClicked}
         />
-        <br></br>
-        <BaseButton label="Uitloggen" variant="danger" />
       </StSection>
     </StArticle>
   );

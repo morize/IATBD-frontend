@@ -37,6 +37,7 @@ const Register = () => {
     };
 
     register(formData).then(() => {
+      e.preventDefault();
       login(formData.email, formData.password).then(() =>
         navigate("../../account")
       );
