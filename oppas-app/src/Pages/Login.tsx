@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { StH1, StArticle, StLabel } from "../Utils/HTMLComponents";
+import { StH1, StArticle, StLabel, StP } from "../Utils/HTMLComponents";
 import Variants from "../Utils/Variants";
 import BaseInput from "../Components/Input/BaseInput";
 import BaseButton from "../Components/Button/BaseButton";
@@ -39,6 +39,22 @@ const StPasswordAnchor = styled.a`
   }
 `;
 
+const StRegister = styled.section`
+  margin-top: 120px;
+  font-size: 18px;
+  text-align: center;
+  color: ${Variants.primary};
+  font-weight: 600;
+  white-space: pre-wrap;
+
+  & a {
+    display: block;
+    margin-top: 10px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+`;
+
 const Login = () => {
   const [formEmail, setFormEmail] = useState("mauricemr@outlook.com");
   const [formPassword, setFormPassword] = useState("Hilol123.");
@@ -71,6 +87,7 @@ const Login = () => {
 
     login(formEmail, formPassword)
       .then(() => {
+        e.preventDefault();
         navigate("../../account");
       })
       .catch(() => {
@@ -78,8 +95,15 @@ const Login = () => {
       });
   };
 
-  const onPasswordResetClicked = (e: React.MouseEvent<HTMLAnchorElement>) =>
+  const onPasswordResetClicked = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
     navigate("../wachtwoord-vergeten");
+  };
+
+  const onRegisterClicked = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    navigate("../aanmelden");
+  };
 
   return (
     <StArticle>
@@ -111,6 +135,11 @@ const Login = () => {
 
         <BaseButton type="submit" label="Inloggen" onClick={submitLoginData} />
       </StForm>
+
+      <StRegister>
+        {"Nog geen account?\n"}
+        <a onClick={onRegisterClicked}>Klik hier om aan te melden!</a>
+      </StRegister>
     </StArticle>
   );
 };
