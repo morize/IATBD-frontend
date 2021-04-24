@@ -38,7 +38,7 @@ const Register = () => {
 
     register(formData).then(() => {
       e.preventDefault();
-      login(formData.email, formData.password, false).then(() =>
+      login(formData.email, formData.password).then(() =>
         navigate("../../account")
       );
     });
@@ -77,15 +77,6 @@ const Register = () => {
           onClick={submitRegisterData}
         />
       </StForm>
-      {/* <button
-        onClick={() => {
-          api.get("api/show").then((response) => {
-            console.log(response.data);
-          });
-        }}
-      >
-        test lol xD
-      </button> */}
     </StArticle>
   );
 };

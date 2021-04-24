@@ -20,7 +20,7 @@ interface IStP {
 }
 
 export const StP = styled.p<IStP>`
-  font-size: 18px;
+  font-size: 16px;
   color: ${(props) => Variants[props.variant!]};
   font-weight: ${(props) => (props.bold ? 600 : 500)};
   white-space: pre-wrap;

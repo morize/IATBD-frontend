@@ -17,9 +17,9 @@ export type TVariants =
 
 const Variants: IVariants = {
   primary: "#4A5E87",
-  secondary: "#02613F",
+  secondary: "#35823D",
   info: "#536ABA",
-  danger: "#973552",
+  danger: "#D11717",
   card: "#208F96",
   default: "#494949",
 };
