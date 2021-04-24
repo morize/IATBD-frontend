@@ -61,6 +61,8 @@ const Login = () => {
   const [formEmail, setFormEmail] = useState("mauricemr@outlook.com");
   const [formPassword, setFormPassword] = useState("Hilol123.");
   const [formError, setFormError] = useState(false);
+  const [rememberMeCheck, setRememberMeCheck] = useState(false);
+
   const navigate = useNavigate();
 
   // Redux storechange logic
@@ -87,7 +89,7 @@ const Login = () => {
   const submitLoginData = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    login(formEmail, formPassword)
+    login(formEmail, formPassword, rememberMeCheck)
       .then(() => {
         e.preventDefault();
         navigate("../../account");
@@ -133,7 +135,12 @@ const Login = () => {
           </StErrorMessage>
         )}
 
-        <Checkbox label="Ingelogd blijven" margin="-25px 0 24px -8px" />
+        <Checkbox
+          label="Ingelogd blijven"
+          margin="-25px 0 24px -8px"
+          checked={rememberMeCheck}
+          onClick={() => setRememberMeCheck(!rememberMeCheck)}
+        />
 
         <BaseButton type="submit" label="Inloggen" onClick={submitLoginData} />
       </StForm>
