@@ -38,7 +38,7 @@ const StyledFormControlLabel = styled(FormControlLabel)<{ margin: string }>`
 
   & .MuiFormControlLabel-label {
     font-size: 16px;
-    font-weight: 600;
+
     color: ${({ disabled }) => (disabled ? "#b3b3c2" : Variants.primary)};
     font-family: "Fira Sans", sans-serif;
   }

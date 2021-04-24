@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { StH1, StArticle, StLabel, StP } from "../Utils/HTMLComponents";
+import { StH1, StArticle, StLabel } from "../Utils/HTMLComponents";
 import Variants from "../Utils/Variants";
 import BaseInput from "../Components/Input/BaseInput";
 import BaseButton from "../Components/Button/BaseButton";
@@ -10,15 +10,11 @@ import Checkbox from "../Components/Checkbox/Checkbox";
 
 import { login } from "../Hooks/Api";
 
-const StErrorMessage = styled.p`
-  color: red;
-  margin: -20px 0 30px 0;
-`;
-
 const StForm = styled.form`
   position: relative;
 
   & div {
+    user-select: none;
     margin-bottom: 30px;
 
     & input {
@@ -27,16 +23,22 @@ const StForm = styled.form`
   }
 `;
 
-const StPasswordAnchor = styled.a`
+const StPasswordForgotAnchor = styled.a`
   position: absolute;
   right: 0;
 
   & label {
     cursor: pointer;
     font-size: 14px;
+    font-weight: 600;
     color: ${Variants.info};
     text-decoration: underline;
   }
+`;
+
+const StErrorMessage = styled.p`
+  color: red;
+  margin: -20px 0 30px 0;
 `;
 
 const StRegister = styled.section`
@@ -44,12 +46,12 @@ const StRegister = styled.section`
   font-size: 18px;
   text-align: center;
   color: ${Variants.primary};
-  font-weight: 600;
   white-space: pre-wrap;
 
   & a {
     display: block;
     margin-top: 10px;
+    font-weight: 600;
     text-decoration: underline;
     cursor: pointer;
   }
@@ -114,9 +116,9 @@ const Login = () => {
           placeholder="Voer uw email in"
           onChange={(e) => setFormEmail(e.target.value)}
         />
-        <StPasswordAnchor onClick={onPasswordResetClicked}>
+        <StPasswordForgotAnchor onClick={onPasswordResetClicked}>
           <StLabel>Wachtwoord vergeten?</StLabel>
-        </StPasswordAnchor>
+        </StPasswordForgotAnchor>
 
         <BaseInput
           label="Wachtwoord:"
@@ -131,7 +133,7 @@ const Login = () => {
           </StErrorMessage>
         )}
 
-        <Checkbox label="Ingelogd blijven" margin="-25px 0 15px -8px" />
+        <Checkbox label="Ingelogd blijven" margin="-25px 0 24px -8px" />
 
         <BaseButton type="submit" label="Inloggen" onClick={submitLoginData} />
       </StForm>

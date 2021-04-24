@@ -29,7 +29,6 @@ export const StP = styled.p<IStP>`
 export const StLabel = styled.label`
   font-size: 18px;
   color: #494949;
-  font-weight: 600;
 `;
 
 export const StSection = styled.section`
