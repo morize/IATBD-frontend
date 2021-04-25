@@ -1,13 +1,15 @@
 import { InputHTMLAttributes, ReactNode } from "react";
 import styled from "styled-components";
 
-import Variants from "../../Utils/Variants";
+import Variants from "../../Assets/Variants";
 
 const StLabel = styled.label`
   display: block;
   margin-bottom: 12px;
+  font-size: 16px;
   font-weight: 600;
   color: ${Variants.primary};
+  user-select: none;
 `;
 
 const StInput = styled.input`
@@ -18,6 +20,8 @@ const StInput = styled.input`
   border: 0;
   outline: none;
   background: none;
+  font-family: "Fira Sans", sans-serif;
+  box-sizing: border-box;
 
   &::placeholder {
     color: #b3b3c2;
@@ -29,10 +33,10 @@ const StInputContainer = styled.div`
   align-items: center;
   height: 50px;
   border: 1px solid #b3b3c2;
-  font-size: 16px;
   border-radius: 5px;
   box-sizing: border-box;
   background: #ffff;
+  user-select: none;
 
   & span {
     color: ${Variants.primary};

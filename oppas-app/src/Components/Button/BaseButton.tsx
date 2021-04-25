@@ -1,7 +1,7 @@
-import React, { ButtonHTMLAttributes, ReactNode } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 import styled from "styled-components";
 
-import Variants, { TVariants } from "../../Utils/Variants";
+import Variants, { TVariants } from "../../Assets/Variants";
 
 const StButton = styled.button<{ variant: TVariants }>`
   display: flex;
@@ -14,10 +14,10 @@ const StButton = styled.button<{ variant: TVariants }>`
   border: none;
   cursor: pointer;
   font-family: "Fira Sans", sans-serif;
-  font-weight: 600;
   font-size: 16px;
   color: #ffffff;
   outline: 0;
+  user-select: none;
 `;
 
 const StEndIcon = styled.div`

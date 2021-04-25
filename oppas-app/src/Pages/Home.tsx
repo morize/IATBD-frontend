@@ -1,7 +1,13 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-import { StH1, StH2, StP, StSection, StArticle } from "../Utils/HTMLComponents";
+import {
+  StH1,
+  StH2,
+  StP,
+  StSection,
+  StArticle,
+} from "../Assets/HTMLComponents";
 import CardButton from "../Components/Card/CardButton/CardButton";
 
 const StCardFigure = styled.figure`
@@ -10,7 +16,7 @@ const StCardFigure = styled.figure`
   margin: 32px 0;
 
   & figcaption {
-    font-size: 1.5rem;
+    font-size: 20px;
   }
 `;
 

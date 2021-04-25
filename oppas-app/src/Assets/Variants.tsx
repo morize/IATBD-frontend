@@ -1,8 +1,10 @@
 interface IVariants {
   primary: string;
   secondary: string;
+  tertiary: string;
   danger: string;
   card: string;
+  success: string;
   default: string;
   info: string;
 }
@@ -10,17 +12,21 @@ interface IVariants {
 export type TVariants =
   | "primary"
   | "secondary"
+  | "tertiary"
   | "danger"
+  | "success"
   | "card"
   | "info"
   | "default";
 
 const Variants: IVariants = {
   primary: "#4A5E87",
-  secondary: "#02613F",
+  secondary: "#9A2828",
+  tertiary: "#235F29",
   info: "#536ABA",
-  danger: "#973552",
-  card: "#208F96",
+  danger: "#EA2222",
+  success: "#35823D",
+  card: "#16711F",
   default: "#494949",
 };
 
