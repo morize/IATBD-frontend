@@ -1,14 +1,20 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 
 import { StH1, StArticle, StP } from "../Utils/HTMLComponents";
 import BaseInput from "../Components/Input/BaseInput";
 import BaseButton from "../Components/Button/BaseButton";
+import { submitNewPassword } from "../Hooks/Api";
 
 const StResetPasswordContainer = styled(StArticle)`
   & p {
     margin-bottom: 24px;
+  }
+
+  & div {
+    margin-bottom: 30px;
   }
 
   & button {
@@ -17,53 +23,37 @@ const StResetPasswordContainer = styled(StArticle)`
 `;
 
 const ResetPassword = () => {
-  const [emailToRecover, setEmailToRecover] = useState("mauricemr@outlook.com");
-  const [emailStatus, setEmailStatus] = useState("default");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const { token, email } = useParams();
+  const navigate = useNavigate();
 
-  const onResetPasswordClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onResetPasswordSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    // Logic to fire post request
-
-    setEmailStatus("sent");
+    submitNewPassword(email, newPassword, confirmNewPassword, token).then(() =>
+      navigate("../../../inloggen", { state: { didPasswordReset: true } })
+    );
   };
 
   return (
     <StResetPasswordContainer>
-      <StH1>Wachtwoord vergeten</StH1>
-      <StP variant={"primary"}>
-        {
-          "Bent u uw wachtwoord vergeten?\n\nAls u nog de geregistreerde email van uw account weet kunnen we een wachtwoordherstel email sturen."
-        }
-      </StP>
+      <StH1>Reset wachtwoord</StH1>
+      <StP variant={"primary"}>Stel een nieuwe wachtwoord voor uw account</StP>
 
       <BaseInput
-        label={"Email:"}
-        placeholder={"Vul een geregistreerde email in"}
-        value={emailToRecover}
-        onChange={(e) => setEmailToRecover(e.target.value)}
+        label={"Nieuw wachtwoord:"}
+        value={newPassword}
+        type="password"
+        onChange={(e) => setNewPassword(e.target.value)}
       />
-
-      {emailStatus === "sent" && (
-        <StP variant={"secondary"}>
-          {"Wachtwoordherstel email is verstuurd! neem een kijk op uw mail."}
-        </StP>
-      )}
-
-      {emailStatus === "notfound" && (
-        <StP variant={"danger"}>{"De ingegeven email is niet gevonden."}</StP>
-      )}
-
-      {emailStatus === "error" && (
-        <StP variant={"danger"}>
-          {"Er is iets misgegaan, probeer later opnieuw."}
-        </StP>
-      )}
-
-      <BaseButton
-        label={"Stuur wachtwoordherstel email"}
-        onClick={onResetPasswordClicked}
+      <BaseInput
+        label={"Nieuw wachtwoord opnieuw:"}
+        type="password"
+        value={confirmNewPassword}
+        onChange={(e) => setConfirmNewPassword(e.target.value)}
       />
+      <BaseButton label={"Reset wachtwoord"} onClick={onResetPasswordSubmit} />
     </StResetPasswordContainer>
   );
 };

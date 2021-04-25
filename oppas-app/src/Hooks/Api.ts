@@ -89,3 +89,28 @@ export const getUserDetails = async (): Promise<{
 
   return apiUserData;
 };
+
+export const sendResetPasswordEmail = async (email: string) => {
+  const sanctumToken = await getSanctumToken.then((token: string) => token);
+
+  await laravelApi.post("api/account/forgot-password", {
+    token: sanctumToken,
+    email: email,
+  });
+};
+
+export const submitNewPassword = async (
+  email: string,
+  password: string,
+  password_confirmation: string,
+  password_token: string
+) => {
+  const sanctumToken = await getSanctumToken.then((token: string) => token);
+
+  await laravelApi.post("api/account/reset-password", {
+    token: password_token,
+    email: email,
+    password: password,
+    password_confirmation: password_confirmation,
+  });
+};

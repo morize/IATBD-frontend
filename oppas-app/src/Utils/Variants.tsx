@@ -19,7 +19,7 @@ const Variants: IVariants = {
   primary: "#4A5E87",
   secondary: "#35823D",
   info: "#536ABA",
-  danger: "#D11717",
+  danger: "#BA2730",
   card: "#208F96",
   default: "#494949",
 };

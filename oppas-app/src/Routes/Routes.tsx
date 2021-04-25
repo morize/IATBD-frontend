@@ -6,6 +6,7 @@ import Home from "../Pages/Home";
 import Account from "../Pages/Account";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import ForgotPassword from "../Pages/ForgotPassword";
 import ResetPassword from "../Pages/ResetPassword";
 
 const PODRoutes = () => {
@@ -15,8 +16,14 @@ const PODRoutes = () => {
         <Route path="home" element={<Home />} />
         <Route path="account/inloggen" element={<Login />} />
         <Route path="account/aanmelden" element={<Register />} />
-        <Route path="account/wachtwoord-vergeten" element={<ResetPassword />} />
-
+        <Route
+          path="account/wachtwoord-vergeten"
+          element={<ForgotPassword />}
+        />
+        <Route
+          path="account/wachtwoord-vergeten/:token/:email"
+          element={<ResetPassword />}
+        />
         <PrivateRoute path="account" element={<Account />} />
 
         <PrivateRoute path="overzicht/huisdieren" element={<Account />} />

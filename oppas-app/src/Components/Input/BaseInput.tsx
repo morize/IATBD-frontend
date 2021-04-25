@@ -9,6 +9,7 @@ const StLabel = styled.label`
   font-size: 16px;
   font-weight: 600;
   color: ${Variants.primary};
+  user-select: none;
 `;
 
 const StInput = styled.input`
@@ -35,6 +36,7 @@ const StInputContainer = styled.div`
   border-radius: 5px;
   box-sizing: border-box;
   background: #ffff;
+  user-select: none;
 
   & span {
     color: ${Variants.primary};

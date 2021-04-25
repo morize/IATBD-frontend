@@ -1,14 +1,18 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { StH1, StArticle, StLabel } from "../Utils/HTMLComponents";
+import { StH1, StArticle, StLabel, StP } from "../Utils/HTMLComponents";
 import Variants from "../Utils/Variants";
 import BaseInput from "../Components/Input/BaseInput";
 import BaseButton from "../Components/Button/BaseButton";
 import Checkbox from "../Components/Checkbox/Checkbox";
 
 import { login } from "../Hooks/Api";
+
+const StPasswordResetInfo = styled(StP)`
+  margin-bottom: 32px;
+`;
 
 const StForm = styled.form`
   position: relative;
@@ -57,6 +61,10 @@ const StRegister = styled.section`
   }
 `;
 
+interface LocationState {
+  state: { didPasswordReset?: string } | null;
+}
+
 const Login = () => {
   const [formEmail, setFormEmail] = useState("mauricemr@outlook.com");
   const [formPassword, setFormPassword] = useState("Hilol123.");
@@ -64,6 +72,7 @@ const Login = () => {
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
 
   const navigate = useNavigate();
+  const { state }: LocationState = useLocation();
 
   // Redux storechange logic
   // Not needed because its not persistent when the page refreshes
@@ -91,7 +100,6 @@ const Login = () => {
 
     login(formEmail, formPassword, rememberMeCheck)
       .then(() => {
-        e.preventDefault();
         navigate("../../account");
       })
       .catch(() => {
@@ -112,6 +120,13 @@ const Login = () => {
   return (
     <StArticle>
       <StH1>Inloggen</StH1>
+
+      {state && (
+        <StPasswordResetInfo variant={"secondary"}>
+          U heeft uw wachtwoord opnieuw ingesteld.
+        </StPasswordResetInfo>
+      )}
+
       <StForm>
         <BaseInput
           label="Email:"
