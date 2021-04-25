@@ -10,7 +10,7 @@ import {
   StSection,
   StP,
   StLabel,
-} from "../Utils/HTMLComponents";
+} from "../Assets/HTMLComponents";
 import {
   sendEmailVerificationLink,
   getUserDetails,

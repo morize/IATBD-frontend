@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 import Navigation from "./Navigation";
-import bgLayout from "../Assets/Images/bg_pattern.png";
+import bgLayout from "../Assets/img/bg_pattern.png";
 
 const RootLayout = styled.section`
   display: flex;

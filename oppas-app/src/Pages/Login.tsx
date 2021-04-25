@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { StH1, StArticle, StLabel, StP } from "../Utils/HTMLComponents";
-import Variants from "../Utils/Variants";
+import { StH1, StArticle, StLabel, StP } from "../Assets/HTMLComponents";
+import Variants from "../Assets/Variants";
 import BaseInput from "../Components/Input/BaseInput";
 import BaseButton from "../Components/Button/BaseButton";
 import Checkbox from "../Components/Checkbox/Checkbox";
@@ -41,7 +41,7 @@ const StPasswordForgotAnchor = styled.a`
 `;
 
 const StErrorMessage = styled.p`
-  color: red;
+  color: ${Variants.danger};
   margin: -20px 0 30px 0;
 `;
 
@@ -56,6 +56,7 @@ const StRegister = styled.section`
     display: block;
     margin-top: 10px;
     font-weight: 600;
+    color: ${Variants.primary};
     text-decoration: underline;
     cursor: pointer;
   }
@@ -71,8 +72,8 @@ const Login = () => {
   const [formError, setFormError] = useState(false);
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
 
-  const navigate = useNavigate();
   const { state }: LocationState = useLocation();
+  const navigate = useNavigate();
 
   // Redux storechange logic
   // Not needed because its not persistent when the page refreshes
@@ -122,7 +123,7 @@ const Login = () => {
       <StH1>Inloggen</StH1>
 
       {state && (
-        <StPasswordResetInfo variant={"secondary"}>
+        <StPasswordResetInfo variant={"success"}>
           U heeft uw wachtwoord opnieuw ingesteld.
         </StPasswordResetInfo>
       )}
@@ -162,7 +163,9 @@ const Login = () => {
 
       <StRegister>
         {"Nog geen account?\n"}
-        <a onClick={onRegisterClicked}>Klik hier om aan te melden!</a>
+        <a href="#register" onClick={onRegisterClicked}>
+          Klik hier om aan te melden!
+        </a>
       </StRegister>
     </StArticle>
   );

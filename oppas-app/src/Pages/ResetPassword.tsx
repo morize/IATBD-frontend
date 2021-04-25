@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 
-import { StH1, StArticle, StP } from "../Utils/HTMLComponents";
+import { StH1, StArticle, StP } from "../Assets/HTMLComponents";
 import BaseInput from "../Components/Input/BaseInput";
 import BaseButton from "../Components/Button/BaseButton";
 import { submitNewPassword } from "../Hooks/Api";

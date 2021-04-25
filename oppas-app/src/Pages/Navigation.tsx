@@ -7,8 +7,8 @@ import PersonIcon from "@material-ui/icons/Person";
 import PetsIcon from "@material-ui/icons/Pets";
 import GroupIcon from "@material-ui/icons/Group";
 
-import bgNavigation from "../Assets/Images/bg_navigation.jpg";
-import dogIcon from "../Assets/Images/logo_pojd.png";
+import bgNavigation from "../Assets/img/bg_navigation.jpg";
+import dogIcon from "../Assets/img/logo_pojd.png";
 
 import { logout } from "../Hooks/Api";
 
@@ -21,7 +21,7 @@ const StNavigation = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 18vw;
+  width: 16vw;
   height: 100vh;
   overflow: hidden;
   box-sizing: border-box;
@@ -47,8 +47,7 @@ const StLogoFigure = styled.figure`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: 2vh;
-  border-bottom: 0.3vh solid rgba(255, 255, 255, 1);
+  user-select: none;
 
   & img {
     width: 5vw;
@@ -57,8 +56,7 @@ const StLogoFigure = styled.figure`
   & figcaption {
     margin-top: -0.5vh;
     text-align: center;
-    font-size: 1.25vw;
-    font-weight: 600;
+    font-size: 1.2vw;
     white-space: pre-wrap;
   }
 
@@ -86,7 +84,7 @@ const StUl = styled.ul`
   margin: 2vh 0;
   padding: 0;
   list-style: none;
-  font-size: 1vw;
+  font-size: 0.9vw;
   text-align: center;
 
   & li {
@@ -141,7 +139,7 @@ const StBottom = styled.section`
   height: 16%;
   margin-top: auto;
   text-align: center;
-  font-size: 0.9vw;
+  font-size: 0.8vw;
   white-space: pre-wrap;
 
   & ${StNavLink} {

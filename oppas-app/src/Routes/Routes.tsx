@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
 import PrivateRoute from "../Routes/PrivateRoute";
-import Layout from "../Assets/Layout";
+import Layout from "../Pages/Layout";
 import Home from "../Pages/Home";
 import Account from "../Pages/Account";
 import Login from "../Pages/Login";

@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { useNavigate } from "react-router-dom";
-import { StH1, StArticle } from "../Utils/HTMLComponents";
+import { StH1, StArticle } from "../Assets/HTMLComponents";
 import BaseInput from "../Components/Input/BaseInput";
 import BaseButton from "../Components/Button/BaseButton";
 

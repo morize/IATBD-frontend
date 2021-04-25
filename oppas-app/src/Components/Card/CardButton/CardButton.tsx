@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { IBaseButton } from "../../Button/BaseButton";
-import Variants from "../../../Utils/Variants";
+import Variants from "../../../Assets/Variants";
 
 export interface ICardButton extends Omit<IBaseButton, "label" | "variant"> {
   src: string;
@@ -12,7 +12,7 @@ export interface ICardButton extends Omit<IBaseButton, "label" | "variant"> {
 const StImg = styled.img`
   display: block;
   width: 100%;
-  height: 76%;
+  height: 80%;
   object-fit: cover;
   border-radius: 5px 5px 0 0;
 `;
@@ -21,9 +21,9 @@ const StFigCaption = styled.figcaption`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 22%;
+  height: 20%;
   border-radius: 0 0 5px 5px;
-  background: ${Variants.secondary};
+  background: ${Variants.tertiary};
   color: #ffff;
 `;
 
@@ -36,6 +36,7 @@ const StEmptyButton = styled.button`
   border: none;
   cursor: pointer;
   font-family: "Fira Sans", sans-serif;
+  user-select: none;
 `;
 
 const CardButton = ({ src, alt, buttonText, value, ...rest }: ICardButton) => (

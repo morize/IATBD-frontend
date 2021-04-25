@@ -105,8 +105,6 @@ export const submitNewPassword = async (
   password_confirmation: string,
   password_token: string
 ) => {
-  const sanctumToken = await getSanctumToken.then((token: string) => token);
-
   await laravelApi.post("api/account/reset-password", {
     token: password_token,
     email: email,

@@ -1,7 +1,7 @@
 import { InputHTMLAttributes, ReactNode } from "react";
 import styled from "styled-components";
 
-import Variants from "../../Utils/Variants";
+import Variants from "../../Assets/Variants";
 
 const StLabel = styled.label`
   display: block;

@@ -4,7 +4,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { Checkbox as MuiCheckbox } from "@material-ui/core";
 import { CheckboxProps } from "@material-ui/core/Checkbox";
 
-import Variants from "../../Utils/Variants";
+import Variants from "../../Assets/Variants";
 
 const StyledCheckbox = styled(MuiCheckbox)`
   &.MuiButtonBase-root {
