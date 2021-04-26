@@ -2,7 +2,13 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { StH1, StArticle, StLabel, StP } from "../Assets/HTMLComponents";
+import {
+  StH1,
+  StArticle,
+  StLabel,
+  StP,
+  StForm,
+} from "../Assets/HTMLComponents";
 import Variants from "../Assets/Variants";
 import BaseInput from "../Components/Input/BaseInput";
 import BaseButton from "../Components/Button/BaseButton";
@@ -12,19 +18,6 @@ import { login } from "../Hooks/Api";
 
 const StPasswordResetInfo = styled(StP)`
   margin-bottom: 32px;
-`;
-
-const StForm = styled.form`
-  position: relative;
-
-  & div {
-    user-select: none;
-    margin-bottom: 30px;
-
-    & input {
-      font-family: "Fira Sans", sans-serif;
-    }
-  }
 `;
 
 const StPasswordForgotAnchor = styled.a`

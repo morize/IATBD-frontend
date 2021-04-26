@@ -2,21 +2,11 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { useNavigate } from "react-router-dom";
-import { StH1, StArticle } from "../Assets/HTMLComponents";
+import { StH1, StArticle, StForm } from "../Assets/HTMLComponents";
 import BaseInput from "../Components/Input/BaseInput";
 import BaseButton from "../Components/Button/BaseButton";
 
 import { register, login } from "../Hooks/Api";
-
-const StForm = styled.form`
-  & div {
-    margin-bottom: 30px;
-
-    & input {
-      font-family: "Fira Sans", sans-serif;
-    }
-  }
-`;
 
 const Register = () => {
   const [formUsername, setFormUsername] = useState("mauri985");

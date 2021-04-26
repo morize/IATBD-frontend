@@ -22,6 +22,7 @@ const StInput = styled.input`
   background: none;
   font-family: "Fira Sans", sans-serif;
   box-sizing: border-box;
+  z-index: 2;
 
   &::placeholder {
     color: #b3b3c2;
@@ -30,6 +31,7 @@ const StInput = styled.input`
 
 const StInputContainer = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   height: 50px;
   border: 1px solid #b3b3c2;
@@ -39,6 +41,24 @@ const StInputContainer = styled.div`
   user-select: none;
 
   & span {
+    margin-right: 8px;
+    color: ${Variants.primary};
+
+    & svg {
+      width: 1.25em;
+      height: 1.25em;
+    }
+  }
+
+  & input[type="file"] {
+    line-height: 30px;
+    cursor: pointer;
+  }
+
+  & input[type="file"] + span {
+    position: absolute;
+    margin-right: 0;
+    right: 8px;
     color: ${Variants.primary};
   }
 `;

@@ -9,8 +9,14 @@ export const StH1 = styled.h1`
 `;
 
 export const StH2 = styled.h2`
-  margin: 16px 0;
-  font-size: 34px;
+  margin: 24px 0;
+  font-size: 32px;
+  color: ${Variants.default};
+`;
+
+export const StH3 = styled.h3`
+  margin: 32px 0 24px 0;
+  font-size: 24px;
   color: ${Variants.default};
 `;
 
@@ -32,10 +38,23 @@ export const StLabel = styled.label`
 `;
 
 export const StSection = styled.section`
-  margin-bottom: 84px;
+  margin: 0 24px 84px 24px;
 `;
 
 export const StArticle = styled.article`
-  width: 800px;
+  width: 700px;
   margin: 0 auto;
+`;
+
+export const StForm = styled.form`
+  position: relative;
+
+  & div {
+    user-select: none;
+    margin-bottom: 24px;
+
+    & input {
+      font-family: "Fira Sans", sans-serif;
+    }
+  }
 `;
