@@ -17,7 +17,7 @@ export const StH2 = styled.h2`
 export const StH3 = styled.h3`
   margin: 32px 0 24px 0;
   font-size: 24px;
-  color: ${Variants.default};
+  color: ${Variants.primary};
 `;
 
 interface IStP {

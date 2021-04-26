@@ -8,6 +8,7 @@ import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
 import BaseButton from "../Components/Button/BaseButton";
 import BaseInput from "../Components/Input/BaseInput";
 import Checkbox from "../Components/Checkbox/Checkbox";
+import Switch from "../Components/Switch/Switch";
 import {
   StH1,
   StH2,
@@ -173,10 +174,10 @@ const Account = () => {
       </StSection>
 
       <StSection>
-        <StH2>Opasser</StH2>
-
+        <StH2>Oppas</StH2>
+        <Switch label="Ben ik een opasser?" />
         <StForm>
-          <StH3>Oppasvragen</StH3>
+          <StH3>Mijn oppasvragen</StH3>
 
           <StOptionsContainer>
             <Checkbox label="Placeholder" />
@@ -188,7 +189,7 @@ const Account = () => {
         </StForm>
 
         <StForm>
-          <StH3>Dierensoorten voor oppas</StH3>
+          <StH3>Oppas voor:</StH3>
 
           <StOptionsContainer>
             <Checkbox label="Katten" />
