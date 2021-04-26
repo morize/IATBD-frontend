@@ -173,7 +173,19 @@ const Account = () => {
       </StSection>
 
       <StSection>
-        <StH2>Opasser Status</StH2>
+        <StH2>Opasser</StH2>
+
+        <StForm>
+          <StH3>Oppasvragen</StH3>
+
+          <StOptionsContainer>
+            <Checkbox label="Placeholder" />
+            <Checkbox label="Placeholder" />
+            <Checkbox label="Placeholder" />
+            <Checkbox label="Placeholder" />
+            {/* fetch sitter requests from database -> replace checkbox with card*/}
+          </StOptionsContainer>
+        </StForm>
 
         <StForm>
           <StH3>Dierensoorten voor oppas</StH3>
@@ -183,6 +195,7 @@ const Account = () => {
             <Checkbox label="Honden" />
             <Checkbox label="Cavia's" />
             <Checkbox label="Vissen" />
+            {/* fetch kind of animal from laravel */}
           </StOptionsContainer>
 
           <BaseButton label="Dierensoorten opslaan" />
