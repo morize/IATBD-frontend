@@ -1,8 +1,10 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import Navigation from "./Navigation";
-import bgLayout from "../Assets/img/bg_pattern.png";
+import { StArticle, StMainArticle } from "../Utils/HTMLComponents";
+import Navigation from "./Navigation/MainNavigation";
+import SubNavigation from "./Navigation/SubNavigation";
+import bgLayout from "../Utils/Images/bg_pattern.png";
 
 const RootLayout = styled.section`
   display: flex;
@@ -23,14 +25,43 @@ const StContent = styled.section`
   background-image: url(${bgLayout});
 `;
 
-const Layout = () => (
-  <RootLayout>
-    <Navigation />
+const checkIfAuthenticationPage = (url: string) => {
+  if (
+    url === "inloggen" ||
+    url === "aanmelden" ||
+    url === "wachtwoord-vergeten"
+  ) {
+    return true;
+  }
+  return false;
+};
 
-    <StContent>
-      <Outlet />
-    </StContent>
-  </RootLayout>
-);
+const Layout = () => {
+  const { pathname } = useLocation();
+
+  const inAuthenticationPage = checkIfAuthenticationPage(
+    pathname.split("/")[2]
+  );
+
+  return (
+    <RootLayout>
+      <Navigation />
+
+      <StContent>
+        {!inAuthenticationPage && <SubNavigation />}
+
+        {!inAuthenticationPage ? (
+          <StArticle>
+            <Outlet />
+          </StArticle>
+        ) : (
+          <StMainArticle>
+            <Outlet />
+          </StMainArticle>
+        )}
+      </StContent>
+    </RootLayout>
+  );
+};
 
 export default Layout;

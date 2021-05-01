@@ -1,13 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-import {
-  StH1,
-  StH2,
-  StP,
-  StSection,
-  StArticle,
-} from "../Assets/HTMLComponents";
+import { StH2, StP, StSection } from "../Utils/HTMLComponents";
 import CardButton from "../Components/Card/CardButton/CardButton";
 
 const StCardFigure = styled.figure`
@@ -21,8 +15,7 @@ const StCardFigure = styled.figure`
 `;
 
 const Home = () => (
-  <StArticle>
-    <StH1>Home</StH1>
+  <>
     <StSection>
       <StH2>Hoe werkt het?</StH2>
       <StP>
@@ -72,7 +65,7 @@ const Home = () => (
         massa.
       </StP>
     </StSection>
-  </StArticle>
+  </>
 );
 
 export default Home;

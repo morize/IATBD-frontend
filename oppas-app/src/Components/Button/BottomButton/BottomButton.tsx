@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import styled from "styled-components";
 
 import BaseButton, { IBaseButton } from "../BaseButton";
-import Variants from "../../../Assets/Variants";
+import Variants from "../../../Utils/Variants";
 
 export interface IBottomButton extends Omit<IBaseButton, "label" | "variant"> {
   icon: ReactNode;

@@ -4,17 +4,17 @@ import styled from "styled-components";
 
 import {
   StH1,
-  StArticle,
+  StSection,
   StLabel,
   StP,
   StForm,
-} from "../Assets/HTMLComponents";
-import Variants from "../Assets/Variants";
-import BaseInput from "../Components/Input/BaseInput";
-import BaseButton from "../Components/Button/BaseButton";
-import Checkbox from "../Components/Checkbox/Checkbox";
+} from "../../Utils/HTMLComponents";
+import Variants from "../../Utils/Variants";
+import BaseInput from "../../Components/Input/BaseInput";
+import BaseButton from "../../Components/Button/BaseButton";
+import Checkbox from "../../Components/Checkbox/Checkbox";
 
-import { login } from "../Hooks/Api";
+import { login } from "../../Hooks/Api";
 
 const StPasswordResetInfo = styled(StP)`
   margin-bottom: 32px;
@@ -112,7 +112,7 @@ const Login = () => {
   };
 
   return (
-    <StArticle>
+    <StSection>
       <StH1>Inloggen</StH1>
 
       {state && (
@@ -160,7 +160,7 @@ const Login = () => {
           Klik hier om aan te melden!
         </a>
       </StRegister>
-    </StArticle>
+    </StSection>
   );
 };
 

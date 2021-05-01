@@ -7,10 +7,10 @@ import PersonIcon from "@material-ui/icons/Person";
 import PetsIcon from "@material-ui/icons/Pets";
 import GroupIcon from "@material-ui/icons/Group";
 
-import bgNavigation from "../Assets/img/bg_navigation.jpg";
-import dogIcon from "../Assets/img/logo_pojd.png";
+import bgNavigation from "../../Utils/Images/bg_navigation.jpg";
+import dogIcon from "../../Utils/Images/logo_pojd.png";
 
-import { logout } from "../Hooks/Api";
+import { logout } from "../../Hooks/Api";
 
 const StNavLink = styled(NavLink)`
   text-decoration: none;
@@ -28,7 +28,7 @@ const StNavigation = styled.nav`
   background-image: url(${bgNavigation});
   background-position: center;
   background-size: cover;
-  box-shadow: inset 0 0 0 2000px rgba(21, 16, 9, 0.7);
+  box-shadow: inset 0 0 0 2000px rgba(39, 30, 8, 0.6);
   color: white;
 
   @media screen and (max-width: 800px) {
@@ -88,9 +88,9 @@ const StUl = styled.ul`
   text-align: center;
 
   & li {
-    height: 10vh;
+    height: 11vh;
     margin-bottom: 4vh;
-    background: rgba(132, 79, 0, 0.7);
+    background: rgba(132, 79, 0, 0.9);
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
     & ${StNavLink} {
@@ -171,10 +171,9 @@ const NavigationItem = (props: INavigationItem) => {
   let activeButtonState =
     props.portrait === "desktop"
       ? {
-          borderTop: "0.3vh solid rgba(255,255,255,0.8)",
-          borderBottom: "0.3vh solid rgba(255,255,255,0.8)",
+          background: "rgba(77,46,0, 0.7)",
         }
-      : { background: "#593412", borderRadius: "50%" };
+      : { background: "rgba(77,46,0, 0.7)", borderRadius: "50%" };
 
   return (
     <li>

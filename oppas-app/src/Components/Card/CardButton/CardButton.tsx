@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { IBaseButton } from "../../Button/BaseButton";
-import Variants from "../../../Assets/Variants";
+import Variants from "../../../Utils/Variants";
 
 export interface ICardButton extends Omit<IBaseButton, "label" | "variant"> {
   src: string;

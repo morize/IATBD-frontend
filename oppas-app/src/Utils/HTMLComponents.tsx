@@ -9,7 +9,7 @@ export const StH1 = styled.h1`
 `;
 
 export const StH2 = styled.h2`
-  margin: 24px 0;
+  margin: 12px 0 24px 0;
   font-size: 32px;
   color: ${Variants.default};
 `;
@@ -41,9 +41,16 @@ export const StSection = styled.section`
   margin: 0 24px 84px 24px;
 `;
 
-export const StArticle = styled.article`
+export const StMainArticle = styled.article`
+  display: block;
+  margin: 40px auto 0 auto;
   width: 700px;
-  margin: 0 auto;
+`;
+
+export const StArticle = styled.article`
+  display: inline-block;
+  margin: 40px auto 0 auto;
+  width: 700px;
 `;
 
 export const StForm = styled.form`

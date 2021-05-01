@@ -12,7 +12,7 @@ const PrivateRoute: React.FC<IPrivateRoute> = ({
   path,
   children,
 }) => {
-  let token = localStorage.getItem("activeToken");
+  const token = localStorage.getItem("activeToken");
 
   if (!token) {
     return <Navigate to="../../account/inloggen" />;

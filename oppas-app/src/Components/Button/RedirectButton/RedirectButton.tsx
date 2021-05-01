@@ -2,8 +2,8 @@ import React, { ReactNode } from "react";
 import styled from "styled-components";
 
 import BaseButton, { IBaseButton } from "../BaseButton";
-import { ForwardIcon } from "../../../Assets/Icons";
-import Variants from "../../../Assets/Variants";
+import { ForwardIcon } from "../../../Utils/Icons";
+import Variants from "../../../Utils/Variants";
 
 export interface IRedirectButton
   extends Omit<IBaseButton, "label" | "variant"> {

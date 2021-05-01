@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Switch as MuiSwitch } from "@material-ui/core";
 import { SwitchProps } from "@material-ui/core/Switch";
 
-import Variants from "../../Assets/Variants";
+import Variants from "../../Utils/Variants";
 
 const StyledSwitch = styled(MuiSwitch)`
   & .MuiSwitch-track {
