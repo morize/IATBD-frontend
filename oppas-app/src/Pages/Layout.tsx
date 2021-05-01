@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { StArticle, StMainArticle } from "../Utils/HTMLComponents";
+import { StArticle, StSubArticle } from "../Utils/HTMLComponents";
 import Navigation from "./Navigation/MainNavigation";
 import SubNavigation from "./Navigation/SubNavigation";
 import bgLayout from "../Utils/Images/bg_pattern.png";
@@ -51,13 +51,13 @@ const Layout = () => {
         {!inAuthenticationPage && <SubNavigation />}
 
         {!inAuthenticationPage ? (
+          <StSubArticle>
+            <Outlet />
+          </StSubArticle>
+        ) : (
           <StArticle>
             <Outlet />
           </StArticle>
-        ) : (
-          <StMainArticle>
-            <Outlet />
-          </StMainArticle>
         )}
       </StContent>
     </RootLayout>

@@ -5,18 +5,15 @@ import { StH1 } from "../../Utils/HTMLComponents";
 
 const SubNavigationContainer = styled.section`
   position: sticky;
-  top: 40px;
-  width: 20vw;
   display: inline-flex;
-  align-items: center;
   flex-direction: column;
   vertical-align: top;
-  box-sizing: border-box;
+  top: 40px;
+  width: 25%;
+  text-align: center;
 
   & ul {
     display: flex;
-    width: 100%;
-    align-items: center;
     flex-direction: column;
     margin: 0;
     padding: 0;
