@@ -56,6 +56,10 @@ const Layout = () => {
         {!inAuthenticationPage ? (
           <StSubArticle>
             <Outlet />
+            <Outlet />
+            <Outlet />
+            <Outlet />
+            <Outlet />
           </StSubArticle>
         ) : (
           <StArticle>
