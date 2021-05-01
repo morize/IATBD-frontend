@@ -1,33 +1,38 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Outlet } from "react-router-dom";
 
 import PrivateRoute from "../Routes/PrivateRoute";
 import Layout from "../Pages/Layout";
 import Home from "../Pages/Home";
-import Account from "../Pages/Account";
-import Login from "../Pages/Login";
-import Register from "../Pages/Register";
-import ForgotPassword from "../Pages/ForgotPassword";
-import ResetPassword from "../Pages/ResetPassword";
+import AccountGegevens from "../Pages/Account/AccountDetail";
+import AccountMedia from "../Pages/Account/AccountMedia";
+import Login from "../Pages/Authentication/Login";
+import Register from "../Pages/Authentication/Register";
+import ForgotPassword from "../Pages/Authentication/ForgotPassword";
+import ResetPassword from "../Pages/Authentication/ResetPassword";
 
 const PODRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="home" element={<Home />} />
-        <Route path="account/inloggen" element={<Login />} />
-        <Route path="account/aanmelden" element={<Register />} />
-        <Route
-          path="account/wachtwoord-vergeten"
-          element={<ForgotPassword />}
-        />
-        <Route
-          path="account/wachtwoord-vergeten/:token/:email"
-          element={<ResetPassword />}
-        />
-        <PrivateRoute path="account" element={<Account />} />
+        <Route path="/*" element={<Home />} />
+        <Route path="/home" element={<Home />} />
 
-        <PrivateRoute path="overzicht/huisdieren" element={<Account />} />
-        <PrivateRoute path="overzicht/opassers" element={<Account />} />
+        <Route path="account" element={<Outlet />}>
+          <Route path="inloggen" element={<Login />} />
+          <Route path="aanmelden" element={<Register />} />
+          <Route path="wachtwoord-vergeten" element={<ForgotPassword />} />
+          <Route
+            path="wachtwoord-vergeten/:token/:email"
+            element={<ResetPassword />}
+          />
+
+          <PrivateRoute path="/" element={<AccountGegevens />} />
+          <PrivateRoute path="/algemeen" element={<AccountGegevens />} />
+          <PrivateRoute path="media" element={<AccountMedia />} />
+        </Route>
+
+        <PrivateRoute path="overzicht/huisdieren" element={<Home />} />
+        <PrivateRoute path="overzicht/opassers" element={<Home />} />
       </Route>
     </Routes>
   );

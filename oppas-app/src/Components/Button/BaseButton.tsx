@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import styled from "styled-components";
 
-import Variants, { TVariants } from "../../Assets/Variants";
+import Variants, { TVariants } from "../../Utils/Variants";
 
 const StButton = styled.button<{ variant: TVariants }>`
   display: flex;

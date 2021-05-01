@@ -3,12 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 
-import { StH1, StArticle, StP } from "../Assets/HTMLComponents";
-import BaseInput from "../Components/Input/BaseInput";
-import BaseButton from "../Components/Button/BaseButton";
-import { submitNewPassword } from "../Hooks/Api";
+import { StH1, StSection, StP } from "../../Utils/HTMLComponents";
+import BaseInput from "../../Components/Input/BaseInput";
+import BaseButton from "../../Components/Button/BaseButton";
+import { submitNewPassword } from "../../Hooks/Api";
 
-const StResetPasswordContainer = styled(StArticle)`
+const StResetPasswordContainer = styled(StSection)`
   & p {
     margin-bottom: 24px;
   }

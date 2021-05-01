@@ -1,22 +1,11 @@
 import { useState } from "react";
-import styled from "styled-components";
 
 import { useNavigate } from "react-router-dom";
-import { StH1, StArticle } from "../Assets/HTMLComponents";
-import BaseInput from "../Components/Input/BaseInput";
-import BaseButton from "../Components/Button/BaseButton";
+import { StH1, StSection, StForm } from "../../Utils/HTMLComponents";
+import BaseInput from "../../Components/Input/BaseInput";
+import BaseButton from "../../Components/Button/BaseButton";
 
-import { register, login } from "../Hooks/Api";
-
-const StForm = styled.form`
-  & div {
-    margin-bottom: 30px;
-
-    & input {
-      font-family: "Fira Sans", sans-serif;
-    }
-  }
-`;
+import { register, login } from "../../Hooks/Api";
 
 const Register = () => {
   const [formUsername, setFormUsername] = useState("mauri985");
@@ -45,7 +34,7 @@ const Register = () => {
   };
 
   return (
-    <StArticle>
+    <StSection>
       <StH1>Aanmelden</StH1>
       <StForm>
         <BaseInput
@@ -77,7 +66,7 @@ const Register = () => {
           onClick={submitRegisterData}
         />
       </StForm>
-    </StArticle>
+    </StSection>
   );
 };
 
