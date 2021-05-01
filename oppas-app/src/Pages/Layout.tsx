@@ -26,10 +26,13 @@ const StContent = styled.section`
 `;
 
 const checkIfAuthenticationPage = (url: string) => {
+  console.log(url);
   if (
     url === "inloggen" ||
     url === "aanmelden" ||
-    url === "wachtwoord-vergeten"
+    url === "wachtwoord-vergeten" ||
+    url === "home" ||
+    url === "contact"
   ) {
     return true;
   }
@@ -40,7 +43,7 @@ const Layout = () => {
   const { pathname } = useLocation();
 
   const inAuthenticationPage = checkIfAuthenticationPage(
-    pathname.split("/")[2]
+    pathname.split("/")[2] ? pathname.split("/")[2] : pathname.split("/")[1]
   );
 
   return (

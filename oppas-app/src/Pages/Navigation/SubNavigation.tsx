@@ -32,9 +32,6 @@ const StSubNavigationTitle = styled(StH1)`
 
 const getSubNavigationOptions = (path: string) => {
   switch (path) {
-    case "home":
-      return ["Introductie", "Werking", "Contact"];
-
     case "account":
       return ["Algemeen", "Media", "Opasser", "Huisdieren"];
 

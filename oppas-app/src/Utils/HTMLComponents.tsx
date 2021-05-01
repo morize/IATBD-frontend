@@ -44,7 +44,7 @@ export const StSection = styled.section`
 
 export const StArticle = styled.article`
   width: 100%;
-  margin-top: 40px;
+  margin-top: 12px;
   box-sizing: border-box;
 `;
 

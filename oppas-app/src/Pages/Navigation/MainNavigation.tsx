@@ -232,15 +232,15 @@ const Navigation = () => {
         ></NavigationItem>
 
         <NavigationItem
-          name={"Overzicht\nHuisdieren"}
-          routeTo="overzicht/huisdieren"
+          name={"Overzicht"}
+          routeTo="overzicht"
           portrait={respState}
           icon={<PetsIcon />}
         ></NavigationItem>
 
         <NavigationItem
-          name={"Overzicht\nOpassers"}
-          routeTo="overzicht/opassers"
+          name={"Contact"}
+          routeTo="contact"
           portrait={respState}
           icon={<GroupIcon />}
         ></NavigationItem>
