@@ -14,9 +14,9 @@ const PODRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
+        // Wildcard 404
         <Route path="/*" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-
+        <Route path="home" element={<Home />} />
         <Route path="account" element={<Outlet />}>
           <Route path="inloggen" element={<Login />} />
           <Route path="aanmelden" element={<Register />} />
@@ -25,14 +25,15 @@ const PODRoutes = () => {
             path="wachtwoord-vergeten/:token/:email"
             element={<ResetPassword />}
           />
-
-          <PrivateRoute path="/" element={<AccountGegevens />} />
-          <PrivateRoute path="/algemeen" element={<AccountGegevens />} />
+          <PrivateRoute element={<AccountGegevens />} />
+          <PrivateRoute path="algemeen" element={<AccountGegevens />} />
           <PrivateRoute path="media" element={<AccountMedia />} />
         </Route>
-
-        <PrivateRoute path="overzicht/huisdieren" element={<Home />} />
-        <PrivateRoute path="overzicht/opassers" element={<Home />} />
+        <PrivateRoute path="overzicht" element={<Outlet />}>
+          <PrivateRoute element={<Home />} />
+          <PrivateRoute path="huisdieren" element={<Home />} />
+          <PrivateRoute path="opassers" element={<Home />} />
+        </PrivateRoute>
       </Route>
     </Routes>
   );

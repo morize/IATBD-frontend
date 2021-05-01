@@ -19,14 +19,13 @@ const RootLayout = styled.section`
 const StContent = styled.section`
   width: 100%;
   height: 100vh;
-  padding: 60px 0;
+  padding: 8vh 0;
   box-sizing: border-box;
   overflow-y: auto;
   background-image: url(${bgLayout});
 `;
 
 const checkIfAuthenticationPage = (url: string) => {
-  console.log(url);
   if (
     url === "inloggen" ||
     url === "aanmelden" ||
@@ -55,10 +54,6 @@ const Layout = () => {
 
         {!inAuthenticationPage ? (
           <StSubArticle>
-            <Outlet />
-            <Outlet />
-            <Outlet />
-            <Outlet />
             <Outlet />
           </StSubArticle>
         ) : (

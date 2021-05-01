@@ -100,6 +100,10 @@ const StUl = styled.ul`
       height: 100%;
       box-sizing: border-box;
       white-space: pre-wrap;
+
+      &.mainnavigation-active {
+        background: rgba(77, 46, 0, 0.7);
+      }
     }
   }
 
@@ -167,22 +171,13 @@ interface INavigationItem {
   icon: ReactNode;
 }
 
-const NavigationItem = (props: INavigationItem) => {
-  let activeButtonState =
-    props.portrait === "desktop"
-      ? {
-          background: "rgba(77,46,0, 0.7)",
-        }
-      : { background: "rgba(77,46,0, 0.7)", borderRadius: "50%" };
-
-  return (
-    <li>
-      <StNavLink to={props.routeTo} activeStyle={activeButtonState}>
-        {props.portrait === "desktop" ? props.name : props.icon}
-      </StNavLink>
-    </li>
-  );
-};
+const NavigationItem = (props: INavigationItem) => (
+  <li>
+    <StNavLink to={props.routeTo} activeClassName={"mainnavigation-active"}>
+      {props.portrait === "desktop" ? props.name : props.icon}
+    </StNavLink>
+  </li>
+);
 
 const Navigation = () => {
   const [respState, setRespState] = useState("");

@@ -3,7 +3,7 @@ import { Route, Navigate } from "react-router-dom";
 interface IPrivateRoute {
   element: JSX.Element;
   admin?: boolean;
-  path: string;
+  path?: string;
 }
 
 const PrivateRoute: React.FC<IPrivateRoute> = ({
