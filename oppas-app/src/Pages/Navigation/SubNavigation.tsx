@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useLocation, NavLink, Navigate } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 
 import { StH1 } from "../../Utils/HTMLComponents";
 import Variants from "../../Utils/Variants";

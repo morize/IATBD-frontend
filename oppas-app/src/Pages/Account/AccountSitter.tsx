@@ -37,7 +37,7 @@ const AccountSitter = () => {
       </StForm>
 
       <StForm>
-        <StH3>Oppas voor:</StH3>
+        <StH3>Oppas voor</StH3>
 
         <StOptionsContainer>
           <Checkbox label="Katten" />

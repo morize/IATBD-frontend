@@ -5,6 +5,7 @@ import Layout from "../Pages/Layout";
 import Home from "../Pages/Home";
 import AccountGegevens from "../Pages/Account/AccountDetail";
 import AccountMedia from "../Pages/Account/AccountMedia";
+import AccountSitter from "../Pages/Account/AccountSitter";
 import Login from "../Pages/Authentication/Login";
 import Register from "../Pages/Authentication/Register";
 import ForgotPassword from "../Pages/Authentication/ForgotPassword";
@@ -14,7 +15,6 @@ const PODRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        // Wildcard 404
         <Route path="/*" element={<Home />} />
         <Route path="home" element={<Home />} />
         <Route path="account" element={<Outlet />}>
@@ -28,6 +28,7 @@ const PODRoutes = () => {
           <PrivateRoute element={<AccountGegevens />} />
           <PrivateRoute path="algemeen" element={<AccountGegevens />} />
           <PrivateRoute path="media" element={<AccountMedia />} />
+          <PrivateRoute path="opasser" element={<AccountSitter />} />
         </Route>
         <PrivateRoute path="overzicht" element={<Outlet />}>
           <PrivateRoute element={<Home />} />
