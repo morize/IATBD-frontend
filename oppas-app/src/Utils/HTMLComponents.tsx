@@ -17,7 +17,7 @@ export const StH2 = styled.h2`
 export const StH3 = styled.h3`
   margin: 32px 0 24px 0;
   font-size: 24px;
-  color: ${Variants.primary};
+  color: ${Variants.default};
 `;
 
 interface IStP {
@@ -38,19 +38,19 @@ export const StLabel = styled.label`
 `;
 
 export const StSection = styled.section`
-  margin: 0 24px 84px 24px;
-`;
-
-export const StMainArticle = styled.article`
-  display: block;
-  margin: 40px auto 0 auto;
-  width: 700px;
+  margin: 0 auto;
+  max-width: 700px;
 `;
 
 export const StArticle = styled.article`
+  width: 100%;
+  margin-top: 12px;
+  box-sizing: border-box;
+`;
+
+export const StSubArticle = styled(StArticle)`
   display: inline-block;
-  margin: 40px auto 0 auto;
-  width: 700px;
+  width: 50%;
 `;
 
 export const StForm = styled.form`

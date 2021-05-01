@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-import { StH2, StP, StSection } from "../Utils/HTMLComponents";
+import { StH1, StH2, StP, StSection } from "../Utils/HTMLComponents";
 import CardButton from "../Components/Card/CardButton/CardButton";
 
 const StCardFigure = styled.figure`
@@ -17,6 +17,7 @@ const StCardFigure = styled.figure`
 const Home = () => (
   <>
     <StSection>
+      <StH1>Home</StH1>
       <StH2>Hoe werkt het?</StH2>
       <StP>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. In cursus,

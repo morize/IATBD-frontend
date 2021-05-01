@@ -9,7 +9,7 @@ import BaseInput from "../../Components/Input/BaseInput";
 const AccountMedia = () => {
   return (
     <StSection>
-      <StH2>Profiel Media</StH2>
+      <StH2>Media</StH2>
 
       <StForm>
         <BaseInput type="file" label="Huisfoto 1:" icon={<PublishIcon />} />

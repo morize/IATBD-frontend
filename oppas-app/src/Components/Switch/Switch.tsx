@@ -4,42 +4,31 @@ import { SwitchProps } from "@material-ui/core/Switch";
 
 import Variants from "../../Utils/Variants";
 
+const StContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const StyledSwitch = styled(MuiSwitch)`
-  & .MuiSwitch-track {
-    background-color: #66667c;
-    opacity: 1 !important;
-  }
-
-  & .MuiSwitch-thumb {
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
-  }
-
   &.MuiSwitch-root {
-    overflow: visible;
-    padding-left: 11px;
-    margin: 4px 9px 4px 4px;
+    margin: 0 0 0 14px;
 
     & .MuiSwitch-switchBase {
       color: #ffffff;
-      padding: 8px !important;
-      position: absolute;
-      top: -4px;
-      left: -5px;
 
       &:hover {
         background-color: rgba(229, 229, 234, 0.5);
       }
 
       &.Mui-checked {
-        color: #00386b;
-        left: 1px;
+        color: ${Variants.success};
 
         &:hover {
           background-color: rgba(25, 76, 122, 0.5);
         }
 
         & + .MuiSwitch-track {
-          background-color: #194c7a;
+          background-color: ${Variants.success};
         }
       }
 
@@ -62,7 +51,7 @@ const StyledSwitchLabel = styled.p<{ disabled?: boolean }>`
   font-weight: 600;
   line-height: 18px;
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
-  color: ${({ disabled }) => (disabled ? "#b3b3c2" : Variants.primary)};
+  color: ${({ disabled }) => (disabled ? "#b3b3c2" : Variants.default)};
 `;
 
 export interface ISwitch extends SwitchProps {
@@ -78,10 +67,10 @@ const Switch = ({ label, disabled, ...rest }: ISwitch) => {
   ) : null;
 
   return (
-    <>
+    <StContainer>
       {labelJsx}
-      <StyledSwitch size="small" disabled={disabled} {...rest} />
-    </>
+      <StyledSwitch size="medium" disabled={disabled} {...rest} />
+    </StContainer>
   );
 };
 
