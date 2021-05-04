@@ -49,6 +49,7 @@ export const StSection = styled.section`
 
 export const StArticle = styled.article`
   display: flex;
+  width: 100%;
   flex-direction: column;
   margin: 0 auto;
   max-width: 700px;
@@ -65,7 +66,6 @@ export const StArticle = styled.article`
 `;
 
 export const StSubArticle = styled(StArticle)`
-  width: 100%;
   margin: 0 auto 0 10vw;
 `;
 

@@ -1,19 +1,16 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
-
+import { NavLink, useNavigate } from "react-router-dom";
 import dogPattern from "../../../Utils/Images/dog_pattern.jpg";
 
-export interface IPetCard {
-  children?: ReactNode;
-}
-
-const PetCardContainer = styled.div`
+const PetCardContainer = styled(NavLink)`
   display: flex;
   align-items: center;
   height: 160px;
   margin-bottom: 32px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
+  text-decoration: none;
   cursor: pointer;
 
   &:last-child {
@@ -61,9 +58,13 @@ const PetCardDescription = styled(PetCardHeader)`
   color: #744226;
 `;
 
-export const PetCardItem = () => {
+export interface IPetCardItem {
+  routeTo: string;
+}
+
+export const PetCardItem = ({ routeTo }: IPetCardItem) => {
   return (
-    <PetCardContainer>
+    <PetCardContainer to={routeTo}>
       <figure>
         <img
           src="https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg"
@@ -82,9 +83,7 @@ export const PetCardItem = () => {
 export const StPetItemsContainer = styled.section`
   display: grid;
   justify-content: center;
-
   padding: 40px 32px;
-
   background-image: url(${dogPattern});
   background-size: cover;
   background-position: center;
@@ -103,13 +102,33 @@ export const StPetItemsContainer = styled.section`
   }
 `;
 
-const PetCard = ({ children }: IPetCard) => {
-  const emptyList = !children && <p>U heeft geen oppasaanvragen</p>;
+const StAddPetButton = styled.button``;
+export interface IPetCard {
+  children?: ReactNode;
+  variant: "sitter" | "owner";
+}
 
+const PetCard = ({ children, variant }: IPetCard) => {
+  const navigate = useNavigate();
+
+  const onAddPetClick = () => navigate("nieuw-huisdier");
+
+  const emptyList = !children && (
+    <p>
+      {variant === "sitter"
+        ? "U heeft geen oppasaanvragen"
+        : "U heeft geen aangemelde huisdieren"}
+    </p>
+  );
+
+  const addButton = variant === "owner" && (
+    <StAddPetButton onClick={onAddPetClick}>+</StAddPetButton>
+  );
   return (
     <StPetItemsContainer>
       {children}
       {emptyList}
+      {addButton}
     </StPetItemsContainer>
   );
 };

@@ -32,9 +32,8 @@ const AccountSitter = () => {
       <StSection>
         <StH3>Mijn oppasvragen</StH3>
 
-        <PetCard>
-          <PetCardItem />
-          <PetCardItem />
+        <PetCard variant="sitter">
+          <PetCardItem routeTo="xd" />
         </PetCard>
       </StSection>
 
