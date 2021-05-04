@@ -4,7 +4,7 @@ import BaseButton from "../../Components/Button/BaseButton";
 import Checkbox from "../../Components/Checkbox/Checkbox";
 import PetCard, { PetCardItem } from "../../Components/Card/PetCard/PetCard";
 import Switch from "../../Components/Switch/Switch";
-import { StH2, StH3, StSection, StForm } from "../../Utils/HTMLComponents";
+import { StH2, StH3, StSection } from "../../Utils/HTMLComponents";
 
 const StOptionsContainer = styled.section`
   display: grid;
