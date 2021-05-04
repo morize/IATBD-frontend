@@ -17,9 +17,10 @@ const RootLayout = styled.section`
 `;
 
 const StContent = styled.section`
+  display: flex;
   width: 100%;
   height: 100vh;
-  padding: 8vh 0;
+
   box-sizing: border-box;
   overflow-y: auto;
   background-image: url(${bgLayout});
@@ -49,7 +50,11 @@ const Layout = () => {
     <RootLayout>
       <Navigation />
 
-      <StContent>
+      <StContent
+        style={
+          !inAuthenticationPage ? { padding: "10vh 0" } : { padding: "6vh 0" }
+        }
+      >
         {!inAuthenticationPage && <SubNavigation />}
 
         {!inAuthenticationPage ? (

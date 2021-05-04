@@ -24,9 +24,11 @@ const StOptionsContainer = styled.section`
 
 const AccountSitter = () => {
   return (
-    <StSection>
-      <StH2>Oppas</StH2>
+    <>
+      <StH2>Opasser</StH2>
+
       <Switch label="Ben ik een opasser?" />
+
       <StSection>
         <StH3>Mijn oppasvragen</StH3>
 
@@ -36,8 +38,8 @@ const AccountSitter = () => {
         </PetCard>
       </StSection>
 
-      <StForm>
-        <StH3>Ik ben een opasser voor:</StH3>
+      <StSection>
+        <StH3>Ik ben een opasser voor</StH3>
 
         <StOptionsContainer>
           <Checkbox label="Katten" />
@@ -47,8 +49,8 @@ const AccountSitter = () => {
         </StOptionsContainer>
 
         <BaseButton label="Dierensoorten opslaan" />
-      </StForm>
-    </StSection>
+      </StSection>
+    </>
   );
 };
 

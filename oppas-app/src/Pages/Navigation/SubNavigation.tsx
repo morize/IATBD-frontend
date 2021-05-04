@@ -9,7 +9,7 @@ const SubNavigationContainer = styled.section`
   display: inline-flex;
   flex-direction: column;
   vertical-align: top;
-  top: 4vh;
+  top: 0;
   width: 20vw;
 
   & h1 {

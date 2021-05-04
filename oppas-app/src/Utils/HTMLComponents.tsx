@@ -17,6 +17,8 @@ export const StH2 = styled.h2`
 export const StH3 = styled.h3`
   margin: 32px 0 24px 0;
   font-size: 24px;
+  font-weight: 500;
+  text-shadow: 0px 6px 6px rgba(0, 0, 0, 0.15);
   color: ${Variants.default};
 `;
 
@@ -39,18 +41,18 @@ export const StLabel = styled.label`
 
 export const StSection = styled.section`
   margin: 0 auto;
-  max-width: 700px;
 `;
 
 export const StArticle = styled.article`
-  width: 100%;
-  margin-top: 12px;
+  margin: 0 auto;
+  max-width: 700px;
   box-sizing: border-box;
 `;
 
 export const StSubArticle = styled(StArticle)`
   display: inline-block;
-  width: 50%;
+  width: 100%;
+  margin: 0 auto 0 6vw;
 `;
 
 export const StForm = styled.form`
