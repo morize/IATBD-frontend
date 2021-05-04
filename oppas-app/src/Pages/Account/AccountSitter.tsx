@@ -27,13 +27,14 @@ const AccountSitter = () => {
     <StSection>
       <StH2>Oppas</StH2>
       <Switch label="Ben ik een opasser?" />
-      <StForm>
+      <StSection>
         <StH3>Mijn oppasvragen</StH3>
 
         <PetCard>
           <PetCardItem />
+          <PetCardItem />
         </PetCard>
-      </StForm>
+      </StSection>
 
       <StForm>
         <StH3>Ik ben een opasser voor:</StH3>

@@ -24,7 +24,7 @@ const StyledSwitch = styled(MuiSwitch)`
         color: ${Variants.success};
 
         &:hover {
-          background-color: rgba(25, 76, 122, 0.5);
+          background-color: rgba(73, 170, 110, 0.5);
         }
 
         & + .MuiSwitch-track {

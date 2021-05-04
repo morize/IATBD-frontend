@@ -11,10 +11,14 @@ const PetCardContainer = styled.div`
   display: flex;
   align-items: center;
   height: 160px;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
   cursor: pointer;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   & figure {
     display: flex;
@@ -42,7 +46,7 @@ const PetCardHeader = styled.div`
   align-items: center;
   justify-content: center;
   height: 40%;
-  margin: 0 !important;
+
   font-size: 120%;
   border-radius: 0 8px 0 0;
   background: #bc9d61;
@@ -78,7 +82,7 @@ export const PetCardItem = () => {
 export const StPetItemsContainer = styled.section`
   display: grid;
   justify-content: center;
-  min-height: 400px;
+
   padding: 40px 32px;
 
   background-image: url(${dogPattern});
