@@ -60,6 +60,9 @@ export const StForm = styled.form`
     user-select: none;
     margin-bottom: 24px;
 
+    &:last-child {
+      margin-bottom: 0;
+    }
     & input {
       font-family: "Fira Sans", sans-serif;
     }

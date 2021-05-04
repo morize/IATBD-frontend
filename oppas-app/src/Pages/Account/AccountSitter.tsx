@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import BaseButton from "../../Components/Button/BaseButton";
 import Checkbox from "../../Components/Checkbox/Checkbox";
+import PetCard, { PetCardItem } from "../../Components/Card/PetCard/PetCard";
 import Switch from "../../Components/Switch/Switch";
 import { StH2, StH3, StSection, StForm } from "../../Utils/HTMLComponents";
 
@@ -14,6 +15,7 @@ const StOptionsContainer = styled.section`
   & label {
     flex-direction: column;
     border-radius: 14px;
+
     &:hover {
       background: rgba(72, 72, 72, 0.1);
     }
@@ -28,16 +30,13 @@ const AccountSitter = () => {
       <StForm>
         <StH3>Mijn oppasvragen</StH3>
 
-        <StOptionsContainer>
-          <Checkbox label="Placeholder" />
-          <Checkbox label="Placeholder" />
-          <Checkbox label="Placeholder" />
-          <Checkbox label="Placeholder" />
-        </StOptionsContainer>
+        <PetCard>
+          <PetCardItem />
+        </PetCard>
       </StForm>
 
       <StForm>
-        <StH3>Oppas voor</StH3>
+        <StH3>Ik ben een opasser voor:</StH3>
 
         <StOptionsContainer>
           <Checkbox label="Katten" />
