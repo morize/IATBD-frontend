@@ -6,9 +6,7 @@ import PetCard, { PetCardItem } from "../../Components/Card/PetCard/PetCard";
 import {
   StH2,
   StH3,
-  StSection,
-  StP,
-  StLabel,
+  StSection
 } from "../../Utils/HTMLComponents";
 
 const AccountPet = () => {

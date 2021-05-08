@@ -71,6 +71,8 @@ export const StSubArticle = styled(StArticle)`
 
 export const StForm = styled.form`
   position: relative;
+  display: flex;
+  flex-direction: column;
 
   & div {
     user-select: none;

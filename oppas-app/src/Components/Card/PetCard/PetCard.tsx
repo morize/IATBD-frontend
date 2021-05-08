@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
 import { NavLink, useNavigate } from "react-router-dom";
+
 import dogPattern from "../../../Utils/Images/dog_pattern.jpg";
 
 const PetCardContainer = styled(NavLink)`
@@ -102,7 +103,18 @@ export const StPetItemsContainer = styled.section`
   }
 `;
 
-const StAddPetButton = styled.button``;
+const StAddPetButton = styled.button`
+    margin: 12px 0 0 0;
+    height: 60px;
+    border: none;
+    border-radius:8px;
+    font-size: 16px;
+    font-weight:600;
+    background: #A77326;
+    color: #ffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;`;
+
 export interface IPetCard {
   children?: ReactNode;
   variant: "sitter" | "owner";
@@ -122,8 +134,9 @@ const PetCard = ({ children, variant }: IPetCard) => {
   );
 
   const addButton = variant === "owner" && (
-    <StAddPetButton onClick={onAddPetClick}>+</StAddPetButton>
+    <StAddPetButton onClick={onAddPetClick}>Stel huisdier voor oppas</StAddPetButton>
   );
+  
   return (
     <StPetItemsContainer>
       {children}
