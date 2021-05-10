@@ -7,7 +7,8 @@ import AccountGegevens from "../Pages/Account/AccountDetail";
 import AccountMedia from "../Pages/Account/AccountMedia";
 import AccountSitter from "../Pages/Account/AccountSitter";
 import AccountPet from "../Pages/Account/AccountPet";
-import CreatePet from "../Pages/Pet/CreatePet";
+import PetCreate from "../Pages/Pet/PetCreate";
+import PetProfile from "../Pages/Pet/PetProfile";
 import Login from "../Pages/Authentication/Login";
 import Register from "../Pages/Authentication/Register";
 import ForgotPassword from "../Pages/Authentication/ForgotPassword";
@@ -32,10 +33,11 @@ const PODRoutes = () => {
           <PrivateRoute path="media" element={<AccountMedia />} />
           <PrivateRoute path="opasser" element={<AccountSitter />} />
           <PrivateRoute path="huisdieren" element={<AccountPet />} />
-          <PrivateRoute path="huisdieren/nieuw-huisdier" element={<CreatePet />} />
+          <PrivateRoute path="huisdieren/nieuw-huisdier" element={<PetCreate />} />
+          <PrivateRoute path="huisdieren/:id/profiel" element={<PetProfile />} />
         </Route>
+
         <PrivateRoute path="overzicht" element={<Outlet />}>
-          <PrivateRoute element={<Home />} />
           <PrivateRoute path="huisdieren" element={<Home />} />
           <PrivateRoute path="opassers" element={<Home />} />
         </PrivateRoute>
