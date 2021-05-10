@@ -75,7 +75,7 @@ const SubNavigation = () => {
     <SubNavigationContainer>
       <StSubNavigationTitle>{mainPath}</StSubNavigationTitle>
       <ul>
-        {subNavigationObject.options.map((option: string, index) => (
+        {subNavigationObject.options.map((option: string, index, key) => (
           <NavLink
             activeClassName={"subnavigation-active"}
             to={`${mainPath}/${option.toLowerCase()}`}
@@ -84,6 +84,7 @@ const SubNavigation = () => {
                 ? "subnavigation-active"
                 : ""
             }
+            key={key[index]}
           >
             {option}
           </NavLink>
