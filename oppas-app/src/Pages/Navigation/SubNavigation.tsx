@@ -9,7 +9,7 @@ const SubNavigationContainer = styled.section`
   display: inline-flex;
   flex-direction: column;
   vertical-align: top;
-  top: 4vh;
+  top: 0;
   width: 20vw;
 
   & h1 {
@@ -60,7 +60,7 @@ const getSubNavigationOptions = (path: string) => {
       };
 
     case "overzicht":
-      return { default: "Overzicht", options: ["Huisdieren", "Opassers"] };
+      return { default: "Huisdieren", options: ["Huisdieren"] };
   }
   return { default: "Default", options: ["Option"] };
 };
@@ -75,7 +75,7 @@ const SubNavigation = () => {
     <SubNavigationContainer>
       <StSubNavigationTitle>{mainPath}</StSubNavigationTitle>
       <ul>
-        {subNavigationObject.options.map((option: string, index) => (
+        {subNavigationObject.options.map((option: string, index, key) => (
           <NavLink
             activeClassName={"subnavigation-active"}
             to={`${mainPath}/${option.toLowerCase()}`}
@@ -84,6 +84,7 @@ const SubNavigation = () => {
                 ? "subnavigation-active"
                 : ""
             }
+            key={key[index]}
           >
             {option}
           </NavLink>

@@ -16,13 +16,14 @@ const RootLayout = styled.section`
   }
 `;
 
-const StContent = styled.section`
+const StContent = styled.section<{ inAuthenticationPage: boolean }>`
+  display: flex;
   width: 100%;
   height: 100vh;
-  padding: 8vh 0;
   box-sizing: border-box;
   overflow-y: auto;
   background-image: url(${bgLayout});
+  padding: ${(props) => (props.inAuthenticationPage ? "6vh 0" : "10vh 0")};
 `;
 
 const checkIfAuthenticationPage = (url: string) => {
@@ -49,7 +50,7 @@ const Layout = () => {
     <RootLayout>
       <Navigation />
 
-      <StContent>
+      <StContent inAuthenticationPage={inAuthenticationPage}>
         {!inAuthenticationPage && <SubNavigation />}
 
         {!inAuthenticationPage ? (

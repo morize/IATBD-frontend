@@ -15,8 +15,10 @@ export const StH2 = styled.h2`
 `;
 
 export const StH3 = styled.h3`
-  margin: 32px 0 24px 0;
+  margin: 0 0 24px 0;
   font-size: 24px;
+  font-weight: 500;
+  text-shadow: 0px 6px 6px rgba(0, 0, 0, 0.15);
   color: ${Variants.default};
 `;
 
@@ -38,28 +40,47 @@ export const StLabel = styled.label`
 `;
 
 export const StSection = styled.section`
-  margin: 0 auto;
-  max-width: 700px;
+  margin: 24px 0;
+
+  &:last-child {
+    margin: 24px 0 0 0;
+  }
 `;
 
 export const StArticle = styled.article`
+  display: flex;
   width: 100%;
-  margin-top: 12px;
-  box-sizing: border-box;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 700px;
+
+  @media (max-width: 1280px) {
+    max-width: 600px;
+  }
+
+  // Workaround for padding-bottom bug while a container is inside an overflow auto parent.
+  &:after {
+    content: "";
+    min-height: 8vh;
+  }
 `;
 
 export const StSubArticle = styled(StArticle)`
-  display: inline-block;
-  width: 50%;
+  margin: 0 auto 0 10vw;
 `;
 
 export const StForm = styled.form`
   position: relative;
+  display: flex;
+  flex-direction: column;
 
   & div {
     user-select: none;
     margin-bottom: 24px;
 
+    &:last-child {
+      margin-bottom: 0;
+    }
     & input {
       font-family: "Fira Sans", sans-serif;
     }

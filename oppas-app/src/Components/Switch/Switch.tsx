@@ -24,7 +24,7 @@ const StyledSwitch = styled(MuiSwitch)`
         color: ${Variants.success};
 
         &:hover {
-          background-color: rgba(25, 76, 122, 0.5);
+          background-color: rgba(73, 170, 110, 0.5);
         }
 
         & + .MuiSwitch-track {
@@ -47,7 +47,7 @@ const StyledSwitchLabel = styled.p<{ disabled?: boolean }>`
   display: inline-block;
   padding: 0;
   margin: 0;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   line-height: 18px;
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};

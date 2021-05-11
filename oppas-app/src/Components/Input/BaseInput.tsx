@@ -31,6 +31,7 @@ const StInput = styled.input`
 
 const StInputContainer = styled.div`
   display: flex;
+  width: 100% !important;
   position: relative;
   align-items: center;
   height: 50px;
@@ -63,6 +64,10 @@ const StInputContainer = styled.div`
   }
 `;
 
+const InputComponentContainer = styled.div`
+  width: 100%;
+`;
+
 export interface IBaseInput extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   icon?: ReactNode;
@@ -73,13 +78,13 @@ const BaseInput = ({ label, icon, ...rest }: IBaseInput) => {
   const iconJsx = icon && <span>{icon}</span>;
 
   return (
-    <>
+    <InputComponentContainer>
       {labelJsx}
       <StInputContainer>
         <StInput {...rest} />
         {iconJsx}
       </StInputContainer>
-    </>
+    </InputComponentContainer>
   );
 };
 

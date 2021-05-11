@@ -3,7 +3,13 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import BaseButton from "../../Components/Button/BaseButton";
-import { StH2, StSection, StP, StLabel } from "../../Utils/HTMLComponents";
+import {
+  StH2,
+  StH3,
+  StSection,
+  StP,
+  StLabel,
+} from "../../Utils/HTMLComponents";
 import {
   sendEmailVerificationLink,
   getUserDetails,
@@ -80,50 +86,54 @@ const AccountGegevens = () => {
   }, [setUserDetails, userDetails]);
 
   return (
-    <StSection>
-      <StH2>Algemene Gegevens</StH2>
-      <StAccountDetails>
-        <StLabel>Gebruikersnaam:</StLabel>
-        <StP>{userDetails.name}</StP>
+    <>
+      <StH2>Algemeen</StH2>
 
-        <StLabel>Email:</StLabel>
-        <StP>{userDetails.email}</StP>
+      <StSection>
+        <StH3>Account Gegevens</StH3>
+        <StAccountDetails>
+          <StLabel>Gebruikersnaam:</StLabel>
+          <StP>{userDetails.name}</StP>
 
-        <StLabel>Email Status:</StLabel>
-        <StP>{userDetails.verified}</StP>
+          <StLabel>Email:</StLabel>
+          <StP>{userDetails.email}</StP>
 
-        <StLabel>Account Status:</StLabel>
-        <StP>{userDetails.isBlocked}</StP>
+          <StLabel>Email Status:</StLabel>
+          <StP>{userDetails.verified}</StP>
 
-        {userDetails.isAdmin === "Ja" && (
-          <>
-            <StLabel>Admin:</StLabel>
-            <StP>{userDetails.isAdmin}</StP>
-          </>
+          <StLabel>Account Status:</StLabel>
+          <StP>{userDetails.isBlocked}</StP>
+
+          {userDetails.isAdmin === "Ja" && (
+            <>
+              <StLabel>Admin:</StLabel>
+              <StP>{userDetails.isAdmin}</StP>
+            </>
+          )}
+        </StAccountDetails>
+
+        {userDetails.verified === "Niet geverifieerd" && (
+          <StSectionVerify>
+            <StP variant="info" bold={true}>
+              {
+                "Verifieer uw account om verder gebruik te maken van Passen op je Dier.\nU ontvangt zo een verificatielink op uw geregistreerde email."
+              }
+            </StP>
+            <BaseButton
+              label="Emailverificatie opnieuw sturen"
+              variant="secondary"
+              onClick={onVerificationClicked}
+            />
+          </StSectionVerify>
         )}
-      </StAccountDetails>
 
-      {userDetails.verified === "Niet geverifieerd" && (
-        <StSectionVerify>
-          <StP variant="info" bold={true}>
-            {
-              "Verifieer uw account om verder gebruik te maken van Passen op je Dier.\nU ontvangt zo een verificatielink op uw geregistreerde email."
-            }
-          </StP>
-          <BaseButton
-            label="Emailverificatie opnieuw sturen"
-            variant="secondary"
-            onClick={onVerificationClicked}
-          />
-        </StSectionVerify>
-      )}
-
-      <BaseButton
-        label="Uitloggen"
-        variant="secondary"
-        onClick={onLogoutClicked}
-      />
-    </StSection>
+        <BaseButton
+          label="Uitloggen"
+          variant="secondary"
+          onClick={onLogoutClicked}
+        />
+      </StSection>
+    </>
   );
 };
 
