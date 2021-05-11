@@ -60,7 +60,7 @@ const getSubNavigationOptions = (path: string) => {
       };
 
     case "overzicht":
-      return { default: "Overzicht", options: ["Huisdieren", "Opassers"] };
+      return { default: "Huisdieren", options: ["Huisdieren"] };
   }
   return { default: "Default", options: ["Option"] };
 };
