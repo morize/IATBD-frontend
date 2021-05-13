@@ -32,7 +32,8 @@ const checkIfAuthenticationPage = (url: string) => {
     url === "aanmelden" ||
     url === "wachtwoord-vergeten" ||
     url === "home" ||
-    url === "contact"
+    url === "contact" ||
+    url === "overzicht" 
   ) {
     return true;
   }
