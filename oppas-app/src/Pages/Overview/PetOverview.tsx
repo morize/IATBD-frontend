@@ -13,6 +13,7 @@ const StOverview = styled(StSection)`
   background: url(${dogPattern});
   border-radius: 8px;
   padding: 2rem 0;
+  min-height: 34rem;
 `;
 
 const StOverviewHeader = styled.div`

@@ -14,6 +14,7 @@ import Login from "../Pages/Authentication/Login";
 import Register from "../Pages/Authentication/Register";
 import ForgotPassword from "../Pages/Authentication/ForgotPassword";
 import ResetPassword from "../Pages/Authentication/ResetPassword";
+import Contact from "../Pages/Contact";
 
 const PODRoutes = () => {
   return (
@@ -51,6 +52,8 @@ const PODRoutes = () => {
           <PrivateRoute path="huisdieren" element={<PetOverview />} />
           <PrivateRoute path=":id/profiel" element={<PetProfile />} />
         </PrivateRoute>
+
+        <Route path="contact" element={<Contact />} />
       </Route>
     </Routes>
   );

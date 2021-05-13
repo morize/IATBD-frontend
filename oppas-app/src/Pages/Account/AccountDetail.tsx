@@ -121,7 +121,7 @@ const AccountGegevens = () => {
             </StP>
             <BaseButton
               label="Emailverificatie opnieuw sturen"
-              variant="secondary"
+              variant="primary"
               onClick={onVerificationClicked}
             />
           </StSectionVerify>
