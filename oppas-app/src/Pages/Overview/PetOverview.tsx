@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 
+import SelectButton from "../../Components/Button/SelectButton/SelectButton";
 import PetOverviewCard from "../../Components/Card/PetCard/PetOverviewCard";
 import BaseButton from "../../Components/Button/BaseButton";
+
 import { StH1, StH2, StSection } from "../../Utils/HTMLComponents";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
 
@@ -22,7 +24,7 @@ const StOverviewHeader = styled.div`
   & button {
     width: 12rem;
     margin-right: 0.8rem;
-    
+
     &:last-child {
       margin: 0;
     }
@@ -44,9 +46,9 @@ const PetOverview = () => {
         <StH2>Beschikbare huisdieren</StH2>
         <StOverview>
           <StOverviewHeader>
-            <BaseButton label="Filter" />
-            <BaseButton label="Filter" />
-            <BaseButton label="Filter" />
+            <SelectButton options={[{value: "yes", label:"filter"}]} placeholder="Huisdier Soort"/>
+            <SelectButton options={[{value: "yes", label:"filter"}]} placeholder="Uurtarief"/>
+          
           </StOverviewHeader>
           <StOverviewGrid>
             <PetOverviewCard />
