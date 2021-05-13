@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import SelectButton from "../../Components/Button/SelectButton/SelectButton";
 import PetOverviewCard from "../../Components/Card/PetCard/PetOverviewCard";
-import BaseButton from "../../Components/Button/BaseButton";
 
 import { StH1, StH2, StSection } from "../../Utils/HTMLComponents";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
@@ -30,6 +29,7 @@ const StOverviewHeader = styled.div`
     }
   }
 `;
+
 const StOverviewGrid = styled(StSection)`
   display: grid;
   justify-content: center;
@@ -38,6 +38,7 @@ const StOverviewGrid = styled(StSection)`
 `;
 
 const PetOverview = () => {
+  const navigate=useNavigate();
   // get array of map
   return (
     <>
@@ -51,21 +52,9 @@ const PetOverview = () => {
           
           </StOverviewHeader>
           <StOverviewGrid>
-            <PetOverviewCard />
-            <PetOverviewCard />
-            <PetOverviewCard />
-            <PetOverviewCard />
-            <PetOverviewCard />
-            <PetOverviewCard />
-            <PetOverviewCard />
-            <PetOverviewCard />
-            <PetOverviewCard />
-            <PetOverviewCard />
-            <PetOverviewCard />
-            <PetOverviewCard />
-            <PetOverviewCard />
-            <PetOverviewCard />
-            <PetOverviewCard />
+            <PetOverviewCard onClick={()=>{navigate("qweqweqwe/profiel")}} />
+            <PetOverviewCard onClick={()=>{navigate("qweqweqwe/profiel")}} />
+            <PetOverviewCard onClick={()=>{navigate("qweqweqwe/profiel")}} />
           </StOverviewGrid>
         </StOverview>
       </StSection>

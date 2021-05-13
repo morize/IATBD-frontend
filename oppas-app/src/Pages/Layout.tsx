@@ -23,7 +23,7 @@ const StContent = styled.section<{ inAuthenticationPage: boolean }>`
   box-sizing: border-box;
   overflow-y: auto;
   background-image: url(${bgLayout});
-  padding: ${(props) => (props.inAuthenticationPage ? "6vh 0" : "10vh 0")};
+  padding: ${(props) => (props.inAuthenticationPage ? "10vh 0" : "6vh 0")};
 `;
 
 const checkIfAuthenticationPage = (url: string) => {
@@ -31,9 +31,7 @@ const checkIfAuthenticationPage = (url: string) => {
     url === "inloggen" ||
     url === "aanmelden" ||
     url === "wachtwoord-vergeten" ||
-    url === "home" ||
-    url === "contact" ||
-    url === "overzicht" 
+    url === "account"
   ) {
     return true;
   }
@@ -46,15 +44,15 @@ const Layout = () => {
   const inAuthenticationPage = checkIfAuthenticationPage(
     pathname.split("/")[2] ? pathname.split("/")[2] : pathname.split("/")[1]
   );
-
+  console.log(pathname.split("/")[2]);
   return (
     <RootLayout>
       <Navigation />
 
       <StContent inAuthenticationPage={inAuthenticationPage}>
-        {!inAuthenticationPage && <SubNavigation />}
+        {inAuthenticationPage && <SubNavigation />}
 
-        {!inAuthenticationPage ? (
+        {inAuthenticationPage ? (
           <StSubArticle>
             <Outlet />
           </StSubArticle>

@@ -60,9 +60,12 @@ const StKindIndicator = styled.span`
   white-space: pre-wrap;
 `;
 
-const PetOverviewCard = () => {
+interface IPetOverviewCard {
+  onClick: () => void;
+}
+const PetOverviewCard = ({ onClick }: IPetOverviewCard) => {
   return (
-    <StPetCard>
+    <StPetCard onClick={onClick}>
       <img src="https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg" />
       <figcaption>Baco</figcaption>
       <StFeeIndicator>{"13.99€\np/uur"}</StFeeIndicator>
