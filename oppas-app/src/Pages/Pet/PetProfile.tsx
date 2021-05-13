@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 
 import { StH2, StLabel, StP, StSection } from "../../Utils/HTMLComponents";
-import dogPattern from "../..//Utils/Images/dog_pattern.jpg";
+import dogPattern from "../../Utils/Images/dog_pattern.jpg";
 
 const StProfileParent = styled(StSection)`
   display: flex;
