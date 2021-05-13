@@ -20,15 +20,17 @@ const PODRoutes = () => {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="/*" element={<Home />} />
+
         <Route path="home" element={<Home />} />
+        <Route path="inloggen" element={<Login />} />
+        <Route path="aanmelden" element={<Register />} />
+        <Route path="wachtwoord-vergeten" element={<ForgotPassword />} />
+        <Route
+          path="wachtwoord-vergeten/:token/:email"
+          element={<ResetPassword />}
+        />
+
         <Route path="account" element={<Outlet />}>
-          <Route path="inloggen" element={<Login />} />
-          <Route path="aanmelden" element={<Register />} />
-          <Route path="wachtwoord-vergeten" element={<ForgotPassword />} />
-          <Route
-            path="wachtwoord-vergeten/:token/:email"
-            element={<ResetPassword />}
-          />
           <PrivateRoute element={<AccountGegevens />} />
           <PrivateRoute path="algemeen" element={<AccountGegevens />} />
           <PrivateRoute path="media" element={<AccountMedia />} />
@@ -47,10 +49,7 @@ const PODRoutes = () => {
         <PrivateRoute path="overzicht" element={<Outlet />}>
           <PrivateRoute element={<PetOverview />} />
           <PrivateRoute path="huisdieren" element={<PetOverview />} />
-          <PrivateRoute
-            path=":id/profiel"
-            element={<PetProfile />}
-          />
+          <PrivateRoute path=":id/profiel" element={<PetProfile />} />
         </PrivateRoute>
       </Route>
     </Routes>

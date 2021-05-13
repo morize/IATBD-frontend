@@ -28,9 +28,6 @@ const StContent = styled.section<{ inAuthenticationPage: boolean }>`
 
 const checkIfAuthenticationPage = (url: string) => {
   if (
-    url === "inloggen" ||
-    url === "aanmelden" ||
-    url === "wachtwoord-vergeten" ||
     url === "account"
   ) {
     return true;
@@ -42,9 +39,9 @@ const Layout = () => {
   const { pathname } = useLocation();
 
   const inAuthenticationPage = checkIfAuthenticationPage(
-    pathname.split("/")[2] ? pathname.split("/")[2] : pathname.split("/")[1]
+    pathname.split("/")[1] && pathname.split("/")[1]
   );
-  console.log(pathname.split("/")[2]);
+  console.log(pathname.split("/")[1]);
   return (
     <RootLayout>
       <Navigation />

@@ -244,7 +244,7 @@ const Navigation = () => {
       {!localUserDetails ? (
         <StBottom>
           Nog geen account?
-          <StNavLink to="account/aanmelden">
+          <StNavLink to="aanmelden">
             Klik hier om aan te melden!
           </StNavLink>
         </StBottom>
