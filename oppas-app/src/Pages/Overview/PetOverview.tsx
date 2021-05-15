@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useSWR from "swr";
 import styled from "styled-components";
 
 import SelectButton from "../../Components/Button/SelectButton/SelectButton";
@@ -41,9 +42,8 @@ const StOverviewGrid = styled(StSection)`
 `;
 
 const PetOverview = () => {
-  const [kindsOfPets, setKindsOfPets] = useState<string[]>();
-  const [overviewPets, setOverviewPets] =
-    useState<{ id: number; pet_name: string; pet_kind: string }[]>();
+  const { data: petOverviewData } = useSWR("api/sitter/pets", getAvailablePets);
+  const { data: kindsOfPetData } = useSWR("api/pet/kinds", getPetKinds);
 
   const [filterKind, setFilterKind] = useState({
     value: "",
@@ -54,24 +54,8 @@ const PetOverview = () => {
     label: "Uurtarief",
   });
 
-  useEffect(() => {
-    if (!kindsOfPets) {
-      getPetKinds().then((response) => {
-        setKindsOfPets(response);
-      });
-    }
-  }, [kindsOfPets, setKindsOfPets]);
-
-  useEffect(() => {
-    if (!overviewPets) {
-      getAvailablePets().then((response) => {
-        setOverviewPets(response);
-      });
-    }
-  }, [overviewPets, setOverviewPets]);
-
   const navigate = useNavigate();
-
+  
   return (
     <>
       <StSection>
@@ -82,8 +66,8 @@ const PetOverview = () => {
             <SelectButton
               value={filterKind}
               options={
-                kindsOfPets
-                  ? kindsOfPets.map((item) => {
+                kindsOfPetData
+                  ? kindsOfPetData.map((item) => {
                       return { value: item, label: item };
                     })
                   : [{ value: "", label: "" }]
@@ -102,8 +86,8 @@ const PetOverview = () => {
           </StFilterHeader>
 
           <StOverviewGrid>
-            {overviewPets &&
-              overviewPets.map((item, key) => (
+            {petOverviewData &&
+              petOverviewData.map((item, key) => (
                 <PetOverviewCard
                   petName={item.pet_name}
                   petKind={item.pet_kind}

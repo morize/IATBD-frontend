@@ -70,7 +70,7 @@ interface IPetOverviewCard {
 
 const PetOverviewCard = ({ petName, petKind, onClick }: IPetOverviewCard) => (
   <StPetCard onClick={onClick}>
-    <img src="https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg" />
+    <img alt="Afbeelding van een hond" src="https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg" />
     <figcaption>{petName}</figcaption>
     <StFeeIndicator>{"13.99€\np/uur"}</StFeeIndicator>
     <StKindIndicator>{petKind}</StKindIndicator>

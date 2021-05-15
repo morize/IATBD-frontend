@@ -2,9 +2,6 @@ import {
   StH1,
   StH2,
   StSection,
-  StLabel,
-  StP,
-  StForm,
 } from "../Utils/HTMLComponents";
 
 const Contact = () => {

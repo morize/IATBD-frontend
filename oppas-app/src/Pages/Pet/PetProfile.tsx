@@ -186,7 +186,7 @@ const PetProfile = () => {
       <StH2>{`Profiel voor ${id}`}</StH2>
       <StProfileParent>
         <figure>
-          <img src={"https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg"} />
+          <img alt="Afbeelding van een huisdier" src={"https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg"} />
           <figcaption>Baco</figcaption>
         </figure>
 
