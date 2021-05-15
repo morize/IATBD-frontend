@@ -61,17 +61,20 @@ const StKindIndicator = styled.span`
 `;
 
 interface IPetOverviewCard {
+  petName: string;
+  petKind: string;
+  //petImg
+  //sitterHourlyFee
   onClick: () => void;
 }
-const PetOverviewCard = ({ onClick }: IPetOverviewCard) => {
-  return (
-    <StPetCard onClick={onClick}>
-      <img src="https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg" />
-      <figcaption>Baco</figcaption>
-      <StFeeIndicator>{"13.99€\np/uur"}</StFeeIndicator>
-      <StKindIndicator>Hond</StKindIndicator>
-    </StPetCard>
-  );
-};
+
+const PetOverviewCard = ({ petName, petKind, onClick }: IPetOverviewCard) => (
+  <StPetCard onClick={onClick}>
+    <img src="https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg" />
+    <figcaption>{petName}</figcaption>
+    <StFeeIndicator>{"13.99€\np/uur"}</StFeeIndicator>
+    <StKindIndicator>{petKind}</StKindIndicator>
+  </StPetCard>
+);
 
 export default PetOverviewCard;

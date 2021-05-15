@@ -41,7 +41,7 @@ const Layout = () => {
   const inAuthenticationPage = checkIfAuthenticationPage(
     pathname.split("/")[1] && pathname.split("/")[1]
   );
-  console.log(pathname.split("/")[1]);
+
   return (
     <RootLayout>
       <Navigation />

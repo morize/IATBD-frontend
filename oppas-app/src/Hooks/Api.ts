@@ -80,15 +80,12 @@ export const getUserDetails = async (): Promise<{
   updated_at: string;
   blocked: number;
   admin: number;
-}> => {
-  const apiUserData = await laravelApi
+}> =>
+  await laravelApi
     .post("api/account/user/details", {
       token: localStorage.getItem("activeToken"),
     })
     .then((response) => response.data);
-
-  return apiUserData;
-};
 
 export const sendResetPasswordEmail = async (email: string) => {
   const sanctumToken = await getSanctumToken.then((token: string) => token);
@@ -112,3 +109,15 @@ export const submitNewPassword = async (
     password_confirmation: password_confirmation,
   });
 };
+
+export const getAvailablePets = async (): Promise<
+  {
+    id: number;
+    pet_name: string;
+    pet_kind: string;
+    //sitter_hourly_fee: float;
+  }[]
+> => await laravelApi.get("api/sitter/pets").then((response) => response.data);
+
+export const getPetKinds = async (): Promise<string[]> =>
+  await laravelApi.get("api/pet/kinds").then((response) => response.data);

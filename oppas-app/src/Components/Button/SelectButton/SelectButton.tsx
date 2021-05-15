@@ -9,6 +9,7 @@ const StSelect = styled(Select)`
     padding: 0.4rem;
     cursor: pointer;
     border: none;
+    text-align: center;
     box-shadow: none !important;
   }
 
@@ -24,18 +25,35 @@ const StSelect = styled(Select)`
       color: #bababa;
     }
   }
+
+  & .react-select__value-container {
+    justify-content: center;
+  }
+
+  & .react-select__menu {
+    text-align: center;
+    background: #be8b4e;
+    color: #ffff;
+
+    & .option:hover {
+      background: black;
+    }
+  }
 `;
 
 interface ISelectButton {
   options: { value: string; label: string }[];
-  placeholder: string;
+  value: { value: string; label: string };
+  onChange: (value: { value: string; label: string }) => void;
 }
 
-const SelectButton = ({ options, placeholder }: ISelectButton) => (
+const SelectButton = ({ options, value, onChange }: ISelectButton) => (
   <StSelect
-    placeholder={placeholder}
+    value={value}
     options={options}
+    onChange={onChange}
     classNamePrefix="react-select"
+    isSearchable={false}
   />
 );
 

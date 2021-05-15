@@ -1,9 +1,11 @@
-import styled from "styled-components";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 import SelectButton from "../../Components/Button/SelectButton/SelectButton";
 import PetOverviewCard from "../../Components/Card/PetCard/PetOverviewCard";
 
+import { getAvailablePets, getPetKinds } from "../../Hooks/Api";
 import { StH1, StH2, StSection } from "../../Utils/HTMLComponents";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
 
@@ -16,7 +18,7 @@ const StOverview = styled(StSection)`
   min-height: 34rem;
 `;
 
-const StOverviewHeader = styled.div`
+const StFilterHeader = styled.div`
   display: flex;
   justify-content: space-around;
   margin: 1.8rem 4rem;
@@ -39,23 +41,76 @@ const StOverviewGrid = styled(StSection)`
 `;
 
 const PetOverview = () => {
-  const navigate=useNavigate();
-  // get array of map
+  const [kindsOfPets, setKindsOfPets] = useState<string[]>();
+  const [overviewPets, setOverviewPets] =
+    useState<{ id: number; pet_name: string; pet_kind: string }[]>();
+
+  const [filterKind, setFilterKind] = useState({
+    value: "",
+    label: "Huisdier Soort",
+  });
+  const [filterHourlyPay, setFilterHourlyPay] = useState({
+    value: "",
+    label: "Uurtarief",
+  });
+
+  useEffect(() => {
+    if (!kindsOfPets) {
+      getPetKinds().then((response) => {
+        setKindsOfPets(response);
+      });
+    }
+  }, [kindsOfPets, setKindsOfPets]);
+
+  useEffect(() => {
+    if (!overviewPets) {
+      getAvailablePets().then((response) => {
+        setOverviewPets(response);
+      });
+    }
+  }, [overviewPets, setOverviewPets]);
+
+  const navigate = useNavigate();
+
   return (
     <>
       <StSection>
         <StH1>Overzicht</StH1>
         <StH2>Beschikbare huisdieren</StH2>
         <StOverview>
-          <StOverviewHeader>
-            <SelectButton options={[{value: "yes", label:"filter"}]} placeholder="Huisdier Soort"/>
-            <SelectButton options={[{value: "yes", label:"filter"}]} placeholder="Uurtarief"/>
-          
-          </StOverviewHeader>
+          <StFilterHeader>
+            <SelectButton
+              value={filterKind}
+              options={
+                kindsOfPets
+                  ? kindsOfPets.map((item) => {
+                      return { value: item, label: item };
+                    })
+                  : [{ value: "", label: "" }]
+              }
+              onChange={(option) => setFilterKind(option)}
+            />
+            <SelectButton
+              value={filterHourlyPay}
+              options={[
+                { value: "> 4€", label: "> 4€" },
+                { value: "4€ < 8€", label: "4€ < 8€" },
+                { value: "8€ <", label: "8€ <" },
+              ]}
+              onChange={(option) => setFilterHourlyPay(option)}
+            />
+          </StFilterHeader>
+
           <StOverviewGrid>
-            <PetOverviewCard onClick={()=>{navigate("qweqweqwe/profiel")}} />
-            <PetOverviewCard onClick={()=>{navigate("qweqweqwe/profiel")}} />
-            <PetOverviewCard onClick={()=>{navigate("qweqweqwe/profiel")}} />
+            {overviewPets &&
+              overviewPets.map((item, key) => (
+                <PetOverviewCard
+                  petName={item.pet_name}
+                  petKind={item.pet_kind}
+                  onClick={() => navigate(`${item.id}/profiel`)}
+                  key={key}
+                />
+              ))}
           </StOverviewGrid>
         </StOverview>
       </StSection>
