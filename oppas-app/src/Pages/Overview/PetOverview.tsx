@@ -7,7 +7,7 @@ import SelectButton from "../../Components/Button/SelectButton/SelectButton";
 import PetOverviewCard from "../../Components/Card/PetCard/PetOverviewCard";
 
 import { getAvailablePets, getPetKinds } from "../../Hooks/Api";
-import { StH1, StH2, StSection } from "../../Utils/HTMLComponents";
+import { StH1, StSection } from "../../Utils/HTMLComponents";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
 
 const StOverview = styled(StSection)`
@@ -15,14 +15,14 @@ const StOverview = styled(StSection)`
   flex-direction: column;
   background: url(${dogPattern});
   border-radius: 8px;
-  padding: 2rem 0;
+  padding: 3rem 0;
   min-height: 34rem;
 `;
 
 const StFilterHeader = styled.div`
   display: flex;
   justify-content: space-around;
-  margin: 1.8rem 4rem;
+  margin: 0.5rem 4rem 1rem 4rem;
 
   & button {
     width: 12rem;
@@ -55,12 +55,38 @@ const PetOverview = () => {
   });
 
   const navigate = useNavigate();
-  
+
+  const filteredPetOverviewData = () => {
+    if (filterKind.value !== "") {
+      return petOverviewData?.filter(
+        (item) => item.pet_kind === filterKind.value
+      );
+    }
+
+    if (filterHourlyPay.value !== "") {
+      switch (filterHourlyPay.value) {
+        case ">4":
+          return petOverviewData?.filter((item) => 4 > item.sit_hourly_prize);
+
+        case "4<8":
+          return petOverviewData?.filter(
+            (item) => 4 < item.sit_hourly_prize && item.sit_hourly_prize < 8
+          );
+
+        case "8<":
+          return petOverviewData?.filter((item) => item.sit_hourly_prize > 8);
+
+        default:
+          return petOverviewData;
+      }
+    }
+    return petOverviewData;
+  };
+
   return (
     <>
       <StSection>
-        <StH1>Overzicht</StH1>
-        <StH2>Beschikbare huisdieren</StH2>
+        <StH1>Huisdieren Overzicht</StH1>
         <StOverview>
           <StFilterHeader>
             <SelectButton
@@ -72,25 +98,38 @@ const PetOverview = () => {
                     })
                   : [{ value: "", label: "" }]
               }
-              onChange={(option) => setFilterKind(option)}
+              onChange={(option) => {
+                setFilterKind(option);
+                setFilterHourlyPay({
+                  value: "",
+                  label: "Uurtarief",
+                });
+              }}
             />
             <SelectButton
               value={filterHourlyPay}
               options={[
-                { value: "> 4€", label: "> 4€" },
-                { value: "4€ < 8€", label: "4€ < 8€" },
-                { value: "8€ <", label: "8€ <" },
+                { value: ">4", label: "> 4€" },
+                { value: "4<8", label: "4€ < 8€" },
+                { value: "8<", label: "8€ <" },
               ]}
-              onChange={(option) => setFilterHourlyPay(option)}
+              onChange={(option) => {
+                setFilterHourlyPay(option);
+                setFilterKind({
+                  value: "",
+                  label: "Huisdier Soort",
+                });
+              }}
             />
           </StFilterHeader>
 
           <StOverviewGrid>
             {petOverviewData &&
-              petOverviewData.map((item, key) => (
+              filteredPetOverviewData()?.map((item, key) => (
                 <PetOverviewCard
                   petName={item.pet_name}
                   petKind={item.pet_kind}
+                  sitterHourlyPrize={item.sit_hourly_prize}
                   onClick={() => navigate(`${item.id}/profiel`)}
                   key={key}
                 />

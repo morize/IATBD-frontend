@@ -104,7 +104,9 @@ export const submitNewPassword = async (
   });
 };
 
-export const getUserDetails = async (url: string): Promise<{
+export const getUserDetails = async (
+  url: string
+): Promise<{
   uuid: number;
   name: string;
   email: string;
@@ -126,7 +128,8 @@ export const getAvailablePets = async (
     id: number;
     pet_name: string;
     pet_kind: string;
-    //sitter_hourly_fee: float;
+    pet_image: string;
+    sit_hourly_prize: number;
   }[]
 > =>
   await laravelApi
@@ -135,6 +138,24 @@ export const getAvailablePets = async (
     .then((response) => sleep(response));
 
 export const getPetKinds = async (url: string): Promise<string[]> =>
+  await laravelApi
+    .get(url)
+    .then((response) => response.data)
+    .then((response) => sleep(response));
+
+export const getPetProfile = async (
+  url: string
+): Promise<{
+  owner_id: number;
+  pet_name: string;
+  pet_breed: string;
+  pet_kind: string;
+  pet_image: string;
+  sit_hourly_prize: number;
+  sit_date_start: string;
+  sit_date_end: string;
+  sit_remarks: string;
+}> =>
   await laravelApi
     .get(url)
     .then((response) => response.data)

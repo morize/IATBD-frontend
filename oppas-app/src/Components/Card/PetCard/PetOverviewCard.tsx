@@ -63,16 +63,25 @@ const StKindIndicator = styled.span`
 interface IPetOverviewCard {
   petName: string;
   petKind: string;
-  //petImg
-  //sitterHourlyFee
+  petImg?: string;
+  sitterHourlyPrize: number;
   onClick: () => void;
 }
 
-const PetOverviewCard = ({ petName, petKind, onClick }: IPetOverviewCard) => (
+const PetOverviewCard = ({
+  petName,
+  petKind,
+  petImg = "https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg",
+  sitterHourlyPrize,
+  onClick,
+}: IPetOverviewCard) => (
   <StPetCard onClick={onClick}>
-    <img alt="Afbeelding van een hond" src="https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg" />
+    <img
+      alt="Afbeelding van een huisdier."
+      srcSet={petImg}
+    />
     <figcaption>{petName}</figcaption>
-    <StFeeIndicator>{"13.99€\np/uur"}</StFeeIndicator>
+    <StFeeIndicator>{`${sitterHourlyPrize}€\np/uur`}</StFeeIndicator>
     <StKindIndicator>{petKind}</StKindIndicator>
   </StPetCard>
 );
