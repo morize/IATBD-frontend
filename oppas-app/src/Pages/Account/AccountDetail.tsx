@@ -1,5 +1,6 @@
-import { useState, useEffect, MouseEvent } from "react";
+import { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import useSWR from "swr";
 import styled from "styled-components";
 
 import BaseButton from "../../Components/Button/BaseButton";
@@ -37,26 +38,17 @@ const StSectionVerify = styled(StSection)`
 `;
 
 const AccountGegevens = () => {
-  const [userDetails, setUserDetails] = useState<{
-    name: string;
-    email: string;
-    verified: string;
-    telephoneNumber: string;
-    isAdmin: string;
-    isBlocked: string;
-  }>({
-    name: "-",
-    email: "-",
-    verified: "-",
-    telephoneNumber: "-",
-    isAdmin: "-",
-    isBlocked: "-",
-  });
-
   const navigate = useNavigate();
+
+  const { data: accountData } = useSWR(
+    "api/account/user/details",
+    getUserDetails
+  );
+  
 
   const onVerificationClicked = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    
     sendEmailVerificationLink();
   };
 
@@ -68,23 +60,6 @@ const AccountGegevens = () => {
     });
   };
 
-  useEffect(() => {
-    if (userDetails.name === "-") {
-      getUserDetails().then((response) => {
-        setUserDetails({
-          name: response.name,
-          email: response.email,
-          verified: response.email_verified_at
-            ? "Geverifieerd"
-            : "Niet geverifieerd",
-          telephoneNumber: "06466709788",
-          isBlocked: response.blocked === 1 ? "Geblokkeerd" : "Actief",
-          isAdmin: response.blocked === 1 ? "Ja" : "Nee",
-        });
-      });
-    }
-  }, [setUserDetails, userDetails]);
-
   return (
     <>
       <StH2>Algemeen</StH2>
@@ -93,26 +68,30 @@ const AccountGegevens = () => {
         <StH3>Account Gegevens</StH3>
         <StAccountDetails>
           <StLabel>Gebruikersnaam:</StLabel>
-          <StP>{userDetails.name}</StP>
+          <StP>{accountData?.name? accountData.name : "-"}</StP>
 
           <StLabel>Email:</StLabel>
-          <StP>{userDetails.email}</StP>
+          <StP>{accountData?.email ? accountData.email : "-"}</StP>
 
           <StLabel>Email Status:</StLabel>
-          <StP>{userDetails.verified}</StP>
+          <StP>
+            {accountData?.email_verified_at
+              ? "Geverifieerd"
+              : "Niet geverifieerd"}
+          </StP>
 
           <StLabel>Account Status:</StLabel>
-          <StP>{userDetails.isBlocked}</StP>
+          <StP>{accountData?.blocked === 1 ? "Geblokkeerd" : "Standaard"}</StP>
 
-          {userDetails.isAdmin === "Ja" && (
+          {/* {accountData?.admin === 1 && (
             <>
               <StLabel>Admin:</StLabel>
-              <StP>{userDetails.isAdmin}</StP>
+              <StP>{accountData?.admin}</StP>
             </>
-          )}
+          )} */}
         </StAccountDetails>
 
-        {userDetails.verified === "Niet geverifieerd" && (
+        {!accountData?.email_verified_at && (
           <StSectionVerify>
             <StP variant="info" bold={true}>
               {
@@ -121,7 +100,7 @@ const AccountGegevens = () => {
             </StP>
             <BaseButton
               label="Emailverificatie opnieuw sturen"
-              variant="secondary"
+              variant="primary"
               onClick={onVerificationClicked}
             />
           </StSectionVerify>

@@ -49,13 +49,14 @@ export const StSection = styled.section`
 
 export const StArticle = styled.article`
   display: flex;
-  width: 100%;
   flex-direction: column;
   margin: 0 auto;
-  max-width: 700px;
+  width: 60rem;
+  
+  
 
   @media (max-width: 1280px) {
-    max-width: 600px;
+    width: 40rem;
   }
 
   // Workaround for padding-bottom bug while a container is inside an overflow auto parent.
@@ -67,6 +68,7 @@ export const StArticle = styled.article`
 
 export const StSubArticle = styled(StArticle)`
   margin: 0 auto 0 10vw;
+  max-width: 700px;
 `;
 
 export const StForm = styled.form`

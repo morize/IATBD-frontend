@@ -14,21 +14,24 @@ import Login from "../Pages/Authentication/Login";
 import Register from "../Pages/Authentication/Register";
 import ForgotPassword from "../Pages/Authentication/ForgotPassword";
 import ResetPassword from "../Pages/Authentication/ResetPassword";
+import Contact from "../Pages/Contact";
 
 const PODRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="/*" element={<Home />} />
+
         <Route path="home" element={<Home />} />
+        <Route path="inloggen" element={<Login />} />
+        <Route path="aanmelden" element={<Register />} />
+        <Route path="wachtwoord-vergeten" element={<ForgotPassword />} />
+        <Route
+          path="wachtwoord-vergeten/:token/:email"
+          element={<ResetPassword />}
+        />
+
         <Route path="account" element={<Outlet />}>
-          <Route path="inloggen" element={<Login />} />
-          <Route path="aanmelden" element={<Register />} />
-          <Route path="wachtwoord-vergeten" element={<ForgotPassword />} />
-          <Route
-            path="wachtwoord-vergeten/:token/:email"
-            element={<ResetPassword />}
-          />
           <PrivateRoute element={<AccountGegevens />} />
           <PrivateRoute path="algemeen" element={<AccountGegevens />} />
           <PrivateRoute path="media" element={<AccountMedia />} />
@@ -47,7 +50,10 @@ const PODRoutes = () => {
         <PrivateRoute path="overzicht" element={<Outlet />}>
           <PrivateRoute element={<PetOverview />} />
           <PrivateRoute path="huisdieren" element={<PetOverview />} />
+          <PrivateRoute path=":id/profiel" element={<PetProfile />} />
         </PrivateRoute>
+
+        <Route path="contact" element={<Contact />} />
       </Route>
     </Routes>
   );

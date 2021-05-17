@@ -1,8 +1,10 @@
-import styled from "styled-components";
 import { useParams } from "react-router-dom";
+import useSWR from "swr";
+import styled from "styled-components";
 
+import { getPetProfile } from "../../Hooks/Api";
 import { StH2, StLabel, StP, StSection } from "../../Utils/HTMLComponents";
-import dogPattern from "../..//Utils/Images/dog_pattern.jpg";
+import dogPattern from "../../Utils/Images/dog_pattern.jpg";
 
 const StProfileParent = styled(StSection)`
   display: flex;
@@ -121,22 +123,20 @@ interface IProfilePet {
   breed: string;
 }
 
-const PetInfo = ({ name, kind, breed }: IProfilePet) => {
-  return (
-    <StProfileContent>
-      <StProfileDetails>
-        <StLabel>Naam:</StLabel>
-        <StP>{name}</StP>
-        <StLabel>Soort:</StLabel>
-        <StP>{kind}</StP>
-        <StLabel>Ras:</StLabel>
-        <StP>{breed}</StP>
-      </StProfileDetails>
+const PetInfo = ({ name, kind, breed }: IProfilePet) => (
+  <StProfileContent>
+    <StProfileDetails>
+      <StLabel>Naam:</StLabel>
+      <StP>{name}</StP>
+      <StLabel>Soort:</StLabel>
+      <StP>{kind}</StP>
+      <StLabel>Ras:</StLabel>
+      <StP>{breed}</StP>
+    </StProfileDetails>
 
-      <StProfileBottomTitle>Huisdier informatie</StProfileBottomTitle>
-    </StProfileContent>
-  );
-};
+    <StProfileBottomTitle>Huisdier informatie</StProfileBottomTitle>
+  </StProfileContent>
+);
 
 interface IProfileSitter {
   dstart: string;
@@ -145,57 +145,68 @@ interface IProfileSitter {
   remarks: string;
 }
 
-const SitterInfo = ({ dstart, dend, payment, remarks }: IProfileSitter) => {
-  return (
-    <StProfileContentSitter>
-      <StProfileDetailsSitter>
-        <div>
-          <StLabel>Datum Start:</StLabel>
-          <StP>{dstart}</StP>
-        </div>
+const SitterInfo = ({ dstart, dend, payment, remarks }: IProfileSitter) => (
+  <StProfileContentSitter>
+    <StProfileDetailsSitter>
+      <div>
+        <StLabel>Datum Start:</StLabel>
+        <StP>{dstart}</StP>
+      </div>
 
-        <div>
-          <StLabel>Datum Eind:</StLabel>
-          <StP>{dend}</StP>
-        </div>
+      <div>
+        <StLabel>Datum Eind:</StLabel>
+        <StP>{dend}</StP>
+      </div>
 
-        <div>
-          <StLabel>Uurtarief:</StLabel>
-          <StP>{payment}</StP>
-        </div>
+      <div>
+        <StLabel>Uurtarief:</StLabel>
+        <StP>{payment}</StP>
+      </div>
 
-        <div>
-          <StLabel>Opmerkingen:</StLabel>
-          <StP>{remarks}</StP>
-        </div>
-      </StProfileDetailsSitter>
+      <div>
+        <StLabel>Opmerkingen:</StLabel>
+        <StP>{remarks}</StP>
+      </div>
+    </StProfileDetailsSitter>
 
-      <StProfileBottomTitle>Oppas informatie</StProfileBottomTitle>
-    </StProfileContentSitter>
-  );
-};
-
-
+    <StProfileBottomTitle>Oppas informatie</StProfileBottomTitle>
+  </StProfileContentSitter>
+);
 
 const PetProfile = () => {
-  // Fetch with id
   const { id } = useParams();
 
+  const { data: petProfileData } = useSWR(
+    `api/pet/profile/${id}`,
+    getPetProfile
+  );
+  
   return (
     <>
-      <StH2>{`Profiel voor ${id}`}</StH2>
+      <StH2>{`Profiel van huisdier: ${
+        petProfileData ? petProfileData.pet_name : ""
+      }`}</StH2>
       <StProfileParent>
         <figure>
-          <img src={"https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg"} />
-          <figcaption>Baco</figcaption>
+          <img
+            alt="Afbeelding van een huisdier"
+            src={"https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg"}
+          />
+          <figcaption>
+            {petProfileData ? petProfileData.pet_name : "-"}
+          </figcaption>
         </figure>
 
-        <PetInfo name="brother" kind="dog" breed="boxer" />
+        <PetInfo
+          name={petProfileData ? petProfileData.pet_name : "-"}
+          kind={petProfileData ? petProfileData.pet_kind : "-"}
+          breed={petProfileData ? petProfileData.pet_breed : "-"}
+        />
         <SitterInfo
-          dstart="19/09/2020"
-          dend="19/09/2020"
-          payment="3 euro"
-          remarks="baco is a cute doggie. a bit too ugly though.qwdqwdqwdqwdqwdqwdqwdqwdqwd"
+          dstart={petProfileData ? petProfileData.sit_date_start : "-"}
+          dend={petProfileData ? petProfileData.sit_date_end : "-"}
+          payment={petProfileData ? petProfileData.sit_hourly_prize.toString() : "-"}
+          remarks={petProfileData ? petProfileData.sit_remarks : "-"}
         />
       </StProfileParent>
     </>

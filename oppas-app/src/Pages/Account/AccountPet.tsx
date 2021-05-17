@@ -1,7 +1,3 @@
-import { useState, useEffect, MouseEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-
 import PetCard, { PetCardItem } from "../../Components/Card/PetCard/PetCard";
 import {
   StH2,
