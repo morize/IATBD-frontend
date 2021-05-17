@@ -1,15 +1,20 @@
 import { useState } from "react";
+import useSWR from "swr";
 import styled from "styled-components";
 import PublishIcon from "@material-ui/icons/Publish";
 
 import BaseInput from "../../Components/Input/BaseInput";
 import BaseButton from "../../Components/Button/BaseButton";
+import SelectButton from "../../Components/Button/SelectButton/SelectButton";
+
 import Variants from "../../Utils/Variants";
+import { getPetKinds, getPetBreeds } from "../../Hooks/Api";
 import { StH2, StH3, StForm, StSection } from "../../Utils/HTMLComponents";
 
 const DoubleInputContainer = styled.section`
   display: flex;
   justify-content: space-between;
+  height: 7rem;
 
   & div {
     width: 48%;
@@ -36,7 +41,17 @@ const StTextArea = styled.textarea`
 
 const CreatePet = () => {
   const [name, setName] = useState("");
-  
+  const [kindOption, setKindOption] =
+    useState<{ label: string; value: string }>();
+  const [breedOption, setBreedOption] =
+    useState<{ label: string; value: string }| null>();
+
+  const { data: kindsOfPetData } = useSWR("api/pet-kinds", getPetKinds);
+  const { data: breedsOfKindData } = useSWR(
+    `api/pet-kinds/${kindOption?.value}`,
+    getPetBreeds
+  );
+
   return (
     <>
       <StH2>Nieuw huisdier</StH2>
@@ -49,8 +64,38 @@ const CreatePet = () => {
             onChange={(e) => setName(e.target.value)}
           />
           <DoubleInputContainer>
-            <BaseInput label="Soort:" />
-            <BaseInput label="Ras:" />
+            <SelectButton
+              options={
+                kindsOfPetData
+                  ? kindsOfPetData.map((item) => {
+                      return { value: item, label: item };
+                    })
+                  : [{ value: "", label: "" }]
+              }
+              onChange={(option) => {
+                setBreedOption(null);
+                setKindOption(option);
+              }}
+              variant="input"
+              labelForInput="Soort:"
+              value={kindOption}
+              placeholder="Soort..."
+            />
+            <SelectButton
+              options={
+                breedsOfKindData
+                  ? breedsOfKindData.map((item) => {
+                      return { value: item, label: item };
+                    })
+                  : [{ value: "", label: "" }]
+              }
+              onChange={(option) => setBreedOption(option)}
+              variant="input"
+              labelForInput="Ras:"
+              value={breedOption!}
+              placeholder="Ras..."
+              isDisabled={!kindOption}
+            />
           </DoubleInputContainer>
 
           <BaseInput label="Foto:" type="file" icon={<PublishIcon />} />

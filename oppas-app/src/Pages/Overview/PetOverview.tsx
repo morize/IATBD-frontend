@@ -105,6 +105,7 @@ const PetOverview = () => {
                   label: "Uurtarief",
                 });
               }}
+              variant={"filter"}
             />
             <SelectButton
               value={filterHourlyPay}
@@ -120,6 +121,7 @@ const PetOverview = () => {
                   label: "Huisdier Soort",
                 });
               }}
+              variant={"filter"}
             />
           </StFilterHeader>
 

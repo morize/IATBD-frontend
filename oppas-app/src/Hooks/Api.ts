@@ -179,3 +179,10 @@ export const getPetKinds = async (url: string): Promise<string[]> =>
     .get(url)
     .then((response) => response.data)
     .then((response) => sleep(response));
+
+export const getPetBreeds = async (url: string): Promise<string[]> =>
+  await laravelApi
+    .get(url)
+    .then((response) => response.data)
+    .then((response) => sleep(response));
+    
