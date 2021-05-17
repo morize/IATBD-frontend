@@ -6,7 +6,7 @@ import styled from "styled-components";
 import SelectButton from "../../Components/Button/SelectButton/SelectButton";
 import PetOverviewCard from "../../Components/Card/PetCard/PetOverviewCard";
 
-import { getAvailablePets, getPetKinds } from "../../Hooks/Api";
+import { getAllPets, getPetKinds } from "../../Hooks/Api";
 import { StH1, StSection } from "../../Utils/HTMLComponents";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
 
@@ -43,7 +43,7 @@ const StOverviewGrid = styled(StSection)`
 
 const PetOverview = () => {
   const { data: kindsOfPetData } = useSWR("api/pet-kinds", getPetKinds);
-  const { data: petOverviewData } = useSWR("api/pets", getAvailablePets);
+  const { data: petOverviewData } = useSWR("api/pets", getAllPets);
   
   const [filterKind, setFilterKind] = useState({
     value: "",

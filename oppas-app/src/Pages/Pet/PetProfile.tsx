@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
-import { getPetProfile } from "../../Hooks/Api";
+import { getSpecificPet } from "../../Hooks/Api";
 import { StH2, StLabel, StP, StSection } from "../../Utils/HTMLComponents";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
 
@@ -178,7 +178,7 @@ const PetProfile = () => {
 
   const { data: petProfileData } = useSWR(
     `api/pets/${id}`,
-    getPetProfile
+    getSpecificPet
   );
   
   return (

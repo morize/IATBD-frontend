@@ -1,15 +1,11 @@
+import { useState } from "react";
 import styled from "styled-components";
 import PublishIcon from "@material-ui/icons/Publish";
 
 import BaseInput from "../../Components/Input/BaseInput";
 import BaseButton from "../../Components/Button/BaseButton";
 import Variants from "../../Utils/Variants";
-import {
-  StH2,
-  StH3,
-  StForm,
-  StSection,
-} from "../../Utils/HTMLComponents";
+import { StH2, StH3, StForm, StSection } from "../../Utils/HTMLComponents";
 
 const DoubleInputContainer = styled.section`
   display: flex;
@@ -30,22 +26,28 @@ const StTextAreaLabel = styled.label`
 const StTextArea = styled.textarea`
   min-height: 100px;
   width: 100%;
-  margin-bottom:24px;
-  padding:8px;
+  margin-bottom: 24px;
+  padding: 8px;
   border: 1px solid #b3b3c2;
   border-radius: 5px;
-  box-sizing:border-box;
+  box-sizing: border-box;
   outline: none;
 `;
 
 const CreatePet = () => {
+  const [name, setName] = useState("");
+  
   return (
     <>
       <StH2>Nieuw huisdier</StH2>
       <StForm>
         <StSection>
           <StH3>Huisdier gegevens</StH3>
-          <BaseInput label="Naam:" />
+          <BaseInput
+            label="Naam:"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
           <DoubleInputContainer>
             <BaseInput label="Soort:" />
             <BaseInput label="Ras:" />
@@ -65,7 +67,7 @@ const CreatePet = () => {
 
           <StTextAreaLabel>Uw opmerkingen:</StTextAreaLabel>
           <StTextArea />
-          <BaseButton label="Voeg huisdier" />
+          <BaseButton label="Bewaar huisdier" />
         </StSection>
       </StForm>
     </>
