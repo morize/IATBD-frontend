@@ -116,9 +116,7 @@ export const getUserDetails = async (
   admin: number;
 }> =>
   await laravelApi
-    .post(url, {
-      token: localStorage.getItem("activeToken"),
-    })
+    .get(url)
     .then((response) => response.data);
 
 export const getAvailablePets = async (

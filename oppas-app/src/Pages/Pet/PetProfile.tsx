@@ -177,7 +177,7 @@ const PetProfile = () => {
   const { id } = useParams();
 
   const { data: petProfileData } = useSWR(
-    `api/pet/profile/${id}`,
+    `api/pets/${id}`,
     getPetProfile
   );
   

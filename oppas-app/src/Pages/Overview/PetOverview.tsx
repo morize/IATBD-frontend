@@ -42,9 +42,9 @@ const StOverviewGrid = styled(StSection)`
 `;
 
 const PetOverview = () => {
-  const { data: petOverviewData } = useSWR("api/sitter/pets", getAvailablePets);
-  const { data: kindsOfPetData } = useSWR("api/pet/kinds", getPetKinds);
-
+  const { data: kindsOfPetData } = useSWR("api/pet-kinds", getPetKinds);
+  const { data: petOverviewData } = useSWR("api/pets", getAvailablePets);
+  
   const [filterKind, setFilterKind] = useState({
     value: "",
     label: "Huisdier Soort",
