@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Select from "react-select";
 
-import Variants from "../../../Utils/Variants";
+import Variants from "../../Utils/Variants";
 
 const StSelect = styled(Select)`
   min-width: 12rem;
@@ -54,9 +54,11 @@ const StInputSelect = styled(Select)`
     justify-content: center;
     width: 100%;
     height: 50px;
-
     border: 1px solid #b3b3c2;
     border-radius: 5px;
+   
+    font-size: 0.9rem;
+    font-weight: 500;
     box-sizing: border-box;
     background: #ffff;
     cursor: pointer;
@@ -70,6 +72,7 @@ const StInputSelect = styled(Select)`
 
   & .react-select__placeholder,
   & .react-select__single-value {
+    color: ${Variants.default};
   }
 
   & .react-select__indicator {
@@ -80,19 +83,16 @@ const StInputSelect = styled(Select)`
     }
   }
 
-  & .react-select__value-container {
-  }
-
   & .react-select__menu {
     position: absolute;
     width: 100%;
-    z-index:3;
+    z-index: 3;
 
     & div {
       margin: 0;
       width: 100%;
     }
-    
+
     & .option:hover {
       background: black;
     }
@@ -118,7 +118,7 @@ interface ISelectButton {
   isDisabled?: boolean;
 }
 
-const SelectButton = ({
+const SelectComponent = ({
   options,
   value,
   onChange,
@@ -153,4 +153,4 @@ const SelectButton = ({
     </div>
   );
 
-export default SelectButton;
+export default SelectComponent;

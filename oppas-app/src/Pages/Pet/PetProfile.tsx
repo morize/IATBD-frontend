@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
-import { getSpecificPet } from "../../Hooks/Api";
+import { getSpecificPet, laravelApiUrl } from "../../Hooks/Api";
 import { StH2, StLabel, StP, StSection } from "../../Utils/HTMLComponents";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
 
@@ -190,7 +190,7 @@ const PetProfile = () => {
         <figure>
           <img
             alt="Afbeelding van een huisdier"
-            src={"https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg"}
+            src={`${laravelApiUrl}/api/pets/${id}/image`}
           />
           <figcaption>
             {petProfileData ? petProfileData.pet_name : "-"}

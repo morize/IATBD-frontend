@@ -1,7 +1,9 @@
 import axios from "axios";
 
+export const laravelApiUrl = "http://localhost:8000";
+
 const laravelApi = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: laravelApiUrl,
   withCredentials: true,
   timeout: 2000,
 });
@@ -150,28 +152,8 @@ export const getSpecificPet = async (
     .then((response) => response.data)
     .then((response) => sleep(response));
 
-export const submitNewPet = async (
-  owner_id: number,
-  pet_name: string,
-  pet_kind: string,
-  pet_breed: string,
-  pet_image: string,
-  sit_hourly_prize: number,
-  sit_date_start: string,
-  sit_date_end: string,
-  sit_remarks: string
-) => {
-  await laravelApi.post("api/pets", {
-    owner_id: owner_id,
-    pet_name: pet_name,
-    pet_kind: pet_kind,
-    pet_breed: pet_breed,
-    pet_image: pet_image,
-    sit_hourly_prize: sit_hourly_prize,
-    sit_date_start: sit_date_start,
-    sit_date_end: sit_date_end,
-    sit_remarks: sit_remarks,
-  });
+export const submitNewPet = async (fData: FormData) => {
+  return await laravelApi.post("api/pets", fData).then((response) => response.data);
 };
 
 export const getPetKinds = async (url: string): Promise<string[]> =>
@@ -185,4 +167,3 @@ export const getPetBreeds = async (url: string): Promise<string[]> =>
     .get(url)
     .then((response) => response.data)
     .then((response) => sleep(response));
-    
