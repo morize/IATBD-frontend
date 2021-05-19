@@ -66,6 +66,12 @@ const StInputContainer = styled.div`
 
 const InputComponentContainer = styled.div`
   width: 100%;
+
+  margin-bottom: 24px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 export interface IBaseInput extends InputHTMLAttributes<HTMLInputElement> {

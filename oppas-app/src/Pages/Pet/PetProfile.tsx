@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
-import { getPetProfile } from "../../Hooks/Api";
+import { getSpecificPet, laravelApiUrl } from "../../Hooks/Api";
 import { StH2, StLabel, StP, StSection } from "../../Utils/HTMLComponents";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
 
@@ -17,7 +17,7 @@ const StProfileParent = styled(StSection)`
   & figure {
     position: relative;
     width: 50%;
-    min-height: 250px;
+    height: 18rem;
     margin: 0;
     padding: 0;
     border-radius: 8px;
@@ -177,8 +177,8 @@ const PetProfile = () => {
   const { id } = useParams();
 
   const { data: petProfileData } = useSWR(
-    `api/pet/profile/${id}`,
-    getPetProfile
+    `api/pets/${id}`,
+    getSpecificPet
   );
   
   return (
@@ -190,7 +190,7 @@ const PetProfile = () => {
         <figure>
           <img
             alt="Afbeelding van een huisdier"
-            src={"https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg"}
+            src={`${laravelApiUrl}/api/pets/${id}/image`}
           />
           <figcaption>
             {petProfileData ? petProfileData.pet_name : "-"}
@@ -205,7 +205,7 @@ const PetProfile = () => {
         <SitterInfo
           dstart={petProfileData ? petProfileData.sit_date_start : "-"}
           dend={petProfileData ? petProfileData.sit_date_end : "-"}
-          payment={petProfileData ? petProfileData.sit_hourly_prize.toString() : "-"}
+          payment={petProfileData ? `${petProfileData.sit_hourly_prize.toString()} €` : "-"}
           remarks={petProfileData ? petProfileData.sit_remarks : "-"}
         />
       </StProfileParent>

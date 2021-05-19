@@ -1,7 +1,9 @@
 import axios from "axios";
 
+export const laravelApiUrl = "http://localhost:8000";
+
 const laravelApi = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: laravelApiUrl,
   withCredentials: true,
   timeout: 2000,
 });
@@ -44,9 +46,7 @@ export const login = async (
         "userDetails",
         JSON.stringify({
           username: response.data.name,
-          email: response.data.email,
-          isAdmin: response.data.admin,
-          isBlocked: response.data.blocked,
+          uuid: response.data.uuid,
         })
       );
 
@@ -114,14 +114,9 @@ export const getUserDetails = async (
   updated_at: string;
   blocked: number;
   admin: number;
-}> =>
-  await laravelApi
-    .post(url, {
-      token: localStorage.getItem("activeToken"),
-    })
-    .then((response) => response.data);
+}> => await laravelApi.get(url).then((response) => response.data);
 
-export const getAvailablePets = async (
+export const getAllPets = async (
   url: string
 ): Promise<
   {
@@ -137,13 +132,7 @@ export const getAvailablePets = async (
     .then((response) => response.data)
     .then((response) => sleep(response));
 
-export const getPetKinds = async (url: string): Promise<string[]> =>
-  await laravelApi
-    .get(url)
-    .then((response) => response.data)
-    .then((response) => sleep(response));
-
-export const getPetProfile = async (
+export const getSpecificPet = async (
   url: string
 ): Promise<{
   owner_id: number;
@@ -156,6 +145,38 @@ export const getPetProfile = async (
   sit_date_end: string;
   sit_remarks: string;
 }> =>
+  await laravelApi
+    .get(url)
+    .then((response) => response.data)
+    .then((response) => sleep(response));
+
+export const submitNewPet = async (fData: FormData) => {
+  return await laravelApi
+    .post("api/pets", fData)
+    .then((response) => response.data);
+};
+
+export const getPetKinds = async (url: string): Promise<string[]> =>
+  await laravelApi
+    .get(url)
+    .then((response) => response.data)
+    .then((response) => sleep(response));
+
+export const getPetBreeds = async (url: string): Promise<string[]> =>
+  await laravelApi
+    .get(url)
+    .then((response) => response.data)
+    .then((response) => sleep(response));
+
+export const getUserPets = async (
+  url: string
+): Promise<{
+  id: string;
+  pet_name: string;
+  pet_breed: string;
+  pet_kind: string;
+  pet_image: string;
+}[]> =>
   await laravelApi
     .get(url)
     .then((response) => response.data)

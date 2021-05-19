@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
-import SelectButton from "../../Components/Button/SelectButton/SelectButton";
+import SelectButton from "../../Components/Select/Select";
 import PetOverviewCard from "../../Components/Card/PetCard/PetOverviewCard";
 
-import { getAvailablePets, getPetKinds } from "../../Hooks/Api";
+import { getAllPets, getPetKinds, laravelApiUrl } from "../../Hooks/Api";
 import { StH1, StSection } from "../../Utils/HTMLComponents";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
 
@@ -42,9 +42,9 @@ const StOverviewGrid = styled(StSection)`
 `;
 
 const PetOverview = () => {
-  const { data: petOverviewData } = useSWR("api/sitter/pets", getAvailablePets);
-  const { data: kindsOfPetData } = useSWR("api/pet/kinds", getPetKinds);
-
+  const { data: kindsOfPetData } = useSWR("api/pet-kinds", getPetKinds);
+  const { data: petOverviewData } = useSWR("api/pets", getAllPets);
+  
   const [filterKind, setFilterKind] = useState({
     value: "",
     label: "Huisdier Soort",
@@ -105,6 +105,7 @@ const PetOverview = () => {
                   label: "Uurtarief",
                 });
               }}
+              variant={"filter"}
             />
             <SelectButton
               value={filterHourlyPay}
@@ -120,6 +121,7 @@ const PetOverview = () => {
                   label: "Huisdier Soort",
                 });
               }}
+              variant={"filter"}
             />
           </StFilterHeader>
 
@@ -129,6 +131,7 @@ const PetOverview = () => {
                 <PetOverviewCard
                   petName={item.pet_name}
                   petKind={item.pet_kind}
+                  petImg={`${laravelApiUrl}/api/pets/${item.id}/image`}
                   sitterHourlyPrize={item.sit_hourly_prize}
                   onClick={() => navigate(`${item.id}/profiel`)}
                   key={key}

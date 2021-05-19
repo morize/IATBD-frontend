@@ -41,7 +41,7 @@ const AccountGegevens = () => {
   const navigate = useNavigate();
 
   const { data: accountData } = useSWR(
-    "api/account/user/details",
+    `api/account/user/1`,
     getUserDetails
   );
   
