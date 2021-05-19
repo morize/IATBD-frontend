@@ -46,9 +46,7 @@ export const login = async (
         "userDetails",
         JSON.stringify({
           username: response.data.name,
-          email: response.data.email,
-          isAdmin: response.data.admin,
-          isBlocked: response.data.blocked,
+          uuid: response.data.uuid,
         })
       );
 
@@ -153,7 +151,9 @@ export const getSpecificPet = async (
     .then((response) => sleep(response));
 
 export const submitNewPet = async (fData: FormData) => {
-  return await laravelApi.post("api/pets", fData).then((response) => response.data);
+  return await laravelApi
+    .post("api/pets", fData)
+    .then((response) => response.data);
 };
 
 export const getPetKinds = async (url: string): Promise<string[]> =>
@@ -163,6 +163,20 @@ export const getPetKinds = async (url: string): Promise<string[]> =>
     .then((response) => sleep(response));
 
 export const getPetBreeds = async (url: string): Promise<string[]> =>
+  await laravelApi
+    .get(url)
+    .then((response) => response.data)
+    .then((response) => sleep(response));
+
+export const getUserPets = async (
+  url: string
+): Promise<{
+  id: string;
+  pet_name: string;
+  pet_breed: string;
+  pet_kind: string;
+  pet_image: string;
+}[]> =>
   await laravelApi
     .get(url)
     .then((response) => response.data)

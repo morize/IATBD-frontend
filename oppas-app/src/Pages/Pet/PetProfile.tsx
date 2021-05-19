@@ -17,7 +17,7 @@ const StProfileParent = styled(StSection)`
   & figure {
     position: relative;
     width: 50%;
-    min-height: 250px;
+    height: 18rem;
     margin: 0;
     padding: 0;
     border-radius: 8px;
@@ -205,7 +205,7 @@ const PetProfile = () => {
         <SitterInfo
           dstart={petProfileData ? petProfileData.sit_date_start : "-"}
           dend={petProfileData ? petProfileData.sit_date_end : "-"}
-          payment={petProfileData ? petProfileData.sit_hourly_prize.toString() : "-"}
+          payment={petProfileData ? `${petProfileData.sit_hourly_prize.toString()} €` : "-"}
           remarks={petProfileData ? petProfileData.sit_remarks : "-"}
         />
       </StProfileParent>

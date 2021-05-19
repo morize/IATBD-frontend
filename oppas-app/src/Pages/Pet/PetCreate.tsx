@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import { format } from "date-fns";
 import styled from "styled-components";
@@ -49,6 +50,7 @@ const StErrorMessage = styled.p`
 `;
 
 const CreatePet = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
 
   const [kindOption, setKindOption] =
@@ -98,7 +100,7 @@ const CreatePet = () => {
       fData.append("sit_hourly_pay", hourlyPay);
       remarks && fData.append("sit_remarks", remarks);
 
-      submitNewPet(fData).then((response) => console.log(response));
+      submitNewPet(fData).then(() => navigate(".."));
     } else {
       if (!error) setError(true);
     }
