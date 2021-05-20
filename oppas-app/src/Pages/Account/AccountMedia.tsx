@@ -9,30 +9,26 @@ import BaseButton from "../../Components/Button/BaseButton";
 import BaseInput from "../../Components/Input/BaseInput";
 
 const AccountMedia = () => {
-  const [fSitterImage, setFSiterImage] = useState<File | null>(null);
-  const [sSitterImage, setSSiterImage] = useState<File | null>(null);
-  const [youtubeUrl, setYoutubeUrl] = useState("");
-  const [status, setStatus] = useState("default");
-
-  const handleFImageInput = (e: React.ChangeEvent<HTMLInputElement>) =>
-    e.target.files && setFSiterImage(e.target.files[0]);
-
-  const handleSImageInput = (e: React.ChangeEvent<HTMLInputElement>) =>
-    e.target.files && setSSiterImage(e.target.files[0]);
+  const [formFirstUserImage, setFormFirstUserImage] = useState<File | null>(null);
+  const [formSecondUserImage, setFormSecondUserImage] = useState<File | null>(null);
+  const [formYoutubeUrl, setFormYoutubeUrl] = useState("");
+  const [formStatus, setFormStatus] = useState("default");
 
   const submitFormData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (fSitterImage || sSitterImage || youtubeUrl) {
+    if (formFirstUserImage || formSecondUserImage || formYoutubeUrl) {
       let fData = new FormData();
 
-      fSitterImage && fData.append("sitter_image_1", fSitterImage);
-      sSitterImage && fData.append("sitter_image_2", sSitterImage);
-      youtubeUrl && fData.append("sitter_video_link", youtubeUrl);
+      formFirstUserImage && fData.append("sitter_image_1", formFirstUserImage);
+      formSecondUserImage && fData.append("sitter_image_2", formSecondUserImage);
+      formYoutubeUrl && fData.append("sitter_video_link", formYoutubeUrl);
 
-      submitSitterMedia(fData).then(() => setStatus("success"));
+      // TODO: redirect to account user profile page when there's one if the post is succesful
+      // load error indicator if the post fails
+      submitSitterMedia(fData).then(() => setFormStatus("success"));
     } else {
-      if (status !== "error") setStatus("error");
+      if (formStatus !== "error") setFormStatus("error");
     }
   };
 
@@ -42,25 +38,29 @@ const AccountMedia = () => {
       <StSection>
         <StH3>Bewerk Media</StH3>
 
-        <StForm onSubmit={(e) => submitFormData(e)}>
+        <StForm onSubmit={submitFormData}>
           <BaseInput
             type="file"
             label="Huisfoto 1:"
             icon={<PublishIcon />}
-            onChange={handleFImageInput}
+            onChange={(e) =>
+              e.target.files && setFormFirstUserImage(e.target.files[0])
+            }
           />
           <BaseInput
             type="file"
             label="Huisfoto 2:"
             icon={<PublishIcon />}
-            onChange={handleSImageInput}
+            onChange={(e) =>
+              e.target.files && setFormSecondUserImage(e.target.files[0])
+            }
           />
           <BaseInput
             label="Youtube video:"
-            value={youtubeUrl}
-            onChange={(e) => setYoutubeUrl(e.target.value)}
+            value={formYoutubeUrl}
             placeholder="eg. https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             icon={<VideoLibraryIcon />}
+            onChange={(e) => setFormYoutubeUrl(e.target.value)}
           />
 
           <BaseButton label="Media opslaan" type="submit" />

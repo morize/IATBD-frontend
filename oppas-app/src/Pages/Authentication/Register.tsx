@@ -8,14 +8,14 @@ import BaseButton from "../../Components/Button/BaseButton";
 import { register, login } from "../../Hooks/Api";
 
 const Register = () => {
-  const [formUsername, setFormUsername] = useState("mauri985");
-  const [formEmail, setFormEmail] = useState("mauricemr@outlook.com");
+  const navigate = useNavigate();
+
+  const [formUsername, setFormUsername] = useState("morize");
+  const [formEmail, setFormEmail] = useState("ayyylmao985@gmail.com");
   const [formPassword, setFormPassword] = useState("Hilol123.");
   const [formConfPassword, setFormConfPassword] = useState("Hilol123.");
 
-  const navigate = useNavigate();
-
-  const submitRegisterData = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const submitRegisterData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     let formData = {
@@ -36,7 +36,7 @@ const Register = () => {
   return (
     <StSection>
       <StH1>Aanmelden</StH1>
-      <StForm>
+      <StForm onSubmit={submitRegisterData}> 
         <BaseInput
           label="Gebruikersnaam:"
           placeholder="Voer uw gebruikersnaam in"
@@ -63,7 +63,6 @@ const Register = () => {
         <BaseButton
           type="submit"
           label="Register"
-          onClick={submitRegisterData}
         />
       </StForm>
     </StSection>

@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
+import {
+  sendEmailVerificationLink,
+  getUserDetails,
+  logout,
+} from "../../Hooks/Api";
 import BaseButton from "../../Components/Button/BaseButton";
 import {
   StH2,
@@ -11,20 +16,11 @@ import {
   StP,
   StLabel,
 } from "../../Utils/HTMLComponents";
-import {
-  sendEmailVerificationLink,
-  getUserDetails,
-  logout,
-} from "../../Hooks/Api";
 
 const StAccountDetails = styled.section`
   display: flex;
   flex-direction: column;
   margin: 32px 0;
-
-  & label {
-    margin-right: auto;
-  }
 
   & p {
     margin-top: -22px;
@@ -33,7 +29,7 @@ const StAccountDetails = styled.section`
 `;
 
 const StSectionVerify = styled(StSection)`
-  margin-bottom: 30px;
+  margin-bottom: 32px;
   text-align: center;
 `;
 
@@ -41,16 +37,11 @@ const AccountGegevens = () => {
   const navigate = useNavigate();
 
   const { data: accountData } = useSWR(
-    `api/account/user/1`,
+    `api/account/user/${
+      JSON.parse(localStorage.getItem("userDetails")!)["uuid"]
+    }`,
     getUserDetails
   );
-  
-
-  const onVerificationClicked = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    
-    sendEmailVerificationLink();
-  };
 
   const onLogoutClicked = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -68,7 +59,7 @@ const AccountGegevens = () => {
         <StH3>Account Gegevens</StH3>
         <StAccountDetails>
           <StLabel>Gebruikersnaam:</StLabel>
-          <StP>{accountData?.name? accountData.name : "-"}</StP>
+          <StP>{accountData?.name ? accountData.name : "-"}</StP>
 
           <StLabel>Email:</StLabel>
           <StP>{accountData?.email ? accountData.email : "-"}</StP>
@@ -82,13 +73,6 @@ const AccountGegevens = () => {
 
           <StLabel>Account Status:</StLabel>
           <StP>{accountData?.blocked === 1 ? "Geblokkeerd" : "Standaard"}</StP>
-
-          {/* {accountData?.admin === 1 && (
-            <>
-              <StLabel>Admin:</StLabel>
-              <StP>{accountData?.admin}</StP>
-            </>
-          )} */}
         </StAccountDetails>
 
         {!accountData?.email_verified_at && (
@@ -101,7 +85,7 @@ const AccountGegevens = () => {
             <BaseButton
               label="Emailverificatie opnieuw sturen"
               variant="primary"
-              onClick={onVerificationClicked}
+              onClick={() => sendEmailVerificationLink()}
             />
           </StSectionVerify>
         )}

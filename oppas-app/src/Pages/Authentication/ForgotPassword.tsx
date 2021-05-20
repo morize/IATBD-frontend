@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import { StH1, StSection, StP } from "../../Utils/HTMLComponents";
+import { StH2, StSection, StP } from "../../Utils/HTMLComponents";
 import BaseInput from "../../Components/Input/BaseInput";
 import BaseButton from "../../Components/Button/BaseButton";
 import { sendResetPasswordEmail } from "../../Hooks/Api";
@@ -17,24 +17,21 @@ const StForgotPasswordContainer = styled(StSection)`
 `;
 
 const ForgotPassword = () => {
-  const [emailToRecover, setEmailToRecover] = useState("mauricemr@outlook.com");
+  const [emailToRecover, setEmailToRecover] = useState("");
   const [emailStatus, setEmailStatus] = useState("default");
 
   const onResetPasswordClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    // Logic to fire post request
     sendResetPasswordEmail(emailToRecover)
-      .then(() => {
-        setEmailStatus("sent");
-      })
+      .then(() => setEmailStatus("sent"))
       .catch(() => setEmailStatus("error"));
   };
 
   return (
     <StForgotPasswordContainer>
-      <StH1>Wachtwoord vergeten</StH1>
-      <StP variant={"primary"}>
+      <StH2>Wachtwoord vergeten</StH2>
+      <StP variant="default">
         {
           "Bent u uw wachtwoord vergeten?\n\nAls u nog de geregistreerde email van uw account weet kunnen we een wachtwoordherstel email sturen."
         }
@@ -53,13 +50,9 @@ const ForgotPassword = () => {
         </StP>
       )}
 
-      {emailStatus === "notfound" && (
-        <StP variant={"danger"}>{"De ingegeven email is niet gevonden."}</StP>
-      )}
-
       {emailStatus === "error" && (
         <StP variant={"danger"}>
-          {"Er is iets misgegaan, probeer later opnieuw."}
+          {"Er is iets misgegaan, probeer opnieuw met een andere email."}
         </StP>
       )}
 

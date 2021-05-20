@@ -17,6 +17,7 @@ const StInput = styled.input`
   padding: 8px;
   border: 0;
   background: none;
+  font-family: "Fira Sans", sans-serif;
   color: #494949;
   box-sizing: border-box;
   outline: none;
