@@ -16,15 +16,15 @@ const AccountPet = () => {
     <>
       <StH2>Mijn huisdieren</StH2>
       <StSection>
-        <PetCard variant="owner">
+        <PetCard cardVariant="owner">
           {userPetsData &&
             userPetsData.map((pet, key) => (
               <PetCardItem
-                pet_name={pet.pet_name}
-                pet_kind={pet.pet_kind}
-                pet_breed={pet.pet_breed}
-                pet_image={`${laravelApiUrl}/api/pets/${pet.id}/image`}
-                routeTo={pet.id.toString()}
+                petName={pet.pet_name}
+                petKind={pet.pet_kind}
+                petBreed={pet.pet_breed}
+                petImageUrl={`${laravelApiUrl}/api/pets/${pet.id}/image`}
+                redirectTo={pet.id.toString()}
                 key={key}
               />
             ))}

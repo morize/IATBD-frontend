@@ -32,7 +32,7 @@ const AccountSitter = () => {
       <StSection>
         <StH3>Mijn oppasvragen</StH3>
 
-        <PetCard variant="sitter">
+        <PetCard cardVariant="sitter">
           {/* <PetCardItem routeTo="xd" /> */}
         </PetCard>
       </StSection>

@@ -45,9 +45,9 @@ const StyledSwitch = styled(MuiSwitch)`
 
 const StyledSwitchLabel = styled.p<{ disabled?: boolean }>`
   display: inline-block;
-  padding: 0;
   margin: 0;
-  font-size: 20px;
+  padding: 0;
+  font-size: 1.2rem;
   font-weight: 600;
   line-height: 18px;
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
@@ -55,23 +55,16 @@ const StyledSwitchLabel = styled.p<{ disabled?: boolean }>`
 `;
 
 export interface ISwitch extends SwitchProps {
-  /**
-   * Text label next to the switch.
-   */
   label?: string;
 }
 
-const Switch = ({ label, disabled, ...rest }: ISwitch) => {
-  const labelJsx = label ? (
-    <StyledSwitchLabel disabled={disabled}>{label}</StyledSwitchLabel>
-  ) : null;
-
-  return (
-    <StContainer>
-      {labelJsx}
-      <StyledSwitch size="medium" disabled={disabled} {...rest} />
-    </StContainer>
-  );
-};
+const Switch = ({ label, disabled, ...rest }: ISwitch) => (
+  <StContainer>
+    {label && (
+      <StyledSwitchLabel disabled={disabled}>{label}</StyledSwitchLabel>
+    )}
+    <StyledSwitch size="medium" disabled={disabled} {...rest} />
+  </StContainer>
+);
 
 export default Switch;

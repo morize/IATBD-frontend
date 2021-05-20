@@ -5,16 +5,14 @@ import BaseButton, { IBaseButton } from "../BaseButton";
 
 export interface IImgButton extends Omit<IBaseButton, "label" | "variant"> {
   icon: ReactNode;
-
   src: string;
-
   active: boolean;
 }
 
 const StImgButton = styled(BaseButton)<IImgButton>`
   width: 500px;
   height: 125px;
-  border-radius: 5px;
+  border-radius: 8px;
   background: linear-gradient(
       ${(props) =>
         props.active
@@ -25,7 +23,7 @@ const StImgButton = styled(BaseButton)<IImgButton>`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  font-size: 25px;
+  font-size: 1.4rem;
 `;
 
 const ImgButton = ({ value, src, active, ...rest }: IImgButton) => {

@@ -5,7 +5,7 @@ import { CheckboxProps } from "@material-ui/core/Checkbox";
 
 import Variants from "../../Utils/Variants";
 
-const StyledCheckbox = styled(MuiCheckbox)`
+const StCheckbox = styled(MuiCheckbox)`
   &.MuiButtonBase-root {
     padding: 8px;
   }
@@ -30,16 +30,15 @@ const StyledCheckbox = styled(MuiCheckbox)`
   }
 `;
 
-const StyledFormControlLabel = styled(FormControlLabel)<{ margin: string }>`
+const StCheckboxContainer = styled(FormControlLabel)<{ margin: string }>`
   &.MuiFormControlLabel-root {
     margin: ${(props) => props.margin};
   }
 
   & .MuiFormControlLabel-label {
-    font-size: 16px;
-
-    color: ${({ disabled }) => (disabled ? "#b3b3c2" : Variants.primary)};
+    font-size: 1rem;
     font-family: "Fira Sans", sans-serif;
+    color: ${({ disabled }) => (disabled ? "#b3b3c2" : Variants.primary)};
   }
 `;
 
@@ -53,16 +52,13 @@ export interface ICheckbox
     | "disableTouchRipple"
     | "disableFocusRipple"
   > {
-  /**
-   * Text label next to the checkbox.
-   */
   label?: string;
   margin?: string;
 }
 
 const Checkbox = ({ label, margin, ...rest }: ICheckbox) => (
-  <StyledFormControlLabel
-    control={<StyledCheckbox disableRipple={true} {...rest} />}
+  <StCheckboxContainer
+    control={<StCheckbox disableRipple={true} {...rest} />}
     label={label}
     margin={margin ? margin : "0"}
   />

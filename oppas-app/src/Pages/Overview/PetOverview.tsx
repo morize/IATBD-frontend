@@ -131,7 +131,7 @@ const PetOverview = () => {
                 <PetOverviewCard
                   petName={item.pet_name}
                   petKind={item.pet_kind}
-                  petImg={`${laravelApiUrl}/api/pets/${item.id}/image`}
+                  petImgUrl={`${laravelApiUrl}/api/pets/${item.id}/image`}
                   sitterHourlyPrize={item.sit_hourly_prize}
                   onClick={() => navigate(`${item.id}/profiel`)}
                   key={key}

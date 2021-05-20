@@ -4,29 +4,21 @@ import Select from "react-select";
 import Variants from "../../Utils/Variants";
 
 const StSelect = styled(Select)`
-  min-width: 12rem;
+  min-width: 200px;
 
   & .react-select__control {
-    background: #be8b4e;
-    padding: 0.4rem;
-    cursor: pointer;
+    padding: 12px;
     border: none;
+    background: #be8b4e;
     text-align: center;
-    align-items: center;
-    box-shadow: none !important;
+    cursor: pointer;
+    box-shadow: none;
   }
 
   & .react-select__placeholder,
-  & .react-select__single-value {
-    color: #ffff;
-  }
-
+  & .react-select__single-value,
   & .react-select__indicator {
     color: #ffff;
-
-    &:hover {
-      color: #bababa;
-    }
   }
 
   & .react-select__value-container {
@@ -34,13 +26,9 @@ const StSelect = styled(Select)`
   }
 
   & .react-select__menu {
-    text-align: center;
     background: #be8b4e;
+    text-align: center;
     color: #ffff;
-
-    & .option:hover {
-      background: black;
-    }
   }
 `;
 
@@ -48,61 +36,41 @@ const StInputSelect = styled(Select)`
   min-width: 100%;
 
   & .react-select__control {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100%;
     height: 50px;
     border: 1px solid #b3b3c2;
+    background: #ffff;
     border-radius: 5px;
-   
     font-size: 0.9rem;
     font-weight: 500;
     box-sizing: border-box;
-    background: #ffff;
     cursor: pointer;
     box-shadow: none;
 
     & div {
-      margin: 0;
       width: auto;
     }
   }
 
   & .react-select__placeholder,
-  & .react-select__single-value {
+  & .react-select__single-value,
+  & .react-select__indicator {
     color: ${Variants.default};
   }
 
-  & .react-select__indicator {
-    color: #ffff;
-
-    &:hover {
-      color: #bababa;
-    }
-  }
-
   & .react-select__menu {
-    position: absolute;
     width: 100%;
     z-index: 3;
 
     & div {
-      margin: 0;
       width: 100%;
-    }
-
-    & .option:hover {
-      background: black;
     }
   }
 `;
 
-const StLabel = styled.label`
+const StSelectLabel = styled.label`
   display: block;
   margin-bottom: 12px;
-  font-size: 16px;
   font-weight: 600;
   color: ${Variants.primary};
   user-select: none;
@@ -118,37 +86,29 @@ interface ISelectButton {
   isDisabled?: boolean;
 }
 
-const SelectComponent = ({
-  options,
-  value,
-  onChange,
-  variant,
-  labelForInput,
-  placeholder,
-  isDisabled,
-}: ISelectButton) =>
-  variant === "filter" ? (
+const SelectComponent = (props: ISelectButton) =>
+  props.variant === "filter" ? (
     <StSelect
-      value={value}
-      options={options}
-      onChange={onChange}
+      value={props.value}
+      options={props.options}
+      onChange={props.onChange}
       classNamePrefix="react-select"
       isSearchable={false}
-      variant={variant}
-      isDisabled={isDisabled}
+      variant={props.variant}
+      isDisabled={props.isDisabled}
     />
   ) : (
     <div>
-      <StLabel>{labelForInput}</StLabel>
+      <StSelectLabel>{props.labelForInput}</StSelectLabel>
       <StInputSelect
-        value={value}
-        options={options}
-        onChange={onChange}
+        value={props.value}
+        options={props.options}
+        onChange={props.onChange}
         classNamePrefix="react-select"
         isSearchable={false}
-        variant={variant}
-        placeholder={placeholder}
-        isDisabled={isDisabled}
+        variant={props.variant}
+        placeholder={props.placeholder}
+        isDisabled={props.isDisabled}
       />
     </div>
   );
