@@ -50,25 +50,23 @@ export const StSection = styled.section`
 export const StArticle = styled.article`
   display: flex;
   flex-direction: column;
+  width: 840px;
   margin: 0 auto;
-  width: 60rem;
-  
-  
 
   @media (max-width: 1280px) {
-    width: 40rem;
+    width: 700px;
   }
 
   // Workaround for padding-bottom bug while a container is inside an overflow auto parent.
   &:after {
     content: "";
-    min-height: 8vh;
+    min-height: 120px;
   }
 `;
 
 export const StSubArticle = styled(StArticle)`
-  margin: 0 auto 0 10vw;
-  max-width: 700px;
+  margin: 0 auto;
+  max-width: 800px;
 `;
 
 export const StForm = styled.form`
@@ -78,9 +76,5 @@ export const StForm = styled.form`
 
   & div {
     user-select: none;
-    
-    & input {
-      font-family: "Fira Sans", sans-serif;
-    }
   }
 `;

@@ -6,10 +6,12 @@ import Variants from "../../Utils/Variants";
 const SubNavigationContainer = styled.section`
   position: sticky;
   width: 16vw;
-  margin: 0 0 0 42px;
+  margin: 0 32px;
+
   & h1 {
     margin: 0;
     font-size: 2.4rem;
+    color: ${Variants.default};
     text-align: center;
     text-transform: capitalize;
   }
@@ -28,7 +30,7 @@ const SubNavigationContainer = styled.section`
       justify-content: center;
       height: 80px;
       width: 180px;
-      margin-bottom: 6vh;
+      margin-bottom: 60px;
       border-radius: 8px;
       color: ${Variants.default};
 

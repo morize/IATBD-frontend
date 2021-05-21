@@ -22,7 +22,7 @@ const StNavigation = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 16vw;
+  width: 15vw;
   height: 100vh;
   background: url(${bgNavigation});
   background-position: center;
