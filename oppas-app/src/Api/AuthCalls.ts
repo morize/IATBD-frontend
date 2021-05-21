@@ -21,7 +21,7 @@ export const login = async (
       };
 
   if (sanctumToken) {
-    await laravelApi.post("api/account/login", loginData).then((response) => {
+    await laravelApi.post("api/login", loginData).then((response) => {
       localStorage.setItem(
         "userDetails",
         JSON.stringify({
@@ -39,7 +39,7 @@ export const login = async (
 };
 
 export const logout = async () => {
-  await laravelApi.post("api/account/logout").then(() => localStorage.clear());
+  await laravelApi.post("api/logout").then(() => localStorage.clear());
 };
 
 export const register = async (formData: {
@@ -76,7 +76,7 @@ export const submitNewPassword = async (
   password_confirmation: string,
   password_token: string
 ) => {
-  await laravelApi.post("api/account/reset-password", {
+  await laravelApi.post("api/reset-password", {
     token: password_token,
     email: email,
     password: password,

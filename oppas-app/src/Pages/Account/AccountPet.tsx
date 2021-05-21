@@ -7,7 +7,7 @@ import PetCard, { PetCardItem } from "../../Components/Card/PetCard/PetCard";
 
 const AccountPet = () => {
   const { data: userPetsData } = useSWR(
-    `api/account/user/${
+    `api/user/${
       JSON.parse(localStorage.getItem("userDetails")!)["uuid"]
     }/pets`,
     getUserPets

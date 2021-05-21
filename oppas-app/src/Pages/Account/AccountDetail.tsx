@@ -33,7 +33,7 @@ const AccountGegevens = () => {
   const navigate = useNavigate();
 
   const { data: accountData } = useSWR(
-    `api/account/user/${
+    `api/user/${
       JSON.parse(localStorage.getItem("userDetails")!)["uuid"]
     }`,
     getUserDetails

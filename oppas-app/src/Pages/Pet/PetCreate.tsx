@@ -70,7 +70,7 @@ const CreatePet = () => {
 
   const { data: kindsOfPetData } = useSWR("api/pet-kinds", getPetKinds);
   const { data: breedsOfKindData } = useSWR(
-    `api/pet-kinds/${kindOption?.value}`,
+    `api/pet-kinds/${kindOption?.value}/breeds`,
     getPetBreeds
   );
 
