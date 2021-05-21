@@ -11,7 +11,7 @@ import SelectButton from "../../Components/Select/Select";
 import BaseDatepicker from "../../Components/Datepicker/BaseDatepicker";
 
 import Variants from "../../Utils/Variants";
-import { getPetKinds, getPetBreeds, submitNewPet } from "../../Hooks/Api";
+import { getPetKinds, getPetBreeds, submitNewPet } from "../../Api/PetCalls";
 import { StH2, StH3, StForm, StSection } from "../../Utils/HTMLComponents";
 
 const DoubleInputContainer = styled.section`
@@ -70,7 +70,7 @@ const CreatePet = () => {
 
   const { data: kindsOfPetData } = useSWR("api/pet-kinds", getPetKinds);
   const { data: breedsOfKindData } = useSWR(
-    `api/pet-kinds/${kindOption?.value}`,
+    `api/pet-kinds/${kindOption?.value}/breeds`,
     getPetBreeds
   );
 

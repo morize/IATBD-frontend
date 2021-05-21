@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+import { sendResetPasswordEmail } from "../../Api/AuthCalls";
 import { StH2, StSection, StP } from "../../Utils/HTMLComponents";
 import BaseInput from "../../Components/Input/BaseInput";
 import BaseButton from "../../Components/Button/BaseButton";
-import { sendResetPasswordEmail } from "../../Hooks/Api";
 
 const StForgotPasswordContainer = styled(StSection)`
   & p {
@@ -38,26 +38,26 @@ const ForgotPassword = () => {
       </StP>
 
       <BaseInput
-        label={"Email:"}
-        placeholder={"Vul een geregistreerde email in"}
+        label="Email:"
+        placeholder="Vul een geregistreerde email in"
         value={emailToRecover}
         onChange={(e) => setEmailToRecover(e.target.value)}
       />
 
       {emailStatus === "sent" && (
-        <StP variant={"secondary"}>
-          {"Wachtwoordherstel email is verstuurd! Neem een kijk op uw mail."}
+        <StP variant="success">
+          Wachtwoordherstel email is verstuurd! Neem een kijk op uw mail.
         </StP>
       )}
 
       {emailStatus === "error" && (
-        <StP variant={"danger"}>
-          {"Er is iets misgegaan, probeer opnieuw met een andere email."}
+        <StP variant="danger">
+          Er is iets misgegaan, probeer opnieuw met een andere email.
         </StP>
       )}
 
       <BaseButton
-        label={"Stuur wachtwoordherstel email"}
+        label="Stuur wachtwoordherstel email"
         onClick={onResetPasswordClicked}
       />
     </StForgotPasswordContainer>

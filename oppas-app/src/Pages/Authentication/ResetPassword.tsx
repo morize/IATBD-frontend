@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
 import styled from "styled-components";
 
+import { submitNewPassword } from "../../Api/AuthCalls";
 import { StH1, StSection, StP } from "../../Utils/HTMLComponents";
 import BaseInput from "../../Components/Input/BaseInput";
 import BaseButton from "../../Components/Button/BaseButton";
-import { submitNewPassword } from "../../Hooks/Api";
+
 
 const StResetPasswordContainer = styled(StSection)`
   & p {

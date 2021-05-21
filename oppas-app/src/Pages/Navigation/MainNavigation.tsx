@@ -7,11 +7,10 @@ import PersonIcon from "@material-ui/icons/Person";
 import PetsIcon from "@material-ui/icons/Pets";
 import GroupIcon from "@material-ui/icons/Group";
 
+import { logout } from "../../Api/AuthCalls";
 import Variants from "../../Utils/Variants";
 import bgNavigation from "../../Utils/Images/bg_navigation.jpg";
 import dogIcon from "../../Utils/Images/logo_pojd.png";
-
-import { logout } from "../../Hooks/Api";
 
 const StNavigationAnchor = styled(NavLink)`
   text-decoration: none;
