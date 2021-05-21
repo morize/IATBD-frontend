@@ -23,11 +23,12 @@ const StResetPasswordContainer = styled(StSection)`
 `;
 
 const ResetPassword = () => {
+  const navigate = useNavigate();
+
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const { token, email } = useParams();
-  const navigate = useNavigate();
-
+ 
   const onResetPasswordSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import BaseButton from "../../Components/Button/BaseButton";
 import Checkbox from "../../Components/Checkbox/Checkbox";
-import PetCard, { PetCardItem } from "../../Components/Card/PetCard/PetCard";
+import PetCard from "../../Components/Card/PetCard/PetCard";
 import Switch from "../../Components/Switch/Switch";
 import { StH2, StH3, StSection } from "../../Utils/HTMLComponents";
 
@@ -10,14 +10,13 @@ const StOptionsContainer = styled.section`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 32px 84px;
-  margin-bottom: 32px;
+  margin: 32px 0;
 
   & label {
-    flex-direction: column;
     border-radius: 14px;
 
     &:hover {
-      background: rgba(72, 72, 72, 0.1);
+      background: rgba(72, 72, 72, 0.15);
     }
   }
 `;
@@ -26,19 +25,17 @@ const AccountSitter = () => {
   return (
     <>
       <StH2>Opasser</StH2>
-
-      <Switch label="Ben ik een opasser?" />
-
       <StSection>
         <StH3>Mijn oppasvragen</StH3>
 
-        <PetCard variant="sitter">
+        <PetCard cardVariant="sitter">
           {/* <PetCardItem routeTo="xd" /> */}
         </PetCard>
       </StSection>
 
       <StSection>
-        <StH3>Ik ben een opasser voor</StH3>
+        <StH3>Oppas instellingen</StH3>
+        <Switch label="Ben ik een opasser?" />
 
         <StOptionsContainer>
           <Checkbox label="Katten" />
@@ -47,7 +44,7 @@ const AccountSitter = () => {
           <Checkbox label="Vissen" />
         </StOptionsContainer>
 
-        <BaseButton label="Dierensoorten opslaan" />
+        <BaseButton label="Instellingen opslaan" />
       </StSection>
     </>
   );

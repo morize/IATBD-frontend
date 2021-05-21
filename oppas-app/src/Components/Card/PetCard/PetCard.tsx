@@ -4,155 +4,135 @@ import styled from "styled-components";
 
 import dogPattern from "../../../Utils/Images/dog_pattern.jpg";
 
-const PetCardContainer = styled(NavLink)`
+const StPetCard = styled(NavLink)`
   display: flex;
-  align-items: center;
-  height: 160px;
-  margin-bottom: 32px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  height: 140px;
+  margin-bottom: 24px;
   border-radius: 8px;
   text-decoration: none;
   cursor: pointer;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   &:last-child {
     margin-bottom: 0;
   }
+`;
 
-  & figure {
-    display: flex;
-    width: 35%;
+const StPetCardFigure = styled.figure`
+  width: 35%;
+  margin: 0;
+
+  & img {
+    width: 100%;
     height: 100%;
-    margin: 0;
-    background: none;
-
-    & img {
-      width: 100%;
-      height: 100%;
-      border-radius: 8px 0 0 10px;
-      object-fit: cover;
-    }
+    border-radius: 8px 0 0 8px;
+    object-fit: cover;
   }
 `;
 
-const PetCardContent = styled.div`
+const StPetCardContent = styled.div`
   width: 65%;
-  height: 100%;
 `;
 
-const PetCardHeader = styled.div`
+const StPetCardContentHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 40%;
-
-  font-size: 120%;
   border-radius: 0 8px 0 0;
   background: #bc9d61;
+  font-size: 1.1rem;
   color: #ffff;
 `;
 
-const PetCardDescription = styled(PetCardHeader)`
+const StPetCardContentDescription = styled(StPetCardContentHeader)`
+  flex-direction: column;
   height: 60%;
   border-radius: 0 0 8px 0;
-  font-size: 100%;
   background: #e9ce88;
+  font-size: 1rem;
   color: #744226;
-  flex-direction: column;
 
   & p {
-    margin: 0 0 0.5rem 0;
-    color: #744226; 
+    margin: 0 0 6px 0;
+    color: #744226;
   }
-  
 `;
 
-export interface IPetCardItem {
-  pet_name: string;
-  pet_kind: string;
-  pet_breed: string;
-  pet_image: string;
-  routeTo: string;
+interface IPetCardItem {
+  petName: string;
+  petKind: string;
+  petBreed: string;
+  petImageUrl: string;
+  redirectTo: string;
 }
 
-export const PetCardItem = ({
-  pet_name,
-  pet_kind,
-  pet_breed,
-  pet_image,
-  routeTo,
-}: IPetCardItem) => {
-  return (
-    <PetCardContainer to={`${routeTo}/profiel`}>
-      <figure>
-        <img src={pet_image} alt="Een huisdier" />
-      </figure>
+export const PetCardItem = (props: IPetCardItem) => (
+  <StPetCard to={`${props.redirectTo}/profiel`}>
+    <StPetCardFigure>
+      <img src={props.petImageUrl} alt="Een huisdier" />
+    </StPetCardFigure>
 
-      <PetCardContent>
-        <PetCardHeader>{pet_name}</PetCardHeader>
-        <PetCardDescription>
-          <p>Soort: {pet_kind}</p>
-          <p>Ras: {pet_breed}</p>
-        </PetCardDescription>
-      </PetCardContent>
-    </PetCardContainer>
-  );
-};
+    <StPetCardContent>
+      <StPetCardContentHeader>{props.petName}</StPetCardContentHeader>
+      <StPetCardContentDescription>
+        <p>Soort: {props.petKind}</p>
+        <p>Ras: {props.petBreed}</p>
+      </StPetCardContentDescription>
+    </StPetCardContent>
+  </StPetCard>
+);
 
-export const StPetItemsContainer = styled.section`
-  display: grid;
-  justify-content: center;
-  padding: 40px 32px;
-  background-image: url(${dogPattern});
-  background-size: cover;
-  background-position: center;
-  border-radius: 8px;
+const StPetCardContainer = styled.section`
+  padding: 8%;
+
   box-sizing: border-box;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  background-image: url(${dogPattern});
+  background-position: center;
 `;
 
 const StAddPetButton = styled.button`
-  margin: 12px 0 0 0;
-  height: 60px;
+  width: 100%;
+  height: 70px;
+  margin: 8px 0 0 0;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
   background: #a77326;
+  font-size: 1rem;
+  font-weight: 600;
   color: #ffff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 export interface IPetCard {
   children?: ReactNode;
-  variant: "sitter" | "owner";
+  cardVariant: "sitter" | "owner";
 }
 
-const PetCard = ({ children, variant }: IPetCard) => {
+const PetCard = ({ children, cardVariant }: IPetCard) => {
   const navigate = useNavigate();
 
-  const onAddPetClick = () => navigate("nieuw-huisdier");
-
-  const emptyList = !children && (
-    <p>
-      {variant === "sitter"
+  const emptyCardList = !children && (
+    <div>
+      {cardVariant === "sitter"
         ? "U heeft geen oppasaanvragen"
         : "U heeft geen aangemelde huisdieren"}
-    </p>
-  );
-
-  const addButton = variant === "owner" && (
-    <StAddPetButton onClick={onAddPetClick}>
-      Stel huisdier voor oppas
-    </StAddPetButton>
+    </div>
   );
 
   return (
-    <StPetItemsContainer>
+    <StPetCardContainer>
       {children}
-      {emptyList}
-      {addButton}
-    </StPetItemsContainer>
+      {emptyCardList}
+
+      {cardVariant === "owner" && (
+        <StAddPetButton onClick={() => navigate("nieuw-huisdier")}>
+          Huisdier toevoegen voor oppas
+        </StAddPetButton>
+      )}
+    </StPetCardContainer>
   );
 };
 

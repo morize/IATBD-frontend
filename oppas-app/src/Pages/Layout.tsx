@@ -20,16 +20,14 @@ const StContent = styled.section<{ inAuthenticationPage: boolean }>`
   display: flex;
   width: 100%;
   height: 100vh;
+  padding: ${(props) => (props.inAuthenticationPage ? "10vh 0" : "6vh 0")};
+  background: url(${bgLayout});
   box-sizing: border-box;
   overflow-y: auto;
-  background-image: url(${bgLayout});
-  padding: ${(props) => (props.inAuthenticationPage ? "10vh 0" : "6vh 0")};
 `;
 
 const checkIfAuthenticationPage = (url: string) => {
-  if (
-    url === "account"
-  ) {
+  if (url === "account") {
     return true;
   }
   return false;

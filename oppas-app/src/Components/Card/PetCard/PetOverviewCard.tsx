@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-const StPetCard = styled.figure`
+const StPetOverviewCard = styled.figure`
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 14rem;
+  height: 220px;
   margin: 0;
   cursor: pointer;
 
@@ -26,64 +26,47 @@ const StPetCard = styled.figure`
   }
 `;
 
-const StFeeIndicator = styled.span`
+const StPayIndicator = styled.span`
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  top: 4rem;
-  right: -2rem;
-  width: 5rem;
-  height: 5rem;
-
-  text-align: center;
-  background: #a75d5d;
-  color: #ffff;
-  font-size: 0.8rem;
+  top: 20%;
+  right: -16%;
+  width: 34%;
+  height: 34%;
   border-radius: 50%;
+  background: #a75d5d;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #ffff;
   white-space: pre-wrap;
 `;
 
-const StKindIndicator = styled.span`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 6rem;
-  width: 7rem;
-  height: 3rem;
-  text-align: center;
-  background: rgba(171, 128, 88, 0.9);
-  color: #ffff;
-  font-size: 0.8rem;
+const StKindIndicator = styled(StPayIndicator)`
+  top: 40%;
+  left: 0;
+  width: 50%;
+  height: 20%;
   border-radius: 0 8px 8px 0;
-  white-space: pre-wrap;
+  background: rgba(171, 128, 88, 1);
 `;
 
 interface IPetOverviewCard {
   petName: string;
   petKind: string;
-  petImg?: string;
+  petImgUrl: string;
   sitterHourlyPrize: number;
   onClick: () => void;
 }
 
-const PetOverviewCard = ({
-  petName,
-  petKind,
-  petImg = "https://pbs.twimg.com/media/CyTv5WOWEAASezv.jpg",
-  sitterHourlyPrize,
-  onClick,
-}: IPetOverviewCard) => (
-  <StPetCard onClick={onClick}>
-    <img
-      alt="Afbeelding van een huisdier."
-      srcSet={petImg}
-    />
-    <figcaption>{petName}</figcaption>
-    <StFeeIndicator>{`${sitterHourlyPrize}€\np/uur`}</StFeeIndicator>
-    <StKindIndicator>{petKind}</StKindIndicator>
-  </StPetCard>
+const PetOverviewCard = (props: IPetOverviewCard) => (
+  <StPetOverviewCard onClick={props.onClick}>
+    <img alt="Afbeelding van een huisdier." srcSet={props.petImgUrl} />
+    <figcaption>{props.petName}</figcaption>
+    <StPayIndicator>{`${props.sitterHourlyPrize}€\np/uur`}</StPayIndicator>
+    <StKindIndicator>{props.petKind}</StKindIndicator>
+  </StPetOverviewCard>
 );
 
 export default PetOverviewCard;

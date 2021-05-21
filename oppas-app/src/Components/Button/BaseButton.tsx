@@ -4,19 +4,15 @@ import styled from "styled-components";
 import Variants, { TVariants } from "../../Utils/Variants";
 
 const StButton = styled.button<{ variant: TVariants }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
-  height: 60px;
-  background: ${(props) => Variants[props.variant]};
-  border-radius: 10px;
+  height: 4rem;
   border: none;
-  cursor: pointer;
+  border-radius: 8px;
+  background: ${(props) => Variants[props.variant]};
   font-family: "Fira Sans", sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   color: #ffffff;
-  outline: 0;
+  cursor: pointer;
   user-select: none;
 `;
 
@@ -28,24 +24,24 @@ const StEndIcon = styled.div`
 
 export interface IBaseButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   label?: string | ReactNode;
-  icon?: ReactNode;
+  startIcon?: ReactNode;
   endIcon?: ReactNode;
   variant?: TVariants;
 }
 
 const BaseButton = ({
   label,
-  icon,
+  startIcon,
   endIcon,
   variant = "primary",
   ...rest
 }: IBaseButton) => {
-  const labelText = label !== "" ? label : "Press me!";
-  const iconJsx = icon && icon;
+  const labelText = label ? label : "Press me!";
+  const startIconJsx = startIcon && startIcon;
   const endIconJsx = endIcon && <StEndIcon>{endIcon}</StEndIcon>;
   return (
     <StButton variant={variant} {...rest}>
-      {labelText} {iconJsx} {endIconJsx}
+      {labelText} {startIconJsx} {endIconJsx}
     </StButton>
   );
 };

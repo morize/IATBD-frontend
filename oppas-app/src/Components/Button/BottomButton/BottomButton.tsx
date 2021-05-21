@@ -9,10 +9,10 @@ export interface IBottomButton extends Omit<IBaseButton, "label" | "variant"> {
 }
 
 const StBottomButton = styled(BaseButton)`
+  position: fixed;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;

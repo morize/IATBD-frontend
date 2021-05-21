@@ -3,10 +3,9 @@ import styled from "styled-components";
 
 import Variants from "../../Utils/Variants";
 
-const StLabel = styled.label`
+const StInputLabel = styled.label`
   display: block;
   margin-bottom: 12px;
-  font-size: 16px;
   font-weight: 600;
   color: ${Variants.primary};
   user-select: none;
@@ -16,12 +15,12 @@ const StInput = styled.input`
   width: 100%;
   height: 100%;
   padding: 8px;
-  color: #494949;
   border: 0;
-  outline: none;
   background: none;
   font-family: "Fira Sans", sans-serif;
+  color: #494949;
   box-sizing: border-box;
+  outline: none;
   z-index: 2;
 
   &::placeholder {
@@ -30,15 +29,14 @@ const StInput = styled.input`
 `;
 
 const StInputContainer = styled.div`
-  display: flex;
-  width: 100% !important;
   position: relative;
+  display: flex;
   align-items: center;
   height: 50px;
   border: 1px solid #b3b3c2;
   border-radius: 5px;
-  box-sizing: border-box;
   background: #ffff;
+  box-sizing: border-box;
   user-select: none;
 
   & span {
@@ -46,8 +44,8 @@ const StInputContainer = styled.div`
     color: ${Variants.primary};
 
     & svg {
-      width: 1.25em;
-      height: 1.25em;
+      width: 34px;
+      height: 34px;
     }
   }
 
@@ -58,15 +56,12 @@ const StInputContainer = styled.div`
 
   & input[type="file"] + span {
     position: absolute;
-    margin-right: 0;
     right: 8px;
-    color: ${Variants.primary};
+    margin-right: 0;
   }
 `;
 
-const InputComponentContainer = styled.div`
-  width: 100%;
-
+const InputParent = styled.div`
   margin-bottom: 24px;
 
   &:last-child {
@@ -79,19 +74,14 @@ export interface IBaseInput extends InputHTMLAttributes<HTMLInputElement> {
   icon?: ReactNode;
 }
 
-const BaseInput = ({ label, icon, ...rest }: IBaseInput) => {
-  const labelJsx = label && <StLabel>{label}</StLabel>;
-  const iconJsx = icon && <span>{icon}</span>;
-
-  return (
-    <InputComponentContainer>
-      {labelJsx}
-      <StInputContainer>
-        <StInput {...rest} />
-        {iconJsx}
-      </StInputContainer>
-    </InputComponentContainer>
-  );
-};
+const BaseInput = ({ label, icon, ...rest }: IBaseInput) => (
+  <InputParent>
+    {label && <StInputLabel>{label}</StInputLabel>}
+    <StInputContainer>
+      <StInput {...rest} />
+      {icon && <span>{icon}</span>}
+    </StInputContainer>
+  </InputParent>
+);
 
 export default BaseInput;

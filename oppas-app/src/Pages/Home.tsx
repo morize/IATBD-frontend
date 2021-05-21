@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 import { StH1, StH2, StP, StSection } from "../Utils/HTMLComponents";
-import CardButton from "../Components/Card/CardButton/CardButton";
+import CardButton from "../Components/Button/CardButton/CardButton";
 
 const StCardFigure = styled.figure`
   width: 100%;
@@ -36,7 +36,7 @@ const Home = () => (
         <StCardFigure>
           <CardButton
             src="https://dogtime.com/assets/uploads/2018/10/how-to-get-pet-sitter-job.jpg"
-            buttonText="Neem een kijk naar onze opassers!"
+            buttonText="Neem een kijk naar onze huisdieren!"
           />
         </StCardFigure>
       </NavLink>

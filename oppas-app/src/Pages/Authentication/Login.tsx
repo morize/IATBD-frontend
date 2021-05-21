@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import {
-  StH1,
+  StH2,
   StSection,
   StLabel,
   StP,
@@ -16,7 +16,7 @@ import Checkbox from "../../Components/Checkbox/Checkbox";
 
 import { login } from "../../Hooks/Api";
 
-const StPasswordResetInfo = styled(StP)`
+const StPasswordResetIndicator = styled(StP)`
   margin-bottom: 32px;
 `;
 
@@ -25,29 +25,29 @@ const StPasswordForgotAnchor = styled.a`
   right: 0;
 
   & label {
-    cursor: pointer;
-    font-size: 14px;
+    font-size: 0.9rem;
     font-weight: 600;
     color: ${Variants.info};
     text-decoration: underline;
+    cursor: pointer;
   }
 `;
 
 const StErrorMessage = styled.p`
+  margin: -16px 0 30px 0;
   color: ${Variants.danger};
-  margin: -20px 0 30px 0;
 `;
 
-const StRegister = styled.section`
+const StRegisterRedirect = styled.section`
   margin-top: 120px;
-  font-size: 18px;
   text-align: center;
+  font-size: 1.1rem;
   color: ${Variants.primary};
   white-space: pre-wrap;
 
   & a {
     display: block;
-    margin-top: 10px;
+    margin-top: 12px;
     font-weight: 600;
     color: ${Variants.primary};
     text-decoration: underline;
@@ -60,36 +60,15 @@ interface LocationState {
 }
 
 const Login = () => {
-  const [formEmail, setFormEmail] = useState("mauricemr@outlook.com");
-  const [formPassword, setFormPassword] = useState("Hilol123.");
-  const [formError, setFormError] = useState(false);
-  const [rememberMeCheck, setRememberMeCheck] = useState(false);
-
-  const { state }: LocationState = useLocation();
   const navigate = useNavigate();
 
-  // Redux storechange logic
-  // Not needed because its not persistent when the page refreshes
-  // But i'll leave it here just in case its somehow better than localstorage.
-  // ------------ LOGIC ---------------
-  // const dispatch = useDispatch();
-  // const dispatchUserDetails = (
-  //   username: string,
-  //   isBlocked: number,
-  //   isAdmin: number
-  // ) => {
-  //   dispatch(
-  //     setUserDetails({
-  //       userDetails: {
-  //         username: username,
-  //         isAdmin: isAdmin,
-  //         isBlocked: isBlocked,
-  //       },
-  //     })
-  //   );
-  // };
+  const { state }: LocationState = useLocation();
+  const [formEmail, setFormEmail] = useState("mauricemr@outlook.com");
+  const [formPassword, setFormPassword] = useState("Hilol123.");
+  const [formStatus, setFormStatus] = useState("default");
+  const [rememberMeCheck, setRememberMeCheck] = useState(false);
 
-  const submitLoginData = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const submitFormLoginData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     login(formEmail, formPassword, rememberMeCheck)
@@ -97,37 +76,29 @@ const Login = () => {
         navigate("../../account");
       })
       .catch(() => {
-        setFormError(true);
+        setFormStatus("error");
       });
-  };
-
-  const onPasswordResetClicked = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    navigate("../wachtwoord-vergeten");
-  };
-
-  const onRegisterClicked = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    navigate("../aanmelden");
   };
 
   return (
     <StSection>
-      <StH1>Inloggen</StH1>
+      <StH2>Inloggen</StH2>
 
-      {state && (
-        <StPasswordResetInfo variant={"success"}>
+      {state?.didPasswordReset && (
+        <StPasswordResetIndicator variant={"success"}>
           U heeft uw wachtwoord opnieuw ingesteld.
-        </StPasswordResetInfo>
+        </StPasswordResetIndicator>
       )}
 
-      <StForm>
+      <StForm onSubmit={submitFormLoginData}>
         <BaseInput
           label="Email:"
           placeholder="Voer uw email in"
           onChange={(e) => setFormEmail(e.target.value)}
         />
-        <StPasswordForgotAnchor onClick={onPasswordResetClicked}>
+        <StPasswordForgotAnchor
+          onClick={() => navigate("../wachtwoord-vergeten")}
+        >
           <StLabel>Wachtwoord vergeten?</StLabel>
         </StPasswordForgotAnchor>
 
@@ -138,7 +109,7 @@ const Login = () => {
           onChange={(e) => setFormPassword(e.target.value)}
         />
 
-        {formError && (
+        {formStatus === "error" && (
           <StErrorMessage>
             De aanmelding is mislukt, probeer nogmaals.
           </StErrorMessage>
@@ -151,15 +122,15 @@ const Login = () => {
           onClick={() => setRememberMeCheck(!rememberMeCheck)}
         />
 
-        <BaseButton type="submit" label="Inloggen" onClick={submitLoginData} />
+        <BaseButton label="Inloggen" type="submit" />
       </StForm>
 
-      <StRegister>
+      <StRegisterRedirect>
         {"Nog geen account?\n"}
-        <a href="#register" onClick={onRegisterClicked}>
+        <a href="#register" onClick={() => navigate("../aanmelden")}>
           Klik hier om aan te melden!
         </a>
-      </StRegister>
+      </StRegisterRedirect>
     </StSection>
   );
 };
