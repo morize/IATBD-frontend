@@ -2,7 +2,8 @@ import { useParams } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
-import { getSpecificPet, laravelApiUrl } from "../../Hooks/Api";
+import { laravelApiUrl } from "../../Api/Api";
+import { getSpecificPet } from "../../Api/PetCalls";
 import { StH2, StLabel, StP, StSection } from "../../Utils/HTMLComponents";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
 

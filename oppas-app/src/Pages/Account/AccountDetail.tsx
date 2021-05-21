@@ -1,13 +1,9 @@
-import { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
-import {
-  sendEmailVerificationLink,
-  getUserDetails,
-  logout,
-} from "../../Hooks/Api";
+import { sendEmailVerificationLink, logout } from "../../Api/AuthCalls";
+import { getUserDetails } from "../../Api/UserCalls";
 import BaseButton from "../../Components/Button/BaseButton";
 import {
   StH2,
@@ -43,7 +39,7 @@ const AccountGegevens = () => {
     getUserDetails
   );
 
-  const onLogoutClicked = (e: MouseEvent<HTMLButtonElement>) => {
+  const onLogoutClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     logout().then(() => {

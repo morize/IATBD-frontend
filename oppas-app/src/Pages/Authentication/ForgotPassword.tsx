@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+import { sendResetPasswordEmail } from "../../Api/AuthCalls";
 import { StH2, StSection, StP } from "../../Utils/HTMLComponents";
 import BaseInput from "../../Components/Input/BaseInput";
 import BaseButton from "../../Components/Button/BaseButton";
-import { sendResetPasswordEmail } from "../../Hooks/Api";
 
 const StForgotPasswordContainer = styled(StSection)`
   & p {

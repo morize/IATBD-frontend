@@ -1,17 +1,16 @@
 import { useState } from "react";
-
 import { useNavigate } from "react-router-dom";
+
+import { register, login } from "../../Api/AuthCalls";
 import { StH1, StSection, StForm } from "../../Utils/HTMLComponents";
 import BaseInput from "../../Components/Input/BaseInput";
 import BaseButton from "../../Components/Button/BaseButton";
-
-import { register, login } from "../../Hooks/Api";
 
 const Register = () => {
   const navigate = useNavigate();
 
   const [formUsername, setFormUsername] = useState("morize");
-  const [formEmail, setFormEmail] = useState("ayyylmao985@gmail.com");
+  const [formEmail, setFormEmail] = useState("mauricemr@outlook.com");
   const [formPassword, setFormPassword] = useState("Hilol123.");
   const [formConfPassword, setFormConfPassword] = useState("Hilol123.");
 

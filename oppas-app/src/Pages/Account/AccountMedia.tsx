@@ -1,16 +1,18 @@
 import { useState } from "react";
 
-import { StSection, StH2, StH3, StForm } from "../../Utils/HTMLComponents";
 import PublishIcon from "@material-ui/icons/Publish";
 import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
 
-import { submitSitterMedia } from "../../Hooks/Api";
+import { submitUserMedia } from "../../Api/UserCalls";
+import { StSection, StH2, StH3, StForm } from "../../Utils/HTMLComponents";
 import BaseButton from "../../Components/Button/BaseButton";
 import BaseInput from "../../Components/Input/BaseInput";
 
 const AccountMedia = () => {
-  const [formFirstUserImage, setFormFirstUserImage] = useState<File | null>(null);
-  const [formSecondUserImage, setFormSecondUserImage] = useState<File | null>(null);
+  const [formFirstUserImage, setFormFirstUserImage] =
+    useState<File | null>(null);
+  const [formSecondUserImage, setFormSecondUserImage] =
+    useState<File | null>(null);
   const [formYoutubeUrl, setFormYoutubeUrl] = useState("");
   const [formStatus, setFormStatus] = useState("default");
 
@@ -21,12 +23,13 @@ const AccountMedia = () => {
       let fData = new FormData();
 
       formFirstUserImage && fData.append("sitter_image_1", formFirstUserImage);
-      formSecondUserImage && fData.append("sitter_image_2", formSecondUserImage);
+      formSecondUserImage &&
+        fData.append("sitter_image_2", formSecondUserImage);
       formYoutubeUrl && fData.append("sitter_video_link", formYoutubeUrl);
 
       // TODO: redirect to account user profile page when there's one if the post is succesful
       // load error indicator if the post fails
-      submitSitterMedia(fData).then(() => setFormStatus("success"));
+      submitUserMedia(fData).then(() => setFormStatus("success"));
     } else {
       if (formStatus !== "error") setFormStatus("error");
     }

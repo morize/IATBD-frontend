@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
+import { StH2, StH3, StSection } from "../../Utils/HTMLComponents";
 import BaseButton from "../../Components/Button/BaseButton";
 import Checkbox from "../../Components/Checkbox/Checkbox";
 import PetCard from "../../Components/Card/PetCard/PetCard";
 import Switch from "../../Components/Switch/Switch";
-import { StH2, StH3, StSection } from "../../Utils/HTMLComponents";
 
 const StOptionsContainer = styled.section`
   display: grid;

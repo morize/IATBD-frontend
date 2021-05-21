@@ -1,8 +1,9 @@
 import useSWR from "swr";
 
-import PetCard, { PetCardItem } from "../../Components/Card/PetCard/PetCard";
+import { laravelApiUrl } from "../../Api/Api";
+import { getUserPets } from "../../Api/PetCalls";
 import { StH2, StSection } from "../../Utils/HTMLComponents";
-import { getUserPets, laravelApiUrl } from "../../Hooks/Api";
+import PetCard, { PetCardItem } from "../../Components/Card/PetCard/PetCard";
 
 const AccountPet = () => {
   const { data: userPetsData } = useSWR(

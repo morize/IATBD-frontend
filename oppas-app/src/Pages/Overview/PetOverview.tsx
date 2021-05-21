@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
-import SelectButton from "../../Components/Select/Select";
-import PetOverviewCard from "../../Components/Card/PetCard/PetOverviewCard";
-
-import { getAllPets, getPetKinds, laravelApiUrl } from "../../Hooks/Api";
+import { laravelApiUrl } from "../../Api/Api";
+import { getAllPets, getPetKinds } from "../../Api/PetCalls";
 import { StH1, StSection } from "../../Utils/HTMLComponents";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
+import SelectButton from "../../Components/Select/Select";
+import PetOverviewCard from "../../Components/Card/PetCard/PetOverviewCard";
 
 const StOverview = styled(StSection)`
   display: flex;
@@ -44,7 +44,7 @@ const StOverviewGrid = styled(StSection)`
 const PetOverview = () => {
   const { data: kindsOfPetData } = useSWR("api/pet-kinds", getPetKinds);
   const { data: petOverviewData } = useSWR("api/pets", getAllPets);
-  
+
   const [filterKind, setFilterKind] = useState({
     value: "",
     label: "Huisdier Soort",
