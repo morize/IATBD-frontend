@@ -7,12 +7,13 @@ import PersonIcon from "@material-ui/icons/Person";
 import PetsIcon from "@material-ui/icons/Pets";
 import GroupIcon from "@material-ui/icons/Group";
 
+import Variants from "../../Utils/Variants";
 import bgNavigation from "../../Utils/Images/bg_navigation.jpg";
 import dogIcon from "../../Utils/Images/logo_pojd.png";
 
 import { logout } from "../../Hooks/Api";
 
-const StNavLink = styled(NavLink)`
+const StNavigationAnchor = styled(NavLink)`
   text-decoration: none;
   color: white;
 `;
@@ -23,13 +24,12 @@ const StNavigation = styled.nav`
   align-items: center;
   width: 16vw;
   height: 100vh;
-  overflow: hidden;
-  box-sizing: border-box;
-  background-image: url(${bgNavigation});
+  background: url(${bgNavigation});
   background-position: center;
   background-size: cover;
+  color: #ffff;
+  box-sizing: border-box;
   box-shadow: inset 0 0 0 2000px rgba(39, 30, 8, 0.6);
-  color: white;
 
   @media screen and (max-width: 800px) {
     position: sticky;
@@ -41,22 +41,19 @@ const StNavigation = styled.nav`
 
 const StLogoFigure = styled.figure`
   display: flex;
-  position: relative;
-  width: 80%;
-  margin: 2vh 0;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  margin: 2vh 0;
   user-select: none;
 
   & img {
-    width: 5vw;
+    width: 4.5vw;
   }
 
   & figcaption {
     margin-top: -0.5vh;
     text-align: center;
-    font-size: 1.2vw;
+    font-size: 1vw;
     white-space: pre-wrap;
   }
 
@@ -79,13 +76,14 @@ const StLogoFigure = styled.figure`
   }
 `;
 
-const StUl = styled.ul`
+const StNavigationItems = styled.ul`
   width: 100%;
   margin: 2vh 0;
   padding: 0;
-  list-style: none;
-  font-size: 0.9vw;
+
   text-align: center;
+  font-size: 0.8vw;
+  list-style: none;
 
   & li {
     height: 11vh;
@@ -93,15 +91,14 @@ const StUl = styled.ul`
     background: rgba(132, 79, 0, 0.9);
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
-    & ${StNavLink} {
+    & ${StNavigationAnchor} {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100%;
-      box-sizing: border-box;
       white-space: pre-wrap;
 
-      &.mainnavigation-active {
+      &.main__navigation__active {
         background: rgba(77, 46, 0, 0.7);
       }
     }
@@ -127,35 +124,41 @@ const StUl = styled.ul`
       background-color: #a86f18;
       filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
-      & ${StNavLink} {
+      & ${StNavigationAnchor} {
         width: 100%;
       }
     }
   }
 `;
 
-const StBottom = styled.section`
+const StNavigationBottom = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 80%;
   height: 16%;
-  margin-top: auto;
-  text-align: center;
-  font-size: 0.8vw;
+  font-size: 0.7vw;
   white-space: pre-wrap;
 
-  & ${StNavLink} {
-    margin-top: 0.4vh;
+  & a {
+    margin-top: 0.2vh;
     text-decoration: underline;
     color: #95f9ff;
+    cursor: pointer;
   }
 
-  & a {
-    margin-top: 0.4vh;
-    text-decoration: underline;
-    color: #95f9ff;
+  & button {
+    height: 4vh;
+    width: 50%;
+    margin-top: 0.2vw;
+    padding: 0;
+    border: 0;
+    border-radius: 0.4vw;
+    background: ${Variants.secondary};
+    font-size: 0.6vw;
+    font-weight: 600;
+    color: #ffff;
     cursor: pointer;
   }
 
@@ -173,23 +176,26 @@ interface INavigationItem {
 
 const NavigationItem = (props: INavigationItem) => (
   <li>
-    <StNavLink to={props.routeTo} activeClassName={"mainnavigation-active"}>
+    <StNavigationAnchor
+      to={props.routeTo}
+      activeClassName={"main__navigation__active"}
+    >
       {props.portrait === "desktop" ? props.name : props.icon}
-    </StNavLink>
+    </StNavigationAnchor>
   </li>
 );
 
 const Navigation = () => {
-  const [respState, setRespState] = useState("");
-  const localUserDetails = JSON.parse(localStorage.getItem("userDetails")!);
-
   const navigate = useNavigate();
+
+  const [currentDevice, setCurrentDevice] = useState("");
+  const localUserDetails = JSON.parse(localStorage.getItem("userDetails")!);
 
   const checkIfDifferentViewport = useCallback(() => {
     let detectedViewport = window.innerWidth <= 800 ? "mobile" : "desktop";
 
-    detectedViewport !== respState && setRespState(detectedViewport);
-  }, [respState]);
+    detectedViewport !== currentDevice && setCurrentDevice(detectedViewport);
+  }, [currentDevice]);
 
   const onLogoutClicked = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -207,52 +213,52 @@ const Navigation = () => {
   return (
     <StNavigation>
       <StLogoFigure>
-        <img src={dogIcon} alt="site logo"></img>
+        <img src={dogIcon} alt="site logo" />
         <figcaption>{"Passen op\nje dier"}</figcaption>
       </StLogoFigure>
 
-      <StUl>
+      <StNavigationItems>
         <NavigationItem
           name="Home"
           routeTo="home"
-          portrait={respState}
+          portrait={currentDevice}
           icon={<HomeIcon />}
-        ></NavigationItem>
+        />
 
         <NavigationItem
           name="Account"
           routeTo="account"
-          portrait={respState}
+          portrait={currentDevice}
           icon={<PersonIcon />}
-        ></NavigationItem>
+        />
 
         <NavigationItem
           name={"Overzicht"}
           routeTo="overzicht"
-          portrait={respState}
+          portrait={currentDevice}
           icon={<PetsIcon />}
-        ></NavigationItem>
+        />
 
         <NavigationItem
           name={"Contact"}
           routeTo="contact"
-          portrait={respState}
+          portrait={currentDevice}
           icon={<GroupIcon />}
-        ></NavigationItem>
-      </StUl>
+        />
+      </StNavigationItems>
 
       {!localUserDetails ? (
-        <StBottom>
+        <StNavigationBottom>
           Nog geen account?
-          <StNavLink to="aanmelden">
+          <StNavigationAnchor to="aanmelden">
             Klik hier om aan te melden!
-          </StNavLink>
-        </StBottom>
+          </StNavigationAnchor>
+        </StNavigationBottom>
       ) : (
-        <StBottom>
+        <StNavigationBottom>
           Welkom {localUserDetails.username}
           <button onClick={onLogoutClicked}>Uitloggen</button>
-        </StBottom>
+        </StNavigationBottom>
       )}
     </StNavigation>
   );
