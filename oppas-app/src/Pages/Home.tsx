@@ -32,7 +32,7 @@ const Home = () => (
         pellentesque.
       </StP>
 
-      <NavLink to="overzicht/opassers">
+      <NavLink to="../overzicht">
         <StCardFigure>
           <CardButton
             src="https://dogtime.com/assets/uploads/2018/10/how-to-get-pet-sitter-job.jpg"
@@ -52,18 +52,6 @@ const Home = () => (
         pharetra, nulla quam ullamcorper eros, ac pellentesque metus odio quis
         massa. Nulla quam ullamcorper eros, ac pellentesque metus odio quis
         massa, nulla quam ullamcorper eros, ac pellentesque.
-      </StP>
-    </StSection>
-
-    <StSection>
-      <StH2>Contact</StH2>
-      <StP>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In cursus,
-        felis laoreet dignissim pharetra, nulla quam ullamcorper eros, ac
-        pellentesque metus odio quis massa. Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit. In cursus, felis laoreet dignissim
-        pharetra, nulla quam ullamcorper eros, ac pellentesque metus odio quis
-        massa.
       </StP>
     </StSection>
   </>
