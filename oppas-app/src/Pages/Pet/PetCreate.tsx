@@ -52,7 +52,6 @@ const StErrorMessage = styled.p`
 const CreatePet = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
-
   const [kindOption, setKindOption] =
     useState<{ label: string; value: string }>();
   const [breedOption, setBreedOption] =
