@@ -5,6 +5,7 @@ import Variants from "../../Utils/Variants";
 
 const SubNavigationContainer = styled.section`
   position: sticky;
+  top: 0;
   width: 16vw;
   margin: 0 32px;
 

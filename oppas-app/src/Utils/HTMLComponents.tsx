@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import Variants, { TVariants } from "./Variants";
 
@@ -36,7 +37,7 @@ export const StP = styled.p<IStP>`
 
 export const StLabel = styled.label`
   font-size: 18px;
-  color: #494949;
+  color: ${Variants.primary};
 `;
 
 export const StSection = styled.section`
@@ -78,3 +79,16 @@ export const StForm = styled.form`
     user-select: none;
   }
 `;
+
+const StProgressContainer = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
+export const LoadingComponent = () => (
+  <StProgressContainer>
+    <CircularProgress />
+  </StProgressContainer>
+);
