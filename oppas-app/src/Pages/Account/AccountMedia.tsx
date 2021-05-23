@@ -3,11 +3,11 @@ import useSWR, { trigger } from "swr";
 import PublishIcon from "@material-ui/icons/Publish";
 import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
 
-import { laravelApiUrl } from "../../Api/Api";
 import {
   submitUserMedia,
   updateUserMedia,
   getUserMedia,
+  formatUserMedia
 } from "../../Api/UserCalls";
 import {
   StSection,
@@ -19,9 +19,6 @@ import {
 import BaseButton from "../../Components/Button/BaseButton";
 import BaseInput from "../../Components/Input/BaseInput";
 import Showcase from "../../Components/Showcase/Showcase";
-
-const getYoutubeIdFromUrl = (url: string) =>
-  url.match(/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#]*).*/)![1];
 
 const AccountMedia = () => {
   const [formImage1, setFormImage1] = useState<File | null>(null);
@@ -52,22 +49,7 @@ const AccountMedia = () => {
     trigger(`api/users-media/${userId}`);
   };
 
-  const userMediaValues = {
-    image1: `${laravelApiUrl}/api/users-media/images/${mediaData?.image_1}`,
-    image2: `${laravelApiUrl}/api/users-media/images/${mediaData?.image_2}`,
-    youtube: {
-      thumbnailUrl:
-        mediaData?.video_link &&
-        `https://img.youtube.com/vi/${getYoutubeIdFromUrl(
-          mediaData.video_link
-        )}/default.jpg`,
-      videoUrl:
-        mediaData?.video_link &&
-        `https://www.youtube.com/embed/${getYoutubeIdFromUrl(
-          mediaData.video_link
-        )}`,
-    },
-  };
+  const userMediaValues = formatUserMedia(mediaData?.image_1, mediaData?.image_2, mediaData?.video_link);
 
   return !isValidating ? (
     <>
