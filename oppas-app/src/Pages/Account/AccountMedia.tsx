@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useSWR, { trigger } from "swr";
-import styled from "styled-components";
-import ImageGallery from "react-image-gallery";
 import PublishIcon from "@material-ui/icons/Publish";
 import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
-import "react-image-gallery/styles/css/image-gallery.css";
 
 import { laravelApiUrl } from "../../Api/Api";
 import {
@@ -12,7 +9,6 @@ import {
   updateUserMedia,
   getUserMedia,
 } from "../../Api/UserCalls";
-import Variants from "../../Utils/Variants";
 import {
   StSection,
   StH2,
@@ -22,45 +18,22 @@ import {
 } from "../../Utils/HTMLComponents";
 import BaseButton from "../../Components/Button/BaseButton";
 import BaseInput from "../../Components/Input/BaseInput";
-
-const StMediaVideo = styled.iframe`
-  width: 600px;
-  height: 480px;
-  margin: 0 auto;
-`;
-
-const StImageGalleryContainer = styled.div`
-  margin-bottom: 32px;
-
-  & .image-gallery-image {
-    width: 600px;
-    height: 480px;
-    border-radius: 8px;
-  }
-
-  & .image-gallery-icon {
-    color: ${Variants.primary};
-  }
-`;
+import Showcase from "../../Components/Showcase/Showcase";
 
 const getYoutubeIdFromUrl = (url: string) =>
   url.match(/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#]*).*/)![1];
-
-const renderVideo = (src: string) => (
-  <StMediaVideo src={src} frameBorder="0" allowFullScreen />
-);
 
 const AccountMedia = () => {
   const [formImage1, setFormImage1] = useState<File | null>(null);
   const [formImage2, setFormImage2] = useState<File | null>(null);
   const [formYoutubeUrl, setFormYoutubeUrl] = useState("");
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   const userId = JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
   const { data: mediaData, isValidating } = useSWR(
     `api/users-media/${userId}`,
-    getUserMedia
+    getUserMedia,
+    { revalidateOnFocus: false }
   );
 
   const submitFormData = (e: React.FormEvent<HTMLFormElement>) => {
@@ -96,40 +69,16 @@ const AccountMedia = () => {
     },
   };
 
-  useEffect(() => {
-    !isDataLoaded && !isValidating && setIsDataLoaded(true);
-  }, [isValidating, isDataLoaded]);
-
-  return isDataLoaded ? (
+  return !isValidating ? (
     <>
       <StH2>Media</StH2>
       <StSection>
         {mediaData && (
-          <StImageGalleryContainer>
-            <ImageGallery
-              showPlayButton={false}
-              showFullscreenButton={false}
-              items={[
-                {
-                  original: userMediaValues.image1,
-                  thumbnail: userMediaValues.image1,
-                },
-                {
-                  original: userMediaValues.image2,
-                  thumbnail: userMediaValues.image2,
-                },
-                {
-                  original: `video`,
-                  thumbnail:
-                    userMediaValues.youtube.thumbnailUrl &&
-                    userMediaValues.youtube.thumbnailUrl,
-                  renderItem: () =>
-                    userMediaValues.youtube.videoUrl &&
-                    renderVideo(userMediaValues.youtube.videoUrl),
-                },
-              ]}
-            />
-          </StImageGalleryContainer>
+          <Showcase
+            image1={userMediaValues.image1}
+            image2={userMediaValues.image2}
+            video={userMediaValues.youtube}
+          />
         )}
 
         {mediaData ? (

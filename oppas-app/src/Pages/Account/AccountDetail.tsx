@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
@@ -11,6 +12,7 @@ import {
   StSection,
   StP,
   StLabel,
+  LoadingComponent,
 } from "../../Utils/HTMLComponents";
 
 const StAccountDetails = styled.section`
@@ -29,14 +31,16 @@ const StSectionVerify = styled(StSection)`
   text-align: center;
 `;
 
+const getYoutubeIdFromUrl = (url: string) =>
+  url.match(/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#]*).*/)![1];
+  
 const AccountGegevens = () => {
   const navigate = useNavigate();
 
-  const { data: accountData } = useSWR(
-    `api/user/${
-      JSON.parse(localStorage.getItem("userDetails")!)["uuid"]
-    }`,
-    getUserDetails
+  const { data: accountData, isValidating } = useSWR(
+    `api/user/${JSON.parse(localStorage.getItem("userDetails")!)["uuid"]}`,
+    getUserDetails,
+    { revalidateOnFocus: false }
   );
 
   const onLogoutClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -47,7 +51,7 @@ const AccountGegevens = () => {
     });
   };
 
-  return (
+  return !isValidating ? (
     <>
       <StH2>Algemeen</StH2>
 
@@ -92,7 +96,12 @@ const AccountGegevens = () => {
           onClick={onLogoutClicked}
         />
       </StSection>
+      <StSection>
+        <StH3>Profiel Media</StH3>
+      </StSection>
     </>
+  ) : (
+    <LoadingComponent />
   );
 };
 
