@@ -1,10 +1,10 @@
-import { useState, useRef } from "react";
-import useSWR from "swr";
+import { useEffect, useState } from "react";
+import useSWR, { trigger } from "swr";
 import styled from "styled-components";
 import ImageGallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
 import PublishIcon from "@material-ui/icons/Publish";
 import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
+import "react-image-gallery/styles/css/image-gallery.css";
 
 import { laravelApiUrl } from "../../Api/Api";
 import {
@@ -12,7 +12,14 @@ import {
   updateUserMedia,
   getUserMedia,
 } from "../../Api/UserCalls";
-import { StSection, StH2, StH3, StForm } from "../../Utils/HTMLComponents";
+import Variants from "../../Utils/Variants";
+import {
+  StSection,
+  StH2,
+  StH3,
+  StForm,
+  LoadingComponent,
+} from "../../Utils/HTMLComponents";
 import BaseButton from "../../Components/Button/BaseButton";
 import BaseInput from "../../Components/Input/BaseInput";
 
@@ -23,56 +30,77 @@ const StMediaVideo = styled.iframe`
 `;
 
 const StImageGalleryContainer = styled.div`
+  margin-bottom: 32px;
+
   & .image-gallery-image {
     width: 600px;
     height: 480px;
+    border-radius: 8px;
+  }
+
+  & .image-gallery-icon {
+    color: ${Variants.primary};
   }
 `;
 
-const getYoutubeIdFromUrl = (url: string) => {
-  const regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
-  return url.match(regExp)![1];
-};
+const getYoutubeIdFromUrl = (url: string) =>
+  url.match(/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#]*).*/)![1];
 
 const renderVideo = (src: string) => (
   <StMediaVideo src={src} frameBorder="0" allowFullScreen />
 );
 
 const AccountMedia = () => {
-  const [formFirstUserImage, setFormFirstUserImage] =
-    useState<File | null>(null);
-  const [formSecondUserImage, setFormSecondUserImage] =
-    useState<File | null>(null);
+  const [formImage1, setFormImage1] = useState<File | null>(null);
+  const [formImage2, setFormImage2] = useState<File | null>(null);
   const [formYoutubeUrl, setFormYoutubeUrl] = useState("");
-  const [formStatus, setFormStatus] = useState("default");
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
-  const { data: mediaData } = useSWR(
-    `api/users-media/${
-      JSON.parse(localStorage.getItem("userDetails")!)["uuid"]
-    }`,
+  const userId = JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
+
+  const { data: mediaData, isValidating } = useSWR(
+    `api/users-media/${userId}`,
     getUserMedia
   );
 
   const submitFormData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (formFirstUserImage || formSecondUserImage || formYoutubeUrl) {
+    if (formImage1 || formImage2 || formYoutubeUrl) {
       let fData = new FormData();
 
-      formFirstUserImage && fData.append("sitter_image_1", formFirstUserImage);
-      formSecondUserImage &&
-        fData.append("sitter_image_2", formSecondUserImage);
+      formImage1 && fData.append("sitter_image_1", formImage1);
+      formImage2 && fData.append("sitter_image_2", formImage2);
       formYoutubeUrl && fData.append("sitter_video_link", formYoutubeUrl);
 
-      mediaData
-        ? updateUserMedia(fData).then(() => setFormStatus("success"))
-        : submitUserMedia(fData).then(() => setFormStatus("success"));
-    } else {
-      if (formStatus !== "error") setFormStatus("error");
+      mediaData ? updateUserMedia(fData) : submitUserMedia(fData);
     }
+
+    trigger(`api/users-media/${userId}`);
   };
-  
-  return (
+
+  const userMediaValues = {
+    image1: `${laravelApiUrl}/api/users-media/images/${mediaData?.image_1}`,
+    image2: `${laravelApiUrl}/api/users-media/images/${mediaData?.image_2}`,
+    youtube: {
+      thumbnailUrl:
+        mediaData?.video_link &&
+        `https://img.youtube.com/vi/${getYoutubeIdFromUrl(
+          mediaData.video_link
+        )}/default.jpg`,
+      videoUrl:
+        mediaData?.video_link &&
+        `https://www.youtube.com/embed/${getYoutubeIdFromUrl(
+          mediaData.video_link
+        )}`,
+    },
+  };
+
+  useEffect(() => {
+    !isDataLoaded && !isValidating && setIsDataLoaded(true);
+  }, [isValidating, isDataLoaded]);
+
+  return isDataLoaded ? (
     <>
       <StH2>Media</StH2>
       <StSection>
@@ -83,18 +111,21 @@ const AccountMedia = () => {
               showFullscreenButton={false}
               items={[
                 {
-                  original: `${laravelApiUrl}/api/users-media/images/${mediaData?.image_1}`,
-                  thumbnail: `${laravelApiUrl}/api/users-media/images/${mediaData?.image_1}`,
+                  original: userMediaValues.image1,
+                  thumbnail: userMediaValues.image1,
                 },
                 {
-                  original: `${laravelApiUrl}/api/users-media/images/${mediaData?.image_2}`,
-                  thumbnail: `${laravelApiUrl}/api/users-media/images/${mediaData?.image_2}`,
+                  original: userMediaValues.image2,
+                  thumbnail: userMediaValues.image2,
                 },
                 {
                   original: `video`,
-                  thumbnail: `https://img.youtube.com/vi/${getYoutubeIdFromUrl(mediaData?.video_link)}/default.jpg`,
+                  thumbnail:
+                    userMediaValues.youtube.thumbnailUrl &&
+                    userMediaValues.youtube.thumbnailUrl,
                   renderItem: () =>
-                    renderVideo(`https://www.youtube.com/embed/${getYoutubeIdFromUrl(mediaData?.video_link)}`),
+                    userMediaValues.youtube.videoUrl &&
+                    renderVideo(userMediaValues.youtube.videoUrl),
                 },
               ]}
             />
@@ -112,30 +143,35 @@ const AccountMedia = () => {
             type="file"
             label="Huisfoto 1:"
             icon={<PublishIcon />}
-            onChange={(e) =>
-              e.target.files && setFormFirstUserImage(e.target.files[0])
-            }
+            onChange={(e) => e.target.files && setFormImage1(e.target.files[0])}
           />
           <BaseInput
             type="file"
             label="Huisfoto 2:"
             icon={<PublishIcon />}
-            onChange={(e) =>
-              e.target.files && setFormSecondUserImage(e.target.files[0])
-            }
+            onChange={(e) => e.target.files && setFormImage2(e.target.files[0])}
           />
           <BaseInput
             label="Youtube video:"
             value={formYoutubeUrl}
-            placeholder="eg. https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            placeholder={
+              mediaData?.video_link
+                ? mediaData.video_link
+                : "eg. https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            }
             icon={<VideoLibraryIcon />}
             onChange={(e) => setFormYoutubeUrl(e.target.value)}
           />
 
-          <BaseButton label="Media opslaan" type="submit" />
+          <BaseButton
+            label={mediaData ? "Aanpassigen opslaan" : "Media opslaan"}
+            type="submit"
+          />
         </StForm>
       </StSection>
     </>
+  ) : (
+    <LoadingComponent />
   );
 };
 
