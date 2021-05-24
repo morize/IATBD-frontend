@@ -1,4 +1,4 @@
-import { laravelApi, laravelApiUrl } from "./Api";
+import { laravelApi, laravelApiUrl, userId } from "./Api";
 
 export const getUserDetails = async (
   url: string
@@ -19,12 +19,7 @@ export const submitUserMedia = async (fData: FormData) =>
 
 export const updateUserMedia = async (fData: FormData) =>
   await laravelApi
-    .post(
-      `api/users-media/${
-        JSON.parse(localStorage.getItem("userDetails")!)["uuid"]
-      }`,
-      fData
-    )
+    .post(`api/users-media/${userId}`, fData)
     .then((response) => response.data);
 
 export const getUserMedia = async (

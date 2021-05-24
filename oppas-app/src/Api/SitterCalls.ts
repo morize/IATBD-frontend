@@ -1,10 +1,15 @@
-import { laravelApi, sleep } from "./Api";
+import { laravelApi, sleep, userId } from "./Api";
 
 export const getPetPreferences = async (url: string): Promise<string[]> =>
   await laravelApi
     .get(url)
     .then((response) => response.data)
     .then((response) => sleep(response));
+
+export const updatePetPreferences = async (fData: FormData) =>
+  await laravelApi
+    .post(`api/sitter-preferences/${userId}`, fData)
+    .then((response) => response.data);
 
 export const getSitter = async (
   url: string
@@ -18,3 +23,8 @@ export const getSitter = async (
     .get(url)
     .then((response) => response.data)
     .then((response) => sleep(response));
+
+export const updateSitterStatus = async (fData: FormData) =>
+  await laravelApi
+    .post(`api/sitters/${userId}`, fData)
+    .then((response) => response.data);

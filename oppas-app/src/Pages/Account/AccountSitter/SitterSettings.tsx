@@ -75,7 +75,7 @@ const SitterSettings = ({ onSubmit }: IPetPreferences) => {
     }
   );
   const { data: kindPreferencesData, isValidating: arePreferencesLoaded } =
-    useSWR(`api/sitters/${userId}/pets`, getPetPreferences, {
+    useSWR(`api/sitter-preferences/${userId}`, getPetPreferences, {
       revalidateOnFocus: false,
     });
 

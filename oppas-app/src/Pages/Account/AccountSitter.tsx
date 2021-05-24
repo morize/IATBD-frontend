@@ -1,5 +1,11 @@
 import styled from "styled-components";
+import { trigger } from "swr";
 
+import { userId } from "../../Api/Api";
+import {
+  updateSitterStatus,
+  updatePetPreferences,
+} from "../../Api/SitterCalls";
 import { StH2, StH3, StSection } from "../../Utils/HTMLComponents";
 import PetPreferences from "./AccountSitter/SitterSettings";
 import PetCard from "../../Components/Card/PetCard/PetCard";
@@ -14,16 +20,26 @@ const StOptionsSection = styled(StSection)`
 `;
 
 const AccountSitter = () => {
-
   const onPetPreferencesSubmit = (
     e: React.FormEvent<HTMLFormElement>,
     isSitterActive: boolean,
     checkboxOptions?: { kind: string; checked: boolean }[]
   ) => {
     e.preventDefault();
+    let fData = new FormData();
+    fData.append("sitter_status", isSitterActive ? "active" : "inactive");
 
-    console.log(checkboxOptions);
-    // trigger rerender after validate
+    if (checkboxOptions) {
+      let petPreferencesFormData = new FormData();
+      petPreferencesFormData.append(
+        "sitter_preferences",
+        JSON.stringify(checkboxOptions)
+      );
+      updatePetPreferences(petPreferencesFormData);
+    }
+    updateSitterStatus(fData);
+
+    trigger(`api/sitters/${userId}`);
   };
 
   return (
