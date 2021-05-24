@@ -4,7 +4,14 @@ import styled from "styled-components";
 
 import { laravelApiUrl } from "../../Api/Api";
 import { getSpecificPet } from "../../Api/PetCalls";
-import { StH2, StLabel, StP, StSection } from "../../Utils/HTMLComponents";
+import { getUserDetails } from "../../Api/UserCalls";
+import {
+  StH2,
+  StLabel,
+  StP,
+  StSection,
+  LoadingComponent,
+} from "../../Utils/HTMLComponents";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
 
 const StProfileParent = styled(StSection)`
@@ -177,16 +184,21 @@ const SitterInfo = ({ dstart, dend, payment, remarks }: IProfileSitter) => (
 const PetProfile = () => {
   const { id } = useParams();
 
-  const { data: petProfileData } = useSWR(
+  const { data: petProfileData, isValidating: isPetProfileDataLoaded } = useSWR(
     `api/pets/${id}`,
-    getSpecificPet
+    getSpecificPet,
+    { revalidateOnFocus: false }
   );
-  
-  return (
+
+  const { data: userData, isValidating: isUserDataLoaded } = useSWR(
+    `api/user/${petProfileData?.owner_id}`,
+    getUserDetails,
+    { revalidateOnFocus: false }
+  );
+
+  return !isPetProfileDataLoaded && !isUserDataLoaded ? (
     <>
-      <StH2>{`Profiel van huisdier: ${
-        petProfileData ? petProfileData.pet_name : ""
-      }`}</StH2>
+      <StH2>{`Eigenaar van huisdier: ${userData ? userData.name : ""}`}</StH2>
       <StProfileParent>
         <figure>
           <img
@@ -206,11 +218,17 @@ const PetProfile = () => {
         <SitterInfo
           dstart={petProfileData ? petProfileData.sit_date_start : "-"}
           dend={petProfileData ? petProfileData.sit_date_end : "-"}
-          payment={petProfileData ? `${petProfileData.sit_hourly_prize.toString()} €` : "-"}
+          payment={
+            petProfileData
+              ? `${petProfileData.sit_hourly_prize.toString()} €`
+              : "-"
+          }
           remarks={petProfileData ? petProfileData.sit_remarks : "-"}
         />
       </StProfileParent>
     </>
+  ) : (
+    <LoadingComponent />
   );
 };
 
