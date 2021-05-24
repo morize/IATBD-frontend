@@ -68,7 +68,7 @@ const AccountSitter = () => {
         })
       );
     }
-  }, [areKindsLoaded, arePreferencesLoaded, kindPreferencesData, setKindPreferences]);
+  }, [areKindsLoaded, arePreferencesLoaded, kindPreferencesData, kindsOfPetData, setKindPreferences]);
 
   return (
     <>

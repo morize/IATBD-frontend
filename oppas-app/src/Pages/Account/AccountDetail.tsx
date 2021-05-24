@@ -92,11 +92,11 @@ const AccountGegevens = () => {
 
       <StSection>
         <StH3>Profiel Showcase</StH3>
-        <Showcase
+        {mediaData ? <Showcase
           image1={userMediaValues.image1}
           image2={userMediaValues.image2}
           video={userMediaValues.youtube}
-        />
+        />: <StP variant="secondary">U heeft nog geen media in uw profiel</StP>}
       </StSection>
 
       <StSection>
