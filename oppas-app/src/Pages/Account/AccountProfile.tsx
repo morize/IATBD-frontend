@@ -69,8 +69,8 @@ const AccountProfile = () => {
         />
       )}
 
-      <StH2>Over de opasser</StH2>
       <StAccountDetails>
+        <StH2>Over de opasser</StH2>
         <StLabel>Naam opasser:</StLabel>
         <StP>{accountData?.name ? accountData.name : "-"}</StP>
 
