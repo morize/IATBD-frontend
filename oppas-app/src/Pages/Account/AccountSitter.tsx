@@ -3,6 +3,8 @@ import { trigger } from "swr";
 
 import { userId } from "../../Api/Api";
 import {
+  createSitter,
+  createPetPreferences,
   updateSitterStatus,
   updatePetPreferences,
 } from "../../Api/SitterCalls";
@@ -23,21 +25,30 @@ const AccountSitter = () => {
   const onPetPreferencesSubmit = (
     e: React.FormEvent<HTMLFormElement>,
     isSitterActive: boolean,
+    create?: boolean,
     checkboxOptions?: { kind: string; checked: boolean }[]
   ) => {
     e.preventDefault();
-    let fData = new FormData();
-    fData.append("sitter_status", isSitterActive ? "active" : "inactive");
+    let sitterStatusData = new FormData();
+    sitterStatusData.append(
+      "sitter_status",
+      isSitterActive ? "active" : "inactive"
+    );
 
-    if (checkboxOptions) {
-      let petPreferencesFormData = new FormData();
-      petPreferencesFormData.append(
-        "sitter_preferences",
-        JSON.stringify(checkboxOptions)
-      );
-      updatePetPreferences(petPreferencesFormData);
-    }
-    updateSitterStatus(fData);
+    create
+      ? createSitter(sitterStatusData)
+      : updateSitterStatus(sitterStatusData).then(() => {
+          if (checkboxOptions) {
+            let petPreferencesFormData = new FormData();
+            petPreferencesFormData.append(
+              "sitter_preferences",
+              JSON.stringify(checkboxOptions)
+            );
+            create
+              ? createPetPreferences(petPreferencesFormData)
+              : updatePetPreferences(petPreferencesFormData);
+          }
+        });
 
     trigger(`api/sitters/${userId}`);
   };

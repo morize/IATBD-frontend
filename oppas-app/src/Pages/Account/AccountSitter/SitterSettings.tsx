@@ -54,11 +54,12 @@ const replaceArrayInstance = (
   return array;
 };
 
-interface IPetPreferences {
+export interface IPetPreferences {
   onSubmit: (
     e: React.FormEvent<HTMLFormElement>,
     isSitterActive: boolean,
-    checkboxOptions?: { kind: string; checked: boolean }[] | undefined
+    create?: boolean,
+    checkboxOptions?: { kind: string; checked: boolean }[]
   ) => void;
 }
 
@@ -94,12 +95,24 @@ const SitterSettings = ({ onSubmit }: IPetPreferences) => {
   }, [isSitterDataLoaded, sitterData]);
 
   useEffect(() => {
-    if (!areKindsLoaded && !arePreferencesLoaded) {
-      setKindPreferences(
-        kindsOfPetData?.map((kind) => {
-          return { kind: kind, checked: kindPreferencesData!.includes(kind) };
-        })
-      );
+    if (!areKindsLoaded && !arePreferencesLoaded && kindsOfPetData) {
+      kindPreferencesData
+        ? setKindPreferences(
+            kindsOfPetData.map((kind) => {
+              return {
+                kind: kind,
+                checked: kindPreferencesData.includes(kind),
+              };
+            })
+          )
+        : setKindPreferences(
+            kindsOfPetData.map((kind) => {
+              return {
+                kind: kind,
+                checked: false,
+              };
+            })
+          );
     }
   }, [
     areKindsLoaded,
@@ -113,7 +126,7 @@ const SitterSettings = ({ onSubmit }: IPetPreferences) => {
       onSubmit={(e) => {
         e.preventDefault();
         isSitterActive
-          ? onSubmit(e, isSitterActive, kindPreferences)
+          ? onSubmit(e, isSitterActive, !sitterData, kindPreferences)
           : onSubmit(e, isSitterActive);
       }}
     >
