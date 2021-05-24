@@ -1,17 +1,12 @@
 import useSWR from "swr";
 
-import { laravelApiUrl } from "../../Api/Api";
+import { laravelApiUrl, userId } from "../../Api/Api";
 import { getUserPets } from "../../Api/PetCalls";
 import { StH2, StSection } from "../../Utils/HTMLComponents";
 import PetCard, { PetCardItem } from "../../Components/Card/PetCard/PetCard";
 
 const AccountPet = () => {
-  const { data: userPetsData } = useSWR(
-    `api/user/${
-      JSON.parse(localStorage.getItem("userDetails")!)["uuid"]
-    }/pets`,
-    getUserPets
-  );
+  const { data: userPetsData } = useSWR(`api/user/${userId}/pets`, getUserPets);
 
   return (
     <>

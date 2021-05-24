@@ -61,10 +61,16 @@ export interface ICheckbox
 
 const Checkbox = ({ label, margin, onClick, value, ...rest }: ICheckbox) => (
   <StCheckboxContainer
-    control={<StCheckbox disableRipple={true} value={value} {...rest} />}
+    control={
+      <StCheckbox
+        disableRipple={true}
+        value={value}
+        onClick={() => onClick(value)}
+        {...rest}
+      />
+    }
     label={label}
     margin={margin ? margin : "0"}
-    onClick={() => onClick(value)}
   />
 );
 
