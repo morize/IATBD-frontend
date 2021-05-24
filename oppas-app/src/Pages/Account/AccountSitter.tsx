@@ -1,10 +1,14 @@
+import useSWR from "swr";
 import styled from "styled-components";
 
+import { getPetKinds } from "../../Api/PetCalls";
+import { getPetPreferences } from "../../Api/SitterCalls";
 import { StH2, StH3, StSection } from "../../Utils/HTMLComponents";
 import BaseButton from "../../Components/Button/BaseButton";
 import Checkbox from "../../Components/Checkbox/Checkbox";
 import PetCard from "../../Components/Card/PetCard/PetCard";
 import Switch from "../../Components/Switch/Switch";
+import { useEffect, useState } from "react";
 
 const StOptionsContainer = styled.section`
   display: grid;
@@ -21,7 +25,51 @@ const StOptionsContainer = styled.section`
   }
 `;
 
+const replaceArrayInstance = (
+  array: { kind: string; checked: boolean }[],
+  value: string
+) => {
+  let object = array.find((o) => o.kind === value);
+
+  if (object) {
+    let arrayInstance = [...array];
+    let index = object && array.indexOf(object);
+    arrayInstance[index] = object && {
+      kind: object.kind,
+      checked: !object.checked,
+    };
+    return arrayInstance;
+  }
+  return array;
+};
+
 const AccountSitter = () => {
+  const [kindPreferences, setKindPreferences] =
+    useState<{ kind: string; checked: boolean }[] | undefined>();
+
+  const userId = JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
+  const { data: kindsOfPetData, isValidating: areKindsLoaded } = useSWR(
+    "api/pet-kinds",
+    getPetKinds,
+    {
+      revalidateOnFocus: false,
+    }
+  );
+  const { data: kindPreferencesData, isValidating: arePreferencesLoaded } =
+    useSWR(`api/sitters/${userId}/pets`, getPetPreferences, {
+      revalidateOnFocus: false,
+    });
+
+  useEffect(() => {
+    if (!areKindsLoaded && !arePreferencesLoaded) {
+      setKindPreferences(
+        kindsOfPetData?.map((kind) => {
+          return { kind: kind, checked: kindPreferencesData!.includes(kind) };
+        })
+      );
+    }
+  }, [areKindsLoaded, arePreferencesLoaded, kindPreferencesData, setKindPreferences]);
+
   return (
     <>
       <StH2>Opasser</StH2>
@@ -38,10 +86,17 @@ const AccountSitter = () => {
         <Switch label="Ben ik een opasser?" />
 
         <StOptionsContainer>
-          <Checkbox label="Katten" />
-          <Checkbox label="Honden" />
-          <Checkbox label="Cavia's" />
-          <Checkbox label="Vissen" />
+          {kindPreferences?.map((kind, key) => (
+            <Checkbox
+              label={kind.kind}
+              key={key}
+              checked={kind.checked}
+              onClick={(kind) =>
+                setKindPreferences(replaceArrayInstance(kindPreferences, kind))
+              }
+              value={kind.kind}
+            />
+          ))}
         </StOptionsContainer>
 
         <BaseButton label="Instellingen opslaan" />
