@@ -3,6 +3,7 @@ import useSWR, { trigger } from "swr";
 import PublishIcon from "@material-ui/icons/Publish";
 import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
 
+import { userId } from "../../Api/Api";
 import {
   submitUserMedia,
   updateUserMedia,
@@ -24,8 +25,6 @@ const AccountMedia = () => {
   const [formImage1, setFormImage1] = useState<File | null>(null);
   const [formImage2, setFormImage2] = useState<File | null>(null);
   const [formYoutubeUrl, setFormYoutubeUrl] = useState("");
-
-  const userId = JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
   const { data: mediaData, isValidating } = useSWR(
     `api/users-media/${userId}`,

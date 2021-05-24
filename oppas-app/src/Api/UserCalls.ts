@@ -1,39 +1,4 @@
-import { laravelApi, laravelApiUrl } from "./Api";
-
-export const getUserDetails = async (
-  url: string
-): Promise<{
-  uuid: number;
-  name: string;
-  email: string;
-  email_verified_at: string;
-  updated_at: string;
-  blocked: number;
-  admin: number;
-}> => await laravelApi.get(url).then((response) => response.data);
-
-export const submitUserMedia = async (fData: FormData) =>
-  await laravelApi
-    .post("api/users-media", fData)
-    .then((response) => response.data);
-
-export const updateUserMedia = async (fData: FormData) =>
-  await laravelApi
-    .post(
-      `api/users-media/${
-        JSON.parse(localStorage.getItem("userDetails")!)["uuid"]
-      }`,
-      fData
-    )
-    .then((response) => response.data);
-
-export const getUserMedia = async (
-  url: string
-): Promise<{
-  image_1: string;
-  image_2: string;
-  video_link: string;
-}> => await laravelApi.get(url).then((response) => response.data);
+import { laravelApi, laravelApiUrl, userId } from "./Api";
 
 const getYoutubeIdFromUrl = (url: string) =>
   url.match(/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#]*).*/)![1];
@@ -54,3 +19,34 @@ export const formatUserMedia = (
       `https://www.youtube.com/embed/${getYoutubeIdFromUrl(videoUrl)}`,
   },
 });
+
+export const getUserDetails = async (
+  url: string
+): Promise<{
+  uuid: number;
+  name: string;
+  email: string;
+  email_verified_at: string;
+  updated_at: string;
+  blocked: number;
+  admin: number;
+}> => await laravelApi.get(url).then((response) => response.data);
+
+export const submitUserMedia = async (fData: FormData) =>
+  await laravelApi
+    .post("api/users-media", fData)
+    .then((response) => response.data);
+
+export const updateUserMedia = async (fData: FormData) =>
+  await laravelApi
+    .post(`api/users-media/${userId}`, fData)
+    .then((response) => response.data);
+
+export const getUserMedia = async (
+  url: string
+): Promise<{
+  image_1: string;
+  image_2: string;
+  video_link: string;
+}> => await laravelApi.get(url).then((response) => response.data);
+

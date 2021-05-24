@@ -42,8 +42,12 @@ const StOverviewGrid = styled(StSection)`
 `;
 
 const PetOverview = () => {
-  const { data: kindsOfPetData } = useSWR("api/pet-kinds", getPetKinds);
-  const { data: petOverviewData } = useSWR("api/pets", getAllPets);
+  const { data: kindsOfPetData } = useSWR("api/pet-kinds", getPetKinds, {
+    revalidateOnFocus: false,
+  });
+  const { data: petOverviewData } = useSWR("api/pets", getAllPets, {
+    revalidateOnFocus: false,
+  });
 
   const [filterKind, setFilterKind] = useState({
     value: "",

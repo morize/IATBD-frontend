@@ -117,6 +117,7 @@ const Login = () => {
         <Checkbox
           label="Ingelogd blijven"
           margin="-24px 0 24px -8px"
+          value="login"
           checked={rememberMeCheck}
           onClick={() => setRememberMeCheck(!rememberMeCheck)}
         />

@@ -5,19 +5,19 @@ import Variants, { TVariants } from "./Variants";
 
 export const StH1 = styled.h1`
   margin: 0 0 32px 0;
-  font-size: 44px;
+  font-size: 2.2rem;
   color: ${Variants.default};
 `;
 
 export const StH2 = styled.h2`
   margin: 12px 0 24px 0;
-  font-size: 32px;
+  font-size: 1.8rem;
   color: ${Variants.default};
 `;
 
 export const StH3 = styled.h3`
   margin: 0 0 24px 0;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 500;
   text-shadow: 0px 6px 6px rgba(0, 0, 0, 0.15);
   color: ${Variants.default};
@@ -29,14 +29,14 @@ interface IStP {
 }
 
 export const StP = styled.p<IStP>`
-  font-size: 16px;
+  font-size: 1rem;
   color: ${(props) => Variants[props.variant!]};
   font-weight: ${(props) => (props.bold ? 600 : 500)};
   white-space: pre-wrap;
 `;
 
 export const StLabel = styled.label`
-  font-size: 18px;
+  font-size: 1.1rem;
   color: ${Variants.primary};
 `;
 

@@ -1,27 +1,58 @@
 import styled from "styled-components";
+import { trigger } from "swr";
 
+import { userId } from "../../Api/Api";
+import {
+  createSitter,
+  createPetPreferences,
+  updateSitterStatus,
+  updatePetPreferences,
+} from "../../Api/SitterCalls";
 import { StH2, StH3, StSection } from "../../Utils/HTMLComponents";
-import BaseButton from "../../Components/Button/BaseButton";
-import Checkbox from "../../Components/Checkbox/Checkbox";
+import PetPreferences from "./AccountSitter/SitterSettings";
 import PetCard from "../../Components/Card/PetCard/PetCard";
-import Switch from "../../Components/Switch/Switch";
 
-const StOptionsContainer = styled.section`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 32px 84px;
-  margin: 32px 0;
+const StOptionsSection = styled(StSection)`
+  display: flex;
+  flex-direction: column;
 
-  & label {
-    border-radius: 14px;
-
-    &:hover {
-      background: rgba(72, 72, 72, 0.15);
-    }
+  & p {
+    margin: 24px 0 -12px 0;
   }
 `;
 
 const AccountSitter = () => {
+  const onPetPreferencesSubmit = (
+    e: React.FormEvent<HTMLFormElement>,
+    isSitterActive: boolean,
+    create?: boolean,
+    checkboxOptions?: { kind: string; checked: boolean }[]
+  ) => {
+    e.preventDefault();
+    let sitterStatusData = new FormData();
+    sitterStatusData.append(
+      "sitter_status",
+      isSitterActive ? "active" : "inactive"
+    );
+
+    create
+      ? createSitter(sitterStatusData)
+      : updateSitterStatus(sitterStatusData).then(() => {
+          if (checkboxOptions) {
+            let petPreferencesFormData = new FormData();
+            petPreferencesFormData.append(
+              "sitter_preferences",
+              JSON.stringify(checkboxOptions)
+            );
+            create
+              ? createPetPreferences(petPreferencesFormData)
+              : updatePetPreferences(petPreferencesFormData);
+          }
+        });
+
+    trigger(`api/sitters/${userId}`);
+  };
+
   return (
     <>
       <StH2>Opasser</StH2>
@@ -33,19 +64,11 @@ const AccountSitter = () => {
         </PetCard>
       </StSection>
 
-      <StSection>
+      <StOptionsSection>
         <StH3>Oppas instellingen</StH3>
-        <Switch label="Ben ik een opasser?" />
 
-        <StOptionsContainer>
-          <Checkbox label="Katten" />
-          <Checkbox label="Honden" />
-          <Checkbox label="Cavia's" />
-          <Checkbox label="Vissen" />
-        </StOptionsContainer>
-
-        <BaseButton label="Instellingen opslaan" />
-      </StSection>
+        <PetPreferences onSubmit={onPetPreferencesSubmit} />
+      </StOptionsSection>
     </>
   );
 };

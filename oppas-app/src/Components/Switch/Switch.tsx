@@ -43,15 +43,15 @@ const StyledSwitch = styled(MuiSwitch)`
   }
 `;
 
-const StyledSwitchLabel = styled.p<{ disabled?: boolean }>`
+const StyledSwitchLabel = styled.label<{ disabled?: boolean }>`
   display: inline-block;
   margin: 0;
   padding: 0;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
   line-height: 18px;
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
-  color: ${({ disabled }) => (disabled ? "#b3b3c2" : Variants.default)};
+  color: ${({ disabled }) => (disabled ? "#b3b3c2" : Variants.primary)};
 `;
 
 export interface ISwitch extends SwitchProps {

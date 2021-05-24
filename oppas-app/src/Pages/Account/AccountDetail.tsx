@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
+import { userId } from "../../Api/Api";
 import {
   getUserMedia,
   formatUserMedia,
@@ -38,7 +39,6 @@ const StSectionVerify = styled(StSection)`
 const AccountGegevens = () => {
   const navigate = useNavigate();
 
-  const userId = JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
   const { data: accountData, isValidating: isAccountDataLoaded } = useSWR(
     `api/user/${userId}`,
     getUserDetails,
@@ -92,11 +92,11 @@ const AccountGegevens = () => {
 
       <StSection>
         <StH3>Profiel Showcase</StH3>
-        <Showcase
+        {mediaData ? <Showcase
           image1={userMediaValues.image1}
           image2={userMediaValues.image2}
           video={userMediaValues.youtube}
-        />
+        />: <StP variant="secondary">U heeft nog geen media in uw profiel</StP>}
       </StSection>
 
       <StSection>

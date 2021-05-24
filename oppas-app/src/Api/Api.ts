@@ -2,6 +2,8 @@ import axios from "axios";
 
 export const laravelApiUrl = "http://localhost:8000";
 
+export const userId = JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
+
 export const laravelApi = axios.create({
   baseURL: laravelApiUrl,
   withCredentials: true,

@@ -51,14 +51,24 @@ export interface ICheckbox
     | "focusRipple"
     | "disableTouchRipple"
     | "disableFocusRipple"
+    | "onClick"
   > {
   label?: string;
+  value: string;
   margin?: string;
+  onClick: (value: string) => void;
 }
 
-const Checkbox = ({ label, margin, ...rest }: ICheckbox) => (
+const Checkbox = ({ label, margin, onClick, value, ...rest }: ICheckbox) => (
   <StCheckboxContainer
-    control={<StCheckbox disableRipple={true} {...rest} />}
+    control={
+      <StCheckbox
+        disableRipple={true}
+        value={value}
+        onClick={() => onClick(value)}
+        {...rest}
+      />
+    }
     label={label}
     margin={margin ? margin : "0"}
   />
