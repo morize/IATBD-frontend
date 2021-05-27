@@ -51,7 +51,7 @@ export const register = async (formData: {
   const sanctumToken = await getSanctumToken.then((token: string) => token);
 
   if (sanctumToken) {
-    await laravelApi.post("api/account/register", formData);
+    await laravelApi.post("api/register", formData);
   }
 };
 
