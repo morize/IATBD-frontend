@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import useSWR from "swr";
 import styled from "styled-components";
 
@@ -41,6 +41,7 @@ const SitterModalInfo = styled(StProfileDetailsSitter)`
 
 interface IPetProfileModal {
   pet_id: string;
+  pet_name?: string;
   user_id?: number;
   sit_hourly_prize?: number;
   sit_date_start?: string;
@@ -48,84 +49,89 @@ interface IPetProfileModal {
   pet_owner?: string;
 }
 
-const SitterModal = ({
-  sit_date_start,
-  sit_date_end,
-  sit_hourly_prize,
-  pet_owner,
-  pet_id,
-  user_id,
-}: IPetProfileModal) => {
-  const [sitterRemarks, setSitterRemarks] = useState("");
+const SitterModal = forwardRef(
+  ({
+    pet_name,
+    sit_date_start,
+    sit_date_end,
+    sit_hourly_prize,
+    pet_owner,
+    pet_id,
+    user_id,
+  }: IPetProfileModal, ref) => {
+    const [sitterRemarks, setSitterRemarks] = useState("");
 
-  const { data: sitterData, isValidating: isSitterDataLoaded } = useSWR(
-    `api/sitters/${user_id}`,
-    getSitter,
-    { revalidateOnFocus: false }
-  );
+    const { data: sitterData, isValidating: isSitterDataLoaded } = useSWR(
+      `api/sitters/${user_id}`,
+      getSitter,
+      { revalidateOnFocus: false }
+    );
 
-  const submitFormData = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    const submitFormData = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-    if (sitterData && !isSitterDataLoaded) {
-      let fData = new FormData();
-      fData.append("sitter_id", sitterData.id);
-      fData.append("pet_id", pet_id);
-      sitterRemarks && fData.append("sitter_remarks", sitterRemarks);
+      if (sitterData && pet_owner && pet_name && !isSitterDataLoaded) {
+        let fData = new FormData();
+        fData.append("sitter_id", sitterData.id);
+        fData.append("pet_id", pet_id);
+        fData.append("owner_name", pet_owner);
+        fData.append("pet_name", pet_name);
+        sitterRemarks && fData.append("sitter_remarks", sitterRemarks);
 
-      createSitterRequest(fData).then(() => console.log("success"));
-    }
-  };
+        createSitterRequest(fData).then(() => console.log("success"));
+      }
+    };
 
-  return (
-    <StModal>
-      <StH3>Reageer voor oppas</StH3>
-      <StLabel style={{ color: "#ffff", marginBottom: "12px" }}>
-        Oppas informatie:
-      </StLabel>
-      <SitterModalInfo>
-        {sit_date_start && (
-          <div>
-            <StLabel>Datum start:</StLabel>
-            <StP>{sit_date_start}</StP>
-          </div>
-        )}
-
-        {sit_date_end && (
-          <div>
-            <StLabel>Datum eind:</StLabel>
-            <StP>{sit_date_end}</StP>
-          </div>
-        )}
-
-        {sit_hourly_prize && (
-          <div>
-            <StLabel>Uurtarief:</StLabel>
-            <StP>{sit_hourly_prize.toString()} €</StP>
-          </div>
-        )}
-
-        {pet_owner && (
-          <div>
-            <StLabel>Huisdier eigenaar:</StLabel>
-            <StP>{pet_owner}</StP>
-          </div>
-        )}
-      </SitterModalInfo>
-
-      <StForm onSubmit={submitFormData}>
+    return (
+      <StModal>
+        <StH3>Reageer voor oppas</StH3>
         <StLabel style={{ color: "#ffff", marginBottom: "12px" }}>
-          Uw opmerkingen:
+          Oppas informatie:
         </StLabel>
-        <TextArea
-          value={sitterRemarks}
-          onChange={(e) => setSitterRemarks(e.target.value)}
-        />
+        <SitterModalInfo>
+          {sit_date_start && (
+            <div>
+              <StLabel>Datum start:</StLabel>
+              <StP>{sit_date_start}</StP>
+            </div>
+          )}
 
-        <BaseButton label="Stuur verzoek" type="submit" />
-      </StForm>
-    </StModal>
-  );
-};
+          {sit_date_end && (
+            <div>
+              <StLabel>Datum eind:</StLabel>
+              <StP>{sit_date_end}</StP>
+            </div>
+          )}
+
+          {sit_hourly_prize && (
+            <div>
+              <StLabel>Uurtarief:</StLabel>
+              <StP>{sit_hourly_prize.toString()} €</StP>
+            </div>
+          )}
+
+          {pet_owner && (
+            <div>
+              <StLabel>Huisdier eigenaar:</StLabel>
+              <StP>{pet_owner}</StP>
+            </div>
+          )}
+        </SitterModalInfo>
+
+        <StForm onSubmit={submitFormData}>
+          <StLabel style={{ color: "#ffff", marginBottom: "12px" }}>
+            Uw opmerkingen:
+          </StLabel>
+          <TextArea
+            value={sitterRemarks}
+            onChange={(e) => setSitterRemarks(e.target.value)}
+          />
+
+          <BaseButton label="Stuur verzoek" type="submit" />
+        </StForm>
+      </StModal>
+    );
+  }
+);
 
 export default SitterModal;

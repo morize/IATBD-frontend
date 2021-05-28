@@ -13,32 +13,24 @@ import PetOverviewCard from "../../Components/Card/PetCard/PetOverviewCard";
 const StOverview = styled(StSection)`
   display: flex;
   flex-direction: column;
+  min-height: 300px;
+  padding: 40px;
   background: url(${dogPattern});
   border-radius: 8px;
-  padding: 3rem 0;
-  min-height: 34rem;
+  box-sizing: border-box;
 `;
 
 const StFilterHeader = styled.div`
   display: flex;
   justify-content: space-around;
-  margin: 0.5rem 4rem 1rem 4rem;
-
-  & button {
-    width: 12rem;
-    margin-right: 0.8rem;
-
-    &:last-child {
-      margin: 0;
-    }
-  }
+  margin: 20px 60px;
 `;
 
 const StOverviewGrid = styled(StSection)`
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(auto-fit, 14rem);
-  grid-gap: 4rem;
+  grid-template-columns: repeat(auto-fit, 200px);
+  grid-gap: 60px;
 `;
 
 const PetOverview = () => {
@@ -137,7 +129,7 @@ const PetOverview = () => {
                   petKind={item.pet_kind}
                   petImgUrl={`${laravelApiUrl}/api/pets/${item.id}/image`}
                   sitterHourlyPrize={item.sit_hourly_prize}
-                  onClick={() => navigate(`${item.id}/profiel`)}
+                  onClick={() => navigate(`profiel/${item.id}`)}
                   key={key}
                 />
               ))}

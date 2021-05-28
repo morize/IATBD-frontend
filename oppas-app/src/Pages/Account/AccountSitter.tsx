@@ -1,15 +1,17 @@
 import styled from "styled-components";
-import { trigger } from "swr";
+import useSWR, { trigger } from "swr";
 
+import { laravelApiUrl } from "../../Api/Api";
 import {
   createSitter,
   createPetPreferences,
   updateSitterStatus,
   updatePetPreferences,
+  getSitterRequests,
 } from "../../Api/SitterCalls";
 import { StH2, StH3, StSection } from "../../Utils/HTMLComponents";
 import PetPreferences from "./AccountSitter/SitterSettings";
-import PetCard from "../../Components/Card/PetCard/PetCard";
+import PetCard, { SitterCardItem } from "../../Components/Card/PetCard/PetCard";
 
 const StOptionsSection = styled(StSection)`
   display: flex;
@@ -21,8 +23,15 @@ const StOptionsSection = styled(StSection)`
 `;
 
 const AccountSitter = () => {
-  const userId = localStorage.getItem("userDetails") !== null && JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
-  
+  const userId =
+    localStorage.getItem("userDetails") !== null &&
+    JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
+
+  const { data: sitterRequestsData, isValidating: isSitterRequestsDataLoaded } =
+    useSWR(`api/sitters/${userId}/requests`, getSitterRequests, {
+      revalidateOnFocus: false,
+    });
+
   const onPetPreferencesSubmit = (
     e: React.FormEvent<HTMLFormElement>,
     isSitterActive: boolean,
@@ -30,6 +39,7 @@ const AccountSitter = () => {
     checkboxOptions?: { kind: string; checked: boolean }[]
   ) => {
     e.preventDefault();
+
     let sitterStatusData = new FormData();
     sitterStatusData.append(
       "sitter_status",
@@ -53,7 +63,7 @@ const AccountSitter = () => {
 
     trigger(`api/sitters/${userId}`);
   };
-
+  
   return (
     <>
       <StH2>Opasser</StH2>
@@ -61,7 +71,21 @@ const AccountSitter = () => {
         <StH3>Mijn oppasvragen</StH3>
 
         <PetCard cardVariant="sitter">
-          {/* <PetCardItem routeTo="xd" /> */}
+          {sitterRequestsData &&
+            sitterRequestsData.map((request, key) => (
+              <SitterCardItem
+                petName={request.pet_name}
+                owner={request.owner_name}
+                status={
+                  request.request_status === "pending"
+                    ? "In afwachting"
+                    : "Afgekeurd"
+                }
+                petImageUrl={`${laravelApiUrl}/api/pets/${request.pet_id}/image`}
+                redirectTo={request.pet_id.toString()}
+                key={key}
+              />
+            ))}
         </PetCard>
       </StSection>
 

@@ -37,22 +37,26 @@ const PODRoutes = () => {
           <PrivateRoute path="algemeen" element={<AccountGegevens />} />
           <PrivateRoute path="media" element={<AccountMedia />} />
           <PrivateRoute path="opasser" element={<AccountSitter />} />
+          <PrivateRoute path="opasser/aanvraag/:id" element={<PetProfile />} />
+
           <PrivateRoute path="huisdieren" element={<AccountPet />} />
           <PrivateRoute
             path="huisdieren/nieuw-huisdier"
             element={<PetCreate />}
           />
           <PrivateRoute
-            path="huisdieren/:id/profiel"
+            path="huisdieren/oppaser/profiel/:id"
+            element={<AccountProfile />}
+          />
+          <PrivateRoute
+            path="huisdieren/profiel/:id"
             element={<PetProfile />}
           />
         </Route>
 
         <PrivateRoute path="overzicht" element={<Outlet />}>
           <PrivateRoute element={<PetOverview />} />
-          <PrivateRoute path=":id/profiel" element={<PetProfile />} />
-          <PrivateRoute path="oppas/:id/profiel" element={<AccountProfile />} />
-          
+          <PrivateRoute path="profiel/:id" element={<PetProfile />} />
         </PrivateRoute>
 
         <Route path="contact" element={<Contact />} />

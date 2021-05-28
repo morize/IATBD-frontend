@@ -59,6 +59,30 @@ const StPetCardContentDescription = styled(StPetCardContentHeader)`
   }
 `;
 
+interface ISitterCardItem {
+  petName: string;
+  petImageUrl: string;
+  redirectTo: string;
+  owner: string;
+  status: string;
+}
+
+export const SitterCardItem = (props: ISitterCardItem) => (
+  <StPetCard to={`aanvraag/${props.redirectTo}`}>
+    <StPetCardFigure>
+      <img src={props.petImageUrl} alt="Een huisdier" />
+    </StPetCardFigure>
+
+    <StPetCardContent>
+      <StPetCardContentHeader>{props.petName}</StPetCardContentHeader>
+      <StPetCardContentDescription>
+        <p>Eigenaar: {props.owner}</p>
+        <p>Status: {props.status}</p>
+      </StPetCardContentDescription>
+    </StPetCardContent>
+  </StPetCard>
+);
+
 interface IPetCardItem {
   petName: string;
   petKind: string;
@@ -68,7 +92,7 @@ interface IPetCardItem {
 }
 
 export const PetCardItem = (props: IPetCardItem) => (
-  <StPetCard to={`${props.redirectTo}/profiel`}>
+  <StPetCard to={`profiel/${props.redirectTo}`}>
     <StPetCardFigure>
       <img src={props.petImageUrl} alt="Een huisdier" />
     </StPetCardFigure>

@@ -58,8 +58,10 @@ const StProfileParent = styled(StSection)`
 
 const PetProfile = () => {
   const { id } = useParams();
-  
-  const userId = localStorage.getItem("userDetails") !== null && JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
+
+  const userId =
+    localStorage.getItem("userDetails") !== null &&
+    JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -104,20 +106,27 @@ const PetProfile = () => {
           }
           remarks={petProfileData ? petProfileData.sit_remarks : "-"}
         />
-        {petProfileData?.owner_id !== userId && (
-          <BaseButton
-            label="Reageeren voor oppas"
-            onClick={() => setIsModalOpen(true)}
-          />
+
+        {window.location.pathname.split("/")[2] === "opasser" && (
+          <BaseButton label="" onClick={() => setIsModalOpen(true)} />
         )}
+
+        {window.location.pathname.split("/")[2] === "profiel" &&
+          petProfileData?.owner_id !== userId && (
+            <BaseButton
+              label="Reageeren voor oppas"
+              onClick={() => setIsModalOpen(true)}
+            />
+          )}
         <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <SitterModal
+            pet_name={petProfileData?.pet_name}
             sit_date_start={petProfileData?.sit_date_start}
             sit_date_end={petProfileData?.sit_date_end}
             sit_hourly_prize={petProfileData?.sit_hourly_prize}
             pet_owner={userData?.name}
             pet_id={id}
-            user_id={userData?.uuid}
+            user_id={userId}
           />
         </Modal>
       </StProfileParent>
