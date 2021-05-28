@@ -1,7 +1,10 @@
 import { useState } from "react";
+import useSWR from "swr";
 import styled from "styled-components";
 
-import { StH3, StLabel, StP } from "../../../Utils/HTMLComponents";
+import { createSitterRequest } from "../../../Api/SitterRequestCalls";
+import { getSitter } from "../../../Api/SitterCalls";
+import { StH3, StLabel, StP, StForm } from "../../../Utils/HTMLComponents";
 import { StProfileDetailsSitter } from "./PetInfo";
 import TextArea from "../../../Components/Input/TextArea";
 import BaseButton from "../../../Components/Button/BaseButton";
@@ -37,6 +40,8 @@ const SitterModalInfo = styled(StProfileDetailsSitter)`
 `;
 
 interface IPetProfileModal {
+  pet_id: string;
+  user_id?: number;
   sit_hourly_prize?: number;
   sit_date_start?: string;
   sit_date_end?: string;
@@ -48,8 +53,29 @@ const SitterModal = ({
   sit_date_end,
   sit_hourly_prize,
   pet_owner,
+  pet_id,
+  user_id,
 }: IPetProfileModal) => {
   const [sitterRemarks, setSitterRemarks] = useState("");
+
+  const { data: sitterData, isValidating: isSitterDataLoaded } = useSWR(
+    `api/sitters/${user_id}`,
+    getSitter,
+    { revalidateOnFocus: false }
+  );
+
+  const submitFormData = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (sitterData && !isSitterDataLoaded) {
+      let fData = new FormData();
+      fData.append("sitter_id", sitterData.id);
+      fData.append("pet_id", pet_id);
+      sitterRemarks && fData.append("sitter_remarks", sitterRemarks);
+
+      createSitterRequest(fData).then(() => console.log("success"));
+    }
+  };
 
   return (
     <StModal>
@@ -87,15 +113,17 @@ const SitterModal = ({
         )}
       </SitterModalInfo>
 
-      <StLabel style={{ color: "#ffff", marginBottom: "12px" }}>
-        Uw opmerkingen:
-      </StLabel>
-      <TextArea
-        value={sitterRemarks}
-        onChange={(e) => setSitterRemarks(e.target.value)}
-      />
+      <StForm onSubmit={submitFormData}>
+        <StLabel style={{ color: "#ffff", marginBottom: "12px" }}>
+          Uw opmerkingen:
+        </StLabel>
+        <TextArea
+          value={sitterRemarks}
+          onChange={(e) => setSitterRemarks(e.target.value)}
+        />
 
-      <BaseButton label="Stuur verzoek" />
+        <BaseButton label="Stuur verzoek" type="submit" />
+      </StForm>
     </StModal>
   );
 };

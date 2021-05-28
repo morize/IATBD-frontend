@@ -1,4 +1,6 @@
-import { laravelApi, sleep, userId } from "./Api";
+import { laravelApi, sleep } from "./Api";
+
+const userId = localStorage.getItem("userDetails") !== null && JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
 export const getSitter = async (
   url: string

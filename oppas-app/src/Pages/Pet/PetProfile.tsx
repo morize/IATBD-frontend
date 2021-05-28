@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
-import { laravelApiUrl, userId } from "../../Api/Api";
+import { laravelApiUrl } from "../../Api/Api";
 import { getSpecificPet } from "../../Api/PetCalls";
 import { getUserDetails } from "../../Api/UserCalls";
 import { StH2, StSection, LoadingComponent } from "../../Utils/HTMLComponents";
@@ -58,6 +58,8 @@ const StProfileParent = styled(StSection)`
 
 const PetProfile = () => {
   const { id } = useParams();
+  
+  const userId = localStorage.getItem("userDetails") !== null && JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -114,6 +116,8 @@ const PetProfile = () => {
             sit_date_end={petProfileData?.sit_date_end}
             sit_hourly_prize={petProfileData?.sit_hourly_prize}
             pet_owner={userData?.name}
+            pet_id={id}
+            user_id={userData?.uuid}
           />
         </Modal>
       </StProfileParent>

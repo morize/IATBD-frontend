@@ -1,3 +1,4 @@
+import { cache } from "swr";
 import { laravelApi, getSanctumToken } from "./Api";
 
 export const login = async (
@@ -39,7 +40,9 @@ export const login = async (
 };
 
 export const logout = async () => {
-  await laravelApi.post("api/logout").then(() => localStorage.clear());
+  localStorage.clear();
+  cache.clear();
+  await laravelApi.post("api/logout").then(() => {});
 };
 
 export const register = async (formData: {

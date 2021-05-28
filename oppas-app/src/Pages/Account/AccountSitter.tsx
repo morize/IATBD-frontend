@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { trigger } from "swr";
 
-import { userId } from "../../Api/Api";
 import {
   createSitter,
   createPetPreferences,
@@ -22,6 +21,8 @@ const StOptionsSection = styled(StSection)`
 `;
 
 const AccountSitter = () => {
+  const userId = localStorage.getItem("userDetails") !== null && JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
+  
   const onPetPreferencesSubmit = (
     e: React.FormEvent<HTMLFormElement>,
     isSitterActive: boolean,
