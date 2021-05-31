@@ -4,14 +4,38 @@ import useSWR from "swr";
 import styled from "styled-components";
 
 import { laravelApiUrl } from "../../Api/Api";
-import { getSpecificPet } from "../../Api/PetCalls";
+import {
+  getSpecificPet,
+  getPetRequests,
+  translateStatus,
+} from "../../Api/PetCalls";
 import { getUserDetails } from "../../Api/UserCalls";
-import { StH2, StSection, LoadingComponent } from "../../Utils/HTMLComponents";
+import {
+  StH2,
+  StH3,
+  StSection,
+  LoadingComponent,
+} from "../../Utils/HTMLComponents";
 import BaseButton from "../../Components/Button/BaseButton";
 import Modal from "../../Components/Modal/ModalComponent";
 import SitterModal from "./PetProfile/SitterModal";
+import SitterRequestModal from "./PetProfile/SitterRequestModal";
+import { PetRequestCardItem } from "../../Components/Card/PetCard/PetCard";
 import { PetInfo, SitterInfo } from "./PetProfile/PetInfo";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
+
+const StRequestsContainer = styled.div`
+  width: 100%;
+  margin: 32px 0;
+  padding: 40px;
+  background: #dfc28b;
+  border-radius: 8px;
+  box-sizing: border-box;
+
+  & h3 {
+    color: #744226;
+  }
+`;
 
 const StProfileParent = styled(StSection)`
   display: flex;
@@ -65,6 +89,13 @@ const PetProfile = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
+  const [modalRequestId, setModalRequestId] = useState<number>();
+  const [modalRequestStatus, setModalRequestStatus] = useState("");
+  const [modalPetName, setModalPetName] = useState("");
+  const [modalSitterName, setModalSitterName] = useState("");
+  const [modalSitterRemarks, setModalSitterRemarks] = useState("");
+
   const { data: petProfileData, isValidating: isPetProfileDataLoaded } = useSWR(
     `api/pets/${id}`,
     getSpecificPet,
@@ -77,9 +108,18 @@ const PetProfile = () => {
     { revalidateOnFocus: false }
   );
 
+  const { data: petRequestData } = useSWR(
+    `api/pets/${id}/requests`,
+    getPetRequests,
+    { revalidateOnFocus: false }
+  );
+
   return !isPetProfileDataLoaded && !isUserDataLoaded ? (
     <>
-      <StH2>{`Eigenaar van huisdier: ${userData ? userData.name : ""}`}</StH2>
+      <StH2>{`Huisdier profiel: ${
+        petProfileData ? petProfileData.pet_name : "-"
+      }`}</StH2>
+
       <StProfileParent>
         <figure>
           <img
@@ -108,8 +148,50 @@ const PetProfile = () => {
         />
 
         {window.location.pathname.split("/")[2] === "opasser" && (
-          <BaseButton label="" onClick={() => setIsModalOpen(true)} />
+          <BaseButton
+            label="Aanvraag annuleren"
+            variant="secondary"
+            onClick={() => setIsModalOpen(true)}
+          />
         )}
+
+        {window.location.pathname.split("/")[2] === "huisdieren" &&
+          petRequestData && (
+            <>
+              <StRequestsContainer>
+                <StH3>Oppas aanvragen</StH3>
+                {petRequestData.map((request, key) => (
+                  <PetRequestCardItem
+                    pet_name={request.pet_name}
+                    status={translateStatus(request.request_status)}
+                    sitter_name={request.sitter_name}
+                    key={key}
+                    onClick={() => {
+                      setModalRequestId(request.id);
+                      setModalPetName(request.pet_name);
+                      setModalRequestStatus(request.request_status);
+                      setModalSitterName(request.sitter_name);
+                      setModalSitterRemarks(request.sitter_remarks);
+                      setIsRequestModalOpen(true);
+                    }}
+                  />
+                ))}
+              </StRequestsContainer>
+              <Modal
+                open={isRequestModalOpen}
+                onClose={() => setIsRequestModalOpen(false)}
+              >
+                <SitterRequestModal
+                  reviewer_id={userId}
+                  sitter_request_id={modalRequestId}
+                  sitter_remarks={modalSitterRemarks}
+                  pet_name={modalPetName}
+                  sitter_name={modalSitterName}
+                  request_status={modalRequestStatus}
+                />
+              </Modal>
+            </>
+          )}
 
         {window.location.pathname.split("/")[2] === "profiel" &&
           petProfileData?.owner_id !== userId && (
@@ -118,9 +200,13 @@ const PetProfile = () => {
               onClick={() => setIsModalOpen(true)}
             />
           )}
+
         <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <SitterModal
             pet_name={petProfileData?.pet_name}
+            sitter_name={
+              JSON.parse(localStorage.getItem("userDetails")!).username
+            }
             sit_date_start={petProfileData?.sit_date_start}
             sit_date_end={petProfileData?.sit_date_end}
             sit_hourly_prize={petProfileData?.sit_hourly_prize}

@@ -3,7 +3,7 @@ import DatePicker, { ReactDatePickerProps } from "react-datepicker";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 
 import "react-datepicker/dist/react-datepicker.css";
-
+ 
 import Variants from "../../Utils/Variants";
 
 const StDatePickerContainer = styled.div`

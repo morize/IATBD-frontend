@@ -47,6 +47,7 @@ interface IPetProfileModal {
   sit_date_start?: string;
   sit_date_end?: string;
   pet_owner?: string;
+  sitter_name?: string;
 }
 
 const SitterModal = forwardRef(
@@ -58,6 +59,7 @@ const SitterModal = forwardRef(
     pet_owner,
     pet_id,
     user_id,
+    sitter_name,
   }: IPetProfileModal, ref) => {
     const [sitterRemarks, setSitterRemarks] = useState("");
 
@@ -70,12 +72,19 @@ const SitterModal = forwardRef(
     const submitFormData = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      if (sitterData && pet_owner && pet_name && !isSitterDataLoaded) {
+      if (
+        sitterData &&
+        pet_owner &&
+        pet_name &&
+        !isSitterDataLoaded &&
+        sitter_name
+      ) {
         let fData = new FormData();
         fData.append("sitter_id", sitterData.id);
         fData.append("pet_id", pet_id);
         fData.append("owner_name", pet_owner);
         fData.append("pet_name", pet_name);
+        fData.append("sitter_name", sitter_name);
         sitterRemarks && fData.append("sitter_remarks", sitterRemarks);
 
         createSitterRequest(fData).then(() => console.log("success"));

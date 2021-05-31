@@ -78,7 +78,7 @@ const PetOverview = () => {
     }
     return petOverviewData;
   };
-
+  
   return (
     <>
       <StSection>

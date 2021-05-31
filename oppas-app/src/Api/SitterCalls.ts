@@ -58,3 +58,8 @@ export const getSitterRequests = async (
     .get(url)
     .then((response) => response.data)
     .then((response) => sleep(response));
+
+export const createSitterReview = async (fData: FormData) =>
+  await laravelApi
+    .post(`api/sitter-reviews`, fData)
+    .then((response) => response.data);

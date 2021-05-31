@@ -6,6 +6,7 @@ import dogPattern from "../../../Utils/Images/dog_pattern.jpg";
 
 const StPetCard = styled(NavLink)`
   display: flex;
+  width: 100%;
   height: 140px;
   margin-bottom: 24px;
   border-radius: 8px;
@@ -104,6 +105,42 @@ export const PetCardItem = (props: IPetCardItem) => (
         <p>Ras: {props.petBreed}</p>
       </StPetCardContentDescription>
     </StPetCardContent>
+  </StPetCard>
+);
+
+const StPetRequestCardContent = styled(StPetCardContent)`
+  border-radius: 8px;
+  width: 100%;
+
+  & div {
+    border-radius: 8px 8px 0 0;
+
+    &:last-child {
+      border-radius: 0 0 8px 8px;
+    }
+  }
+`;
+interface IPetRequestCard {
+  sitter_name: string;
+  pet_name: string;
+  status: string;
+  onClick: () => void;
+}
+
+export const PetRequestCardItem = ({
+  sitter_name,
+  pet_name,
+  status,
+  onClick,
+}: IPetRequestCard) => (
+  <StPetCard to={""} onClick={onClick}>
+    <StPetRequestCardContent>
+      <StPetCardContentHeader>Opasser: {sitter_name}</StPetCardContentHeader>
+      <StPetCardContentDescription>
+        <p>Voor huisdier: {pet_name}</p>
+        <p>Uw reactie: {status}</p>
+      </StPetCardContentDescription>
+    </StPetRequestCardContent>
   </StPetCard>
 );
 

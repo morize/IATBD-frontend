@@ -64,3 +64,35 @@ export const getUserPets = async (
     .get(url)
     .then((response) => response.data)
     .then((response) => sleep(response));
+
+export const getPetRequests = async (
+  url: string
+): Promise<
+  {
+    id: number;
+    sitter_id: number;
+    pet_id: number;
+    owner_name: string;
+    pet_name: string;
+    sitter_name: string;
+    sitter_remarks: string;
+    request_status: string;
+  }[]
+> =>
+  await laravelApi
+    .get(url)
+    .then((response) => response.data)
+    .then((response) => sleep(response));
+
+export const translateStatus = (status: string) => {
+  switch (status) {
+    case "pending":
+      return "In afwachting";
+    case "accepted":
+      return "Geaccepteerd";
+    case "rejected":
+      return "Afgewezen";
+    default:
+      return "pending";
+  }
+};

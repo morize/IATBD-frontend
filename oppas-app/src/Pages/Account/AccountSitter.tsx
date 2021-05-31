@@ -10,6 +10,7 @@ import {
   getSitterRequests,
 } from "../../Api/SitterCalls";
 import { StH2, StH3, StSection } from "../../Utils/HTMLComponents";
+import { translateStatus } from "../../Api/PetCalls";
 import PetPreferences from "./AccountSitter/SitterSettings";
 import PetCard, { SitterCardItem } from "../../Components/Card/PetCard/PetCard";
 
@@ -27,10 +28,13 @@ const AccountSitter = () => {
     localStorage.getItem("userDetails") !== null &&
     JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
-  const { data: sitterRequestsData, isValidating: isSitterRequestsDataLoaded } =
-    useSWR(`api/sitters/${userId}/requests`, getSitterRequests, {
+  const { data: sitterRequestsData } = useSWR(
+    `api/sitters/${userId}/requests`,
+    getSitterRequests,
+    {
       revalidateOnFocus: false,
-    });
+    }
+  );
 
   const onPetPreferencesSubmit = (
     e: React.FormEvent<HTMLFormElement>,
@@ -63,7 +67,7 @@ const AccountSitter = () => {
 
     trigger(`api/sitters/${userId}`);
   };
-  
+
   return (
     <>
       <StH2>Opasser</StH2>
@@ -76,11 +80,7 @@ const AccountSitter = () => {
               <SitterCardItem
                 petName={request.pet_name}
                 owner={request.owner_name}
-                status={
-                  request.request_status === "pending"
-                    ? "In afwachting"
-                    : "Afgekeurd"
-                }
+                status={translateStatus(request.request_status)}
                 petImageUrl={`${laravelApiUrl}/api/pets/${request.pet_id}/image`}
                 redirectTo={request.pet_id.toString()}
                 key={key}

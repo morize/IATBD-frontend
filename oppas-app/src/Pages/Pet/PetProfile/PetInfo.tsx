@@ -83,7 +83,7 @@ interface IProfilePet {
 export const PetInfo = ({ name, kind, breed }: IProfilePet) => (
   <StProfileContent>
     <StProfileDetails>
-      <StLabel>Naam:</StLabel>
+      <StLabel>Naam huisdier:</StLabel>
       <StP>{name}</StP>
       <StLabel>Soort:</StLabel>
       <StP>{kind}</StP>
