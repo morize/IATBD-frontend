@@ -21,7 +21,7 @@ const SubNavigationContainer = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 42px 0 0 0;
+    margin: 64px 0 0 0;
     padding: 0;
     user-select: none;
 

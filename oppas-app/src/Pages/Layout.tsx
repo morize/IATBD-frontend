@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { StArticle, StSubArticle } from "../Utils/HTMLComponents";
 import Navigation from "./Navigation/MainNavigation";
 import SubNavigation from "./Navigation/SubNavigation";
+import ASubNavigation from "./Navigation/ASubNavigation";
 import bgLayout from "../Utils/Images/bg_pattern.png";
 
 const RootLayout = styled.section`
@@ -16,11 +17,13 @@ const RootLayout = styled.section`
   }
 `;
 
-const StContent = styled.section<{ inAuthenticationPage: boolean }>`
+const StContent = styled.section<{isAdmin: boolean}>`
+  position: relative;
   display: flex;
   width: 100%;
   height: 100vh;
-  padding: ${(props) => (props.inAuthenticationPage ? "10vh 0" : "6vh 0")};
+  flex-direction: ${(props) => props.isAdmin ? "column": "row"};
+  padding: ${(props) => props.isAdmin ? "0": "6vh 0"};
   background: url(${bgLayout});
   box-sizing: border-box;
   overflow-y: auto;
@@ -44,15 +47,15 @@ const Layout = () => {
     <RootLayout>
       <Navigation />
 
-      <StContent inAuthenticationPage={inAuthenticationPage}>
+      <StContent isAdmin={pathname.split("/")[1] === "admin"}>
+        {pathname?.split("/")[1] === "admin" && <ASubNavigation />}
         {inAuthenticationPage && <SubNavigation />}
-
         {inAuthenticationPage ? (
           <StSubArticle>
             <Outlet />
           </StSubArticle>
         ) : (
-          <StArticle>
+          <StArticle admin={pathname?.split("/")[1] === "admin"}>
             <Outlet />
           </StArticle>
         )}

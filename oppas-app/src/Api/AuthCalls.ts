@@ -28,6 +28,8 @@ export const login = async (
         JSON.stringify({
           username: response.data.name,
           uuid: response.data.uuid,
+          role: response.data.role,
+          status: response.data.status,
         })
       );
 
