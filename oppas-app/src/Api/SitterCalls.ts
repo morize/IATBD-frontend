@@ -1,4 +1,8 @@
-import { laravelApi, sleep, userId } from "./Api";
+import { laravelApi, sleep } from "./Api";
+
+const userId =
+  localStorage.getItem("userDetails") !== null &&
+  JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
 export const getSitter = async (
   url: string
@@ -21,7 +25,6 @@ export const updateSitterStatus = async (fData: FormData) =>
     .post(`api/sitters/${userId}`, fData)
     .then((response) => response.data);
 
-    
 export const getPetPreferences = async (url: string): Promise<string[]> =>
   await laravelApi
     .get(url)
@@ -36,4 +39,27 @@ export const createPetPreferences = async (fData: FormData) =>
 export const updatePetPreferences = async (fData: FormData) =>
   await laravelApi
     .post(`api/sitter-preferences/${userId}`, fData)
+    .then((response) => response.data);
+
+export const getSitterRequests = async (
+  url: string
+): Promise<
+  {
+    id: number;
+    sitter_id: number;
+    pet_id: number;
+    owner_name: string;
+    pet_name: string;
+    sitter_remarks: string;
+    request_status: string;
+  }[]
+> =>
+  await laravelApi
+    .get(url)
+    .then((response) => response.data)
+    .then((response) => sleep(response));
+
+export const createSitterReview = async (fData: FormData) =>
+  await laravelApi
+    .post(`api/sitter-reviews`, fData)
     .then((response) => response.data);

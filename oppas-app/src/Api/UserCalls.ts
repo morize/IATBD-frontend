@@ -1,4 +1,6 @@
-import { laravelApi, laravelApiUrl, userId } from "./Api";
+import { laravelApi, laravelApiUrl } from "./Api";
+
+const userId = localStorage.getItem("userDetails") !== null && JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
 const getYoutubeIdFromUrl = (url: string) =>
   url.match(/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#]*).*/)![1];

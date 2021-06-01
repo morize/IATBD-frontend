@@ -1,35 +1,61 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
 import { laravelApiUrl } from "../../Api/Api";
-import { getSpecificPet } from "../../Api/PetCalls";
+import {
+  getSpecificPet,
+  getPetRequests,
+  translateStatus,
+} from "../../Api/PetCalls";
 import { getUserDetails } from "../../Api/UserCalls";
 import {
   StH2,
-  StLabel,
-  StP,
+  StH3,
   StSection,
   LoadingComponent,
 } from "../../Utils/HTMLComponents";
+import BaseButton from "../../Components/Button/BaseButton";
+import Modal from "../../Components/Modal/ModalComponent";
+import SitterModal from "./PetProfile/SitterModal";
+import SitterRequestModal from "./PetProfile/SitterRequestModal";
+import { PetRequestCardItem } from "../../Components/Card/PetCard/PetCard";
+import { PetInfo, SitterInfo } from "./PetProfile/PetInfo";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
+
+const StRequestsContainer = styled.div`
+  width: 100%;
+  margin: 32px 0;
+  padding: 40px;
+  background: #dfc28b;
+  border-radius: 8px;
+  box-sizing: border-box;
+
+  & h3 {
+    color: #744226;
+  }
+`;
 
 const StProfileParent = styled(StSection)`
   display: flex;
   flex-flow: wrap;
   justify-content: space-between;
-  padding: 40px 32px;
+  padding: 40px;
   background: url(${dogPattern});
   border-radius: 8px;
 
+  & button {
+    margin-top: 4%;
+  }
+
   & figure {
     position: relative;
-    width: 50%;
-    height: 18rem;
+    width: 45%;
+    height: 260px;
     margin: 0;
     padding: 0;
     border-radius: 8px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
     & img {
       width: 100%;
@@ -54,135 +80,21 @@ const StProfileParent = styled(StSection)`
   }
 `;
 
-const StProfileContent = styled.div`
-  position: relative;
-  display: flex;
-  width: 45%;
-  background: #dfc28b;
-  border-radius: 8px;
-`;
-
-const StProfileContentSitter = styled(StProfileContent)`
-  width: 100%;
-  min-height: 240px;
-  margin-top: 8%;
-`;
-
-const StProfileBottomTitle = styled.div`
-  position: absolute;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 22%;
-  border-radius: 0 0 8px 8px;
-  background: #be8b4e;
-  color: #ffff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-`;
-
-const StProfileDetails = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  height: 78%;
-  color: #87571f;
-  text-align: center;
-
-  & label {
-    display: block;
-    color: #87571f;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-
-  & p {
-    margin: 0 0 8px 0;
-
-    &:last-child {
-      margin: 0;
-    }
-  }
-`;
-
-const StProfileDetailsSitter = styled(StProfileDetails)`
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-content: center;
-  padding: 0 16%;
-
-  & div {
-    margin-right: 2%;
-
-    &:last-child {
-      width: 100%;
-      margin: 4% 0 0 0;
-    }
-  }
-`;
-
-interface IProfilePet {
-  name: string;
-  kind: string;
-  breed: string;
-}
-
-const PetInfo = ({ name, kind, breed }: IProfilePet) => (
-  <StProfileContent>
-    <StProfileDetails>
-      <StLabel>Naam:</StLabel>
-      <StP>{name}</StP>
-      <StLabel>Soort:</StLabel>
-      <StP>{kind}</StP>
-      <StLabel>Ras:</StLabel>
-      <StP>{breed}</StP>
-    </StProfileDetails>
-
-    <StProfileBottomTitle>Huisdier informatie</StProfileBottomTitle>
-  </StProfileContent>
-);
-
-interface IProfileSitter {
-  dstart: string;
-  dend: string;
-  payment: string;
-  remarks: string;
-}
-
-const SitterInfo = ({ dstart, dend, payment, remarks }: IProfileSitter) => (
-  <StProfileContentSitter>
-    <StProfileDetailsSitter>
-      <div>
-        <StLabel>Datum Start:</StLabel>
-        <StP>{dstart}</StP>
-      </div>
-
-      <div>
-        <StLabel>Datum Eind:</StLabel>
-        <StP>{dend}</StP>
-      </div>
-
-      <div>
-        <StLabel>Uurtarief:</StLabel>
-        <StP>{payment}</StP>
-      </div>
-
-      <div>
-        <StLabel>Opmerkingen:</StLabel>
-        <StP>{remarks}</StP>
-      </div>
-    </StProfileDetailsSitter>
-
-    <StProfileBottomTitle>Oppas informatie</StProfileBottomTitle>
-  </StProfileContentSitter>
-);
-
 const PetProfile = () => {
   const { id } = useParams();
+
+  const userId =
+    localStorage.getItem("userDetails") !== null &&
+    JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
+  const [modalRequestId, setModalRequestId] = useState<number>();
+  const [modalRequestStatus, setModalRequestStatus] = useState("");
+  const [modalPetName, setModalPetName] = useState("");
+  const [modalSitterName, setModalSitterName] = useState("");
+  const [modalSitterRemarks, setModalSitterRemarks] = useState("");
 
   const { data: petProfileData, isValidating: isPetProfileDataLoaded } = useSWR(
     `api/pets/${id}`,
@@ -196,9 +108,18 @@ const PetProfile = () => {
     { revalidateOnFocus: false }
   );
 
+  const { data: petRequestData } = useSWR(
+    `api/pets/${id}/requests`,
+    getPetRequests,
+    { revalidateOnFocus: false }
+  );
+
   return !isPetProfileDataLoaded && !isUserDataLoaded ? (
     <>
-      <StH2>{`Eigenaar van huisdier: ${userData ? userData.name : ""}`}</StH2>
+      <StH2>{`Huisdier profiel: ${
+        petProfileData ? petProfileData.pet_name : "-"
+      }`}</StH2>
+
       <StProfileParent>
         <figure>
           <img
@@ -225,6 +146,75 @@ const PetProfile = () => {
           }
           remarks={petProfileData ? petProfileData.sit_remarks : "-"}
         />
+
+        {window.location.pathname.split("/")[2] === "opasser" && (
+          <BaseButton
+            label="Aanvraag annuleren"
+            variant="secondary"
+            onClick={() => setIsModalOpen(true)}
+          />
+        )}
+
+        {window.location.pathname.split("/")[2] === "huisdieren" &&
+          petRequestData && (
+            <>
+              <StRequestsContainer>
+                <StH3>Oppas aanvragen</StH3>
+                {petRequestData.map((request, key) => (
+                  <PetRequestCardItem
+                    pet_name={request.pet_name}
+                    status={translateStatus(request.request_status)}
+                    sitter_name={request.sitter_name}
+                    key={key}
+                    onClick={() => {
+                      setModalRequestId(request.id);
+                      setModalPetName(request.pet_name);
+                      setModalRequestStatus(request.request_status);
+                      setModalSitterName(request.sitter_name);
+                      setModalSitterRemarks(request.sitter_remarks);
+                      setIsRequestModalOpen(true);
+                    }}
+                  />
+                ))}
+              </StRequestsContainer>
+              <Modal
+                open={isRequestModalOpen}
+                onClose={() => setIsRequestModalOpen(false)}
+              >
+                <SitterRequestModal
+                  reviewer_id={userId}
+                  sitter_request_id={modalRequestId}
+                  sitter_remarks={modalSitterRemarks}
+                  pet_name={modalPetName}
+                  sitter_name={modalSitterName}
+                  request_status={modalRequestStatus}
+                />
+              </Modal>
+            </>
+          )}
+
+        {window.location.pathname.split("/")[2] === "profiel" &&
+          petProfileData?.owner_id !== userId && (
+            <BaseButton
+              label="Reageeren voor oppas"
+              onClick={() => setIsModalOpen(true)}
+            />
+          )}
+
+        <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <SitterModal
+            pet_name={petProfileData?.pet_name}
+            sitter_name={
+              JSON.parse(localStorage.getItem("userDetails")!).username
+            }
+            sit_date_start={petProfileData?.sit_date_start}
+            sit_date_end={petProfileData?.sit_date_end}
+            sit_hourly_prize={petProfileData?.sit_hourly_prize}
+            pet_owner={userData?.name}
+            pet_id={id}
+            user_id={userId}
+          />
+        </Modal>
       </StProfileParent>
     </>
   ) : (

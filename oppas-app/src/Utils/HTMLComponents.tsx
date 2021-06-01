@@ -61,7 +61,7 @@ export const StArticle = styled.article`
   // Workaround for padding-bottom bug while a container is inside an overflow auto parent.
   &:after {
     content: "";
-    min-height: 120px;
+    min-height: 100px;
   }
 `;
 

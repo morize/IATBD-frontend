@@ -2,11 +2,7 @@ import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
-import { userId } from "../../Api/Api";
-import {
-  getUserMedia,
-  formatUserMedia,
-} from "../../Api/UserCalls";
+import { getUserMedia, formatUserMedia } from "../../Api/UserCalls";
 import {
   StH2,
   StH3,
@@ -38,6 +34,8 @@ const StSectionVerify = styled(StSection)`
 
 const AccountGegevens = () => {
   const navigate = useNavigate();
+
+  const userId = localStorage.getItem("userDetails") !== null && JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
   const { data: accountData, isValidating: isAccountDataLoaded } = useSWR(
     `api/user/${userId}`,
@@ -92,16 +90,20 @@ const AccountGegevens = () => {
 
       <StSection>
         <StH3>Profiel Showcase</StH3>
-        {mediaData ? <Showcase
-          image1={userMediaValues.image1}
-          image2={userMediaValues.image2}
-          video={userMediaValues.youtube}
-        />: <StP variant="secondary">U heeft nog geen media in uw profiel</StP>}
+        {mediaData ? (
+          <Showcase
+            image1={userMediaValues.image1}
+            image2={userMediaValues.image2}
+            video={userMediaValues.youtube}
+          />
+        ) : (
+          <StP variant="secondary">U heeft nog geen media in uw profiel</StP>
+        )}
       </StSection>
 
       <StSection>
-      <StH3>Acties</StH3>
-      {!accountData?.email_verified_at && (
+        <StH3>Acties</StH3>
+        {!accountData?.email_verified_at && (
           <StSectionVerify>
             <StP variant="info" bold={true}>
               {

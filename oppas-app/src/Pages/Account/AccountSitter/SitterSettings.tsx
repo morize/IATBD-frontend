@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 import styled from "styled-components";
 
-import { userId } from "../../../Api/Api";
 import { getPetKinds } from "../../../Api/PetCalls";
 import { getSitter, getPetPreferences } from "../../../Api/SitterCalls";
 import { StForm, StP, LoadingComponent } from "../../../Utils/HTMLComponents";
@@ -67,6 +66,10 @@ const SitterSettings = ({ onSubmit }: IPetPreferences) => {
   const [isSitterActive, setIsSitterActive] = useState(false);
   const [kindPreferences, setKindPreferences] =
     useState<{ kind: string; checked: boolean }[] | undefined>();
+
+  const userId =
+    localStorage.getItem("userDetails") !== null &&
+    JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
   const { data: kindsOfPetData, isValidating: areKindsLoaded } = useSWR(
     "api/pet-kinds",

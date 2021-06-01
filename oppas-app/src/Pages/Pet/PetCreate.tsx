@@ -6,6 +6,7 @@ import styled from "styled-components";
 import PublishIcon from "@material-ui/icons/Publish";
 
 import BaseInput from "../../Components/Input/BaseInput";
+import TextArea from "../../Components/Input/TextArea";
 import BaseButton from "../../Components/Button/BaseButton";
 import SelectButton from "../../Components/Select/Select";
 import BaseDatepicker from "../../Components/Datepicker/BaseDatepicker";
@@ -24,26 +25,6 @@ const DoubleInputContainer = styled.section`
   }
 `;
 
-const StTextAreaLabel = styled.label`
-  display: block;
-  margin-bottom: 12px;
-  font-weight: 600;
-  color: ${Variants.primary};
-`;
-
-const StTextArea = styled.textarea`
-  min-height: 100px;
-  width: 100%;
-  margin-bottom: 24px;
-  padding: 8px;
-  border: 1px solid #b3b3c2;
-  border-radius: 5px;
-  font-family: "Fira Sans", sans-serif;
-  color: ${Variants.default};
-  box-sizing: border-box;
-  outline: none;
-`;
-
 const StErrorMessage = styled.p`
   color: ${Variants.danger};
   margin: -14px 0 30px 0;
@@ -51,6 +32,7 @@ const StErrorMessage = styled.p`
 
 const CreatePet = () => {
   const navigate = useNavigate();
+  
   const [name, setName] = useState("");
   const [kindOption, setKindOption] =
     useState<{ label: string; value: string }>();
@@ -59,7 +41,7 @@ const CreatePet = () => {
 
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const [startDate, setStartDate] = useState<Date | undefined>();
+  const [startDate, setStartDate] = useState<Date | undefined>(); 
   const [endDate, setEndDate] = useState<Date | undefined>();
 
   const [hourlyPay, setHourlyPay] = useState("");
@@ -186,11 +168,9 @@ const CreatePet = () => {
             onChange={(e) => setHourlyPay(e.target.value)}
           />
 
-          <StTextAreaLabel>Uw opmerkingen:</StTextAreaLabel>
-          <StTextArea
-            value={remarks}
-            onChange={(e) => setRemarks(e.target.value)}
-          />
+          <TextArea label="Uw opmerkingen:" value={remarks} onChange={(e) => setRemarks(e.target.value)} />
+         
+          
           {error && (
             <StErrorMessage>
               U heeft een van de velden niet ingevuld.

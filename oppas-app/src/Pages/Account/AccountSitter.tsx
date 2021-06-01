@@ -1,16 +1,18 @@
 import styled from "styled-components";
-import { trigger } from "swr";
+import useSWR, { trigger } from "swr";
 
-import { userId } from "../../Api/Api";
+import { laravelApiUrl } from "../../Api/Api";
 import {
   createSitter,
   createPetPreferences,
   updateSitterStatus,
   updatePetPreferences,
+  getSitterRequests,
 } from "../../Api/SitterCalls";
 import { StH2, StH3, StSection } from "../../Utils/HTMLComponents";
+import { translateStatus } from "../../Api/PetCalls";
 import PetPreferences from "./AccountSitter/SitterSettings";
-import PetCard from "../../Components/Card/PetCard/PetCard";
+import PetCard, { SitterCardItem } from "../../Components/Card/PetCard/PetCard";
 
 const StOptionsSection = styled(StSection)`
   display: flex;
@@ -22,6 +24,18 @@ const StOptionsSection = styled(StSection)`
 `;
 
 const AccountSitter = () => {
+  const userId =
+    localStorage.getItem("userDetails") !== null &&
+    JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
+
+  const { data: sitterRequestsData } = useSWR(
+    `api/sitters/${userId}/requests`,
+    getSitterRequests,
+    {
+      revalidateOnFocus: false,
+    }
+  );
+
   const onPetPreferencesSubmit = (
     e: React.FormEvent<HTMLFormElement>,
     isSitterActive: boolean,
@@ -29,6 +43,7 @@ const AccountSitter = () => {
     checkboxOptions?: { kind: string; checked: boolean }[]
   ) => {
     e.preventDefault();
+
     let sitterStatusData = new FormData();
     sitterStatusData.append(
       "sitter_status",
@@ -60,7 +75,17 @@ const AccountSitter = () => {
         <StH3>Mijn oppasvragen</StH3>
 
         <PetCard cardVariant="sitter">
-          {/* <PetCardItem routeTo="xd" /> */}
+          {sitterRequestsData &&
+            sitterRequestsData.map((request, key) => (
+              <SitterCardItem
+                petName={request.pet_name}
+                owner={request.owner_name}
+                status={translateStatus(request.request_status)}
+                petImageUrl={`${laravelApiUrl}/api/pets/${request.pet_id}/image`}
+                redirectTo={request.pet_id.toString()}
+                key={key}
+              />
+            ))}
         </PetCard>
       </StSection>
 

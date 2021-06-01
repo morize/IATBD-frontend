@@ -6,6 +6,7 @@ import dogPattern from "../../../Utils/Images/dog_pattern.jpg";
 
 const StPetCard = styled(NavLink)`
   display: flex;
+  width: 100%;
   height: 140px;
   margin-bottom: 24px;
   border-radius: 8px;
@@ -59,6 +60,30 @@ const StPetCardContentDescription = styled(StPetCardContentHeader)`
   }
 `;
 
+interface ISitterCardItem {
+  petName: string;
+  petImageUrl: string;
+  redirectTo: string;
+  owner: string;
+  status: string;
+}
+
+export const SitterCardItem = (props: ISitterCardItem) => (
+  <StPetCard to={`aanvraag/${props.redirectTo}`}>
+    <StPetCardFigure>
+      <img src={props.petImageUrl} alt="Een huisdier" />
+    </StPetCardFigure>
+
+    <StPetCardContent>
+      <StPetCardContentHeader>{props.petName}</StPetCardContentHeader>
+      <StPetCardContentDescription>
+        <p>Eigenaar: {props.owner}</p>
+        <p>Status: {props.status}</p>
+      </StPetCardContentDescription>
+    </StPetCardContent>
+  </StPetCard>
+);
+
 interface IPetCardItem {
   petName: string;
   petKind: string;
@@ -68,7 +93,7 @@ interface IPetCardItem {
 }
 
 export const PetCardItem = (props: IPetCardItem) => (
-  <StPetCard to={`${props.redirectTo}/profiel`}>
+  <StPetCard to={`profiel/${props.redirectTo}`}>
     <StPetCardFigure>
       <img src={props.petImageUrl} alt="Een huisdier" />
     </StPetCardFigure>
@@ -80,6 +105,42 @@ export const PetCardItem = (props: IPetCardItem) => (
         <p>Ras: {props.petBreed}</p>
       </StPetCardContentDescription>
     </StPetCardContent>
+  </StPetCard>
+);
+
+const StPetRequestCardContent = styled(StPetCardContent)`
+  border-radius: 8px;
+  width: 100%;
+
+  & div {
+    border-radius: 8px 8px 0 0;
+
+    &:last-child {
+      border-radius: 0 0 8px 8px;
+    }
+  }
+`;
+interface IPetRequestCard {
+  sitter_name: string;
+  pet_name: string;
+  status: string;
+  onClick: () => void;
+}
+
+export const PetRequestCardItem = ({
+  sitter_name,
+  pet_name,
+  status,
+  onClick,
+}: IPetRequestCard) => (
+  <StPetCard to={""} onClick={onClick}>
+    <StPetRequestCardContent>
+      <StPetCardContentHeader>Opasser: {sitter_name}</StPetCardContentHeader>
+      <StPetCardContentDescription>
+        <p>Voor huisdier: {pet_name}</p>
+        <p>Uw reactie: {status}</p>
+      </StPetCardContentDescription>
+    </StPetRequestCardContent>
   </StPetCard>
 );
 
