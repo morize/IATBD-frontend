@@ -4,11 +4,11 @@ export const getAllUsers = async (
   url: string
 ): Promise<
   {
-    id: number;
-    pet_name: string;
-    pet_kind: string;
-    pet_image: string;
-    sit_hourly_prize: number;
+    uuid: number;
+    email: string;
+    name: string;
+    role: string;
+    status: string;
   }[]
 > =>
   await laravelApi
@@ -16,18 +16,28 @@ export const getAllUsers = async (
     .then((response) => response.data)
     .then((response) => sleep(response));
 
+export const updateUserStatus = async (userId: number, status: string) => {
+  await laravelApi.post(`api/user/${userId}/status`, {
+    status: status,
+  });
+};
+
 export const getAllSitterRequests = async (
   url: string
 ): Promise<
   {
     id: number;
+    owner_name: string;
     pet_name: string;
-    pet_kind: string;
-    pet_image: string;
-    sit_hourly_prize: number;
+    sitter_name: string;
+    request_status: string;
   }[]
 > =>
   await laravelApi
     .get(url)
     .then((response) => response.data)
     .then((response) => sleep(response));
+
+export const deleteSitterRequest = async (requestId: number) => {
+  await laravelApi.delete(`api/sitter-requests/${requestId}`);
+};

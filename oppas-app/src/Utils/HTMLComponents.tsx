@@ -48,14 +48,15 @@ export const StSection = styled.section`
   }
 `;
 
-export const StArticle = styled.article<{admin?: boolean}>`
+export const StArticle = styled.article<{ admin?: boolean }>`
   display: flex;
   flex-direction: column;
   width: 800px;
-  min-width: ${(props) => props.admin ? "100%": "auto"};
+  height: 100%;
+  min-width: ${(props) => (props.admin ? "100%" : "auto")};
   margin: 0 auto;
-  overflow:  ${(props) => props.admin ? "auto": "unset"};
-  
+  overflow: ${(props) => (props.admin ? "auto" : "unset")};
+
   @media (max-width: 1280px) {
     width: 700px;
   }
@@ -82,7 +83,7 @@ export const StForm = styled.form`
   }
 `;
 
-const StProgressContainer = styled.section`
+const StProgressContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

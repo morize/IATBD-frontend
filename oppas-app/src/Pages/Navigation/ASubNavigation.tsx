@@ -10,7 +10,7 @@ const StSubnavigationBody = styled.nav`
   align-items: center;
   width: 100%;
   min-height: 120px;
-  padding: 0 8%;
+  padding: 0 6%;
   background: #814e12;
   color: #fff;
   box-sizing: border-box;
