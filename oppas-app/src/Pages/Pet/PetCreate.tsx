@@ -41,7 +41,7 @@ const CreatePet = () => {
 
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const [startDate, setStartDate] = useState<Date | undefined>();
+  const [startDate, setStartDate] = useState<Date | undefined>(); 
   const [endDate, setEndDate] = useState<Date | undefined>();
 
   const [hourlyPay, setHourlyPay] = useState("");
