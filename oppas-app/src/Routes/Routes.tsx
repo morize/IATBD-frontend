@@ -16,7 +16,8 @@ import Register from "../Pages/Authentication/Register";
 import ForgotPassword from "../Pages/Authentication/ForgotPassword";
 import ResetPassword from "../Pages/Authentication/ResetPassword";
 import Contact from "../Pages/Contact";
-import Admin from "../Pages/Admin/Admin";
+import AdminUsers from "../Pages/Admin/AdminUsers";
+import AdminRequests from "../Pages/Admin/AdminRequests";
 
 const PODRoutes = () => (
   <Routes>
@@ -58,10 +59,10 @@ const PODRoutes = () => (
 
       <Route path="contact" element={<Contact />} />
 
-      <PrivateRoute path="admin" element={<Admin />}>
-        <PrivateRoute element={<PetOverview />} />
-        <PrivateRoute path="gebruikers" element={<PetOverview />} />
-        <PrivateRoute path="aanvragen" element={<PetOverview />} />
+      <PrivateRoute path="admin" element={<Outlet />}>
+        <PrivateRoute element={<AdminUsers />} />
+        <PrivateRoute path="gebruikers" element={<AdminUsers />} />
+        <PrivateRoute path="aanvragen" element={<AdminRequests />} />
       </PrivateRoute>
     </Route>
   </Routes>

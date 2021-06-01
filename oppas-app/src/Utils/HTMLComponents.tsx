@@ -48,13 +48,13 @@ export const StSection = styled.section`
   }
 `;
 
-export const StArticle = styled.article<{fullWidth?: boolean}>`
+export const StArticle = styled.article<{admin?: boolean}>`
   display: flex;
   flex-direction: column;
   width: 800px;
-  min-width: ${(props) => props.fullWidth ? "100%": "auto"};
+  min-width: ${(props) => props.admin ? "100%": "auto"};
   margin: 0 auto;
-
+  overflow:  ${(props) => props.admin ? "auto": "unset"};
   
   @media (max-width: 1280px) {
     width: 700px;

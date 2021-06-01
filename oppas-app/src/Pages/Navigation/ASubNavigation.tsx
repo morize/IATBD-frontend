@@ -1,21 +1,21 @@
 import styled from "styled-components";
 import { useLocation, NavLink } from "react-router-dom";
 
-import { StH2 } from "../../../Utils/HTMLComponents";
+import { StH2 } from "../../Utils/HTMLComponents";
 
-
-const StSubnavigationBody = styled.div`
+const StSubnavigationBody = styled.nav`
   position: sticky;
   top: 0;
   display: flex;
   align-items: center;
   width: 100%;
-  height: 120px;
+  min-height: 120px;
   padding: 0 8%;
   background: #814e12;
   color: #fff;
   box-sizing: border-box;
-
+  z-index: 3;
+  
   & h2 {
     margin: 0;
     font-weight: 500;
@@ -37,7 +37,6 @@ const StNavigationOptions = styled.div`
     color: #fff;
     background: #bc8127;
     border-radius: 8px;
-    box-sizing: border-box;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   }
 
@@ -54,13 +53,13 @@ const ASubNavigation = () => {
       <StH2>Admin pagina</StH2>
       <StNavigationOptions>
         <NavLink
-          to="gebruikers"
+          to="admin/gebruikers"
           activeClassName="aSubnavigation-active"
           className={pathname.split("/")[2] ? "" : "aSubnavigation-active"}
         >
           Gebruikers
         </NavLink>
-        <NavLink to="aanvragen" activeClassName="aSubnavigation-active">
+        <NavLink to="admin/aanvragen" activeClassName="aSubnavigation-active">
           Oppas aanvragen
         </NavLink>
       </StNavigationOptions>
