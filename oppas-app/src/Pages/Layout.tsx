@@ -16,11 +16,12 @@ const RootLayout = styled.section`
   }
 `;
 
-const StContent = styled.section<{ inAuthenticationPage: boolean }>`
+const StContent = styled.section<{isAdmin: boolean}>`
+  position: relative;
   display: flex;
   width: 100%;
   height: 100vh;
-  padding: ${(props) => (props.inAuthenticationPage ? "10vh 0" : "6vh 0")};
+  padding: ${(props) => props.isAdmin ? "0": "6vh 0"};
   background: url(${bgLayout});
   box-sizing: border-box;
   overflow-y: auto;
@@ -44,15 +45,14 @@ const Layout = () => {
     <RootLayout>
       <Navigation />
 
-      <StContent inAuthenticationPage={inAuthenticationPage}>
+      <StContent isAdmin={pathname.split("/")[1] === "admin"}>
         {inAuthenticationPage && <SubNavigation />}
-
         {inAuthenticationPage ? (
           <StSubArticle>
             <Outlet />
           </StSubArticle>
         ) : (
-          <StArticle>
+          <StArticle fullWidth={pathname?.split("/")[1] === "admin"}>
             <Outlet />
           </StArticle>
         )}

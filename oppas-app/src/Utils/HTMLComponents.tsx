@@ -48,12 +48,13 @@ export const StSection = styled.section`
   }
 `;
 
-export const StArticle = styled.article`
+export const StArticle = styled.article<{fullWidth?: boolean}>`
   display: flex;
   flex-direction: column;
-  width: 840px;
+  width: ${(props) => props.fullWidth ? "100%": "800px"};
   margin: 0 auto;
 
+  
   @media (max-width: 1280px) {
     width: 700px;
   }

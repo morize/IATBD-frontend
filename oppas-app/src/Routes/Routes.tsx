@@ -47,7 +47,7 @@ const PODRoutes = () => (
         <PrivateRoute
           path="huisdieren/oppaser/profiel/:id"
           element={<AccountProfile />}
-        />
+        /> 
         <PrivateRoute path="huisdieren/profiel/:id" element={<PetProfile />} />
       </Route>
 
