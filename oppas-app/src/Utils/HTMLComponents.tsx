@@ -51,7 +51,8 @@ export const StSection = styled.section`
 export const StArticle = styled.article<{fullWidth?: boolean}>`
   display: flex;
   flex-direction: column;
-  width: ${(props) => props.fullWidth ? "100%": "800px"};
+  width: 800px;
+  min-width: ${(props) => props.fullWidth ? "100%": "auto"};
   margin: 0 auto;
 
   
