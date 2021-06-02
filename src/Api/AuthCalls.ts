@@ -41,11 +41,11 @@ export const login = async (
   }
 };
 
-export const logout = async () => {
-  localStorage.clear();
-  cache.clear();
-  await laravelApi.post("api/logout").then(() => {});
-};
+export const logout = async () =>
+  await laravelApi.post("api/logout").then(() => {
+    localStorage.clear();
+    cache.clear();
+  });
 
 export const register = async (formData: {
   name: string;

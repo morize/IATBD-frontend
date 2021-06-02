@@ -84,7 +84,7 @@ const AccountGegevens = () => {
           </StP>
 
           <StLabel>Account Status:</StLabel>
-          <StP>{accountData?.blocked === 1 ? "Geblokkeerd" : "Standaard"}</StP>
+          <StP>{accountData?.status === "blocked" ? "Geblokkeerd" : "Actief"}</StP>
         </StAccountDetails>
       </StSection>
 

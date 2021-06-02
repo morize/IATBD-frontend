@@ -49,10 +49,10 @@ const AccountSitter = () => {
       "sitter_status",
       isSitterActive ? "active" : "inactive"
     );
-
+    
     create
       ? createSitter(sitterStatusData)
-      : updateSitterStatus(sitterStatusData).then(() => {
+      : updateSitterStatus(sitterStatusData, userId).then(() => {
           if (checkboxOptions) {
             let petPreferencesFormData = new FormData();
             petPreferencesFormData.append(
@@ -61,7 +61,7 @@ const AccountSitter = () => {
             );
             create
               ? createPetPreferences(petPreferencesFormData)
-              : updatePetPreferences(petPreferencesFormData);
+              : updatePetPreferences(petPreferencesFormData, userId);
           }
         });
 

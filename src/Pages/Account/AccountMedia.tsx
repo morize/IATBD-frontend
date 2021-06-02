@@ -43,7 +43,7 @@ const AccountMedia = () => {
       formImage2 && fData.append("sitter_image_2", formImage2);
       formYoutubeUrl && fData.append("sitter_video_link", formYoutubeUrl);
 
-      mediaData ? updateUserMedia(fData) : submitUserMedia(fData);
+      mediaData ? updateUserMedia(fData, userId) : submitUserMedia(fData);
     }
 
     trigger(`api/users-media/${userId}`);

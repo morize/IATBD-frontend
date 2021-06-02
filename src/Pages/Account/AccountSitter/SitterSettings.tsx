@@ -93,11 +93,11 @@ const SitterSettings = ({ onSubmit }: IPetPreferences) => {
 
   useEffect(() => {
     if (!isSitterDataLoaded && sitterData) {
-      sitterData.sit_status === "active" && setIsSitterActive(true);
+      sitterData.sitter_status === "active" && setIsSitterActive(true);
     }
   }, [isSitterDataLoaded, sitterData]);
 
-  useEffect(() => {
+  useEffect(() => { 
     if (!areKindsLoaded && !arePreferencesLoaded && kindsOfPetData) {
       kindPreferencesData
         ? setKindPreferences(
@@ -123,7 +123,7 @@ const SitterSettings = ({ onSubmit }: IPetPreferences) => {
     kindsOfPetData,
     kindPreferencesData,
   ]);
-
+  
   return !isSitterDataLoaded ? (
     <StFormSettings
       onSubmit={(e) => {

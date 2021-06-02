@@ -78,7 +78,7 @@ const AccountProfile = () => {
         <StP>{accountData?.email ? accountData.email : "-"}</StP>
 
         <StLabel>Account Soort:</StLabel>
-        <StP>{sitterData?.sit_status ? "Opasser" : "-"}</StP>
+        <StP>{sitterData?.sitter_status ? "Opasser" : "-"}</StP>
       </StAccountDetails>
     </>
   ) : (
