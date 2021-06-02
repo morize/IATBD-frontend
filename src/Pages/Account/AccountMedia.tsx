@@ -7,7 +7,6 @@ import {
   submitUserMedia,
   updateUserMedia,
   getUserMedia,
-  formatUserMedia,
 } from "../../Api/UserCalls";
 import {
   StSection,
@@ -31,7 +30,7 @@ const AccountMedia = () => {
     localStorage.getItem("userDetails") !== null &&
     JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
-  const { data: mediaData, isValidating } = useSWR(
+  const { data: mediaData, isValidating: isMediaDataValidating } = useSWR(
     `api/users-media/${userId}`,
     getUserMedia,
     { revalidateOnFocus: false }
@@ -59,21 +58,15 @@ const AccountMedia = () => {
     }
   };
 
-  const userMediaValues = formatUserMedia(
-    mediaData?.image_1,
-    mediaData?.image_2,
-    mediaData?.video_link
-  );
-
-  return !isValidating ? (
+  return !isMediaDataValidating ? (
     <>
       <StH2>Media</StH2>
       <StSection>
         {mediaData && (
           <Showcase
-            image1={userMediaValues.image1}
-            image2={userMediaValues.image2}
-            video={userMediaValues.youtube}
+            image1={mediaData.image_1}
+            image2={mediaData.image_2}
+            video={mediaData.video_link}
           />
         )}
 
@@ -107,7 +100,7 @@ const AccountMedia = () => {
             icon={<VideoLibraryIcon />}
             onChange={(e) => setFormYoutubeUrl(e.target.value)}
           />
-          
+
           {formError && (
             <StErrorMessage>
               U moet minstens een afbeelding of video toevoegen

@@ -6,7 +6,6 @@ import { getSitter } from "../../Api/SitterCalls";
 import {
   getUserDetails,
   getUserMedia,
-  formatUserMedia,
 } from "../../Api/UserCalls";
 import {
   StH1,
@@ -50,11 +49,6 @@ const AccountProfile = () => {
     getUserMedia,
     { revalidateOnFocus: false }
   );
-  const userMediaValues = formatUserMedia(
-    mediaData?.image_1,
-    mediaData?.image_2,
-    mediaData?.video_link
-  );
 
   return !isAccountDataLoaded && !isSitterDataLoaded && !isMediaDataLoaded ? (
     <>
@@ -63,9 +57,9 @@ const AccountProfile = () => {
       <StH2>Huisfoto's en video</StH2>
       {mediaData && (
         <Showcase
-          image1={userMediaValues.image1}
-          image2={userMediaValues.image2}
-          video={userMediaValues.youtube}
+          image1={mediaData.image_1}
+          image2={mediaData.image_2}
+          video={mediaData.video_link}
         />
       )}
 

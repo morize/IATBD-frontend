@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
-import { getUserMedia, formatUserMedia } from "../../Api/UserCalls";
+import { getUserMedia } from "../../Api/UserCalls";
 import {
   StH2,
   StH3,
@@ -57,12 +57,6 @@ const AccountGegevens = () => {
     logout().then(() => navigate("../../home"));
   };
 
-  const userMediaValues = formatUserMedia(
-    mediaData?.image_1,
-    mediaData?.image_2,
-    mediaData?.video_link
-  );
-
   return !isAccountDataLoaded && !isMediaLoaded ? (
     <>
       <StH2>Algemeen</StH2>
@@ -94,9 +88,9 @@ const AccountGegevens = () => {
         <StH3>Profiel Showcase</StH3>
         {mediaData ? (
           <Showcase
-            image1={userMediaValues.image1}
-            image2={userMediaValues.image2}
-            video={userMediaValues.youtube}
+            image1={mediaData.image_1}
+            image2={mediaData.image_2}
+            video={mediaData.video_link}
           />
         ) : (
           <StP variant="secondary">U heeft nog geen media in uw profiel</StP>

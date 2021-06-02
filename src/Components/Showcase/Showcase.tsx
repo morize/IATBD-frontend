@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 
+import { formatUserMedia } from "../../Api/UserCalls";
 import Variants from "../../Utils/Variants";
 
 const StMediaVideo = styled.iframe`
@@ -31,31 +32,47 @@ const renderVideo = (src: string) => (
 interface IShowcase {
   image1: string;
   image2: string;
-  video: { thumbnailUrl: string | undefined; videoUrl: string | undefined };
+  video: string;
 }
 
-const Showcase = ({ image1, image2, video }: IShowcase) => (
-  <StImageGalleryContainer>
-    <ImageGallery
-      showPlayButton={false}
-      showFullscreenButton={false}
-      items={[
-        {
-          original: image1,
-          thumbnail: image1,
-        },
-        {
-          original: image2,
-          thumbnail: image2,
-        },
-        {
-          original: `video`,
-          thumbnail: video.thumbnailUrl && video.thumbnailUrl,
-          renderItem: () => video.videoUrl && renderVideo(video.videoUrl),
-        },
-      ]}
-    />
-  </StImageGalleryContainer>
-);
+const Showcase = ({ image1, image2, video }: IShowcase) => {
+  const userMediaValues = formatUserMedia(image1, image2, video);
+
+  const getImages = () => {
+    let imageArray = [];
+    image1 &&
+      imageArray.push({
+        original: userMediaValues.image1,
+        thumbnail: userMediaValues.image1,
+      });
+
+    image2 &&
+      imageArray.push({
+        original: userMediaValues.image2,
+        thumbnail: userMediaValues.image2,
+      });
+
+    video &&
+      imageArray.push({
+        original: "video",
+        thumbnail: userMediaValues.youtube.thumbnailUrl,
+        renderItem: () =>
+          userMediaValues.youtube.videoUrl &&
+          renderVideo(userMediaValues.youtube.videoUrl),
+      });
+
+    return imageArray;
+  };
+
+  return (
+    <StImageGalleryContainer>
+      <ImageGallery
+        showPlayButton={false}
+        showFullscreenButton={false}
+        items={getImages()}
+      />
+    </StImageGalleryContainer>
+  );
+};
 
 export default Showcase;
