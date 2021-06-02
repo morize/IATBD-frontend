@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 import { login } from "../../Api/AuthCalls";
 import {
+  LoadingComponent,
   StH2,
   StSection,
   StLabel,
@@ -60,31 +61,33 @@ interface LocationState {
 
 const Login = () => {
   const navigate = useNavigate();
-
   const { state }: LocationState = useLocation();
+
   const [formEmail, setFormEmail] = useState("ayyylmao985@gmail.com");
   const [formPassword, setFormPassword] = useState("Password123.");
   const [formStatus, setFormStatus] = useState("default");
+  const [loadingComponent, setLoadingComponent] = useState(false);
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
 
   const submitFormLoginData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setLoadingComponent(true);
+
     login(formEmail, formPassword, rememberMeCheck)
-      .then(() => {
-        navigate("../../account");
-      })
+      .then(() => navigate("../../account"))
       .catch(() => {
+        setLoadingComponent(false);
         setFormStatus("error");
       });
   };
 
-  return (
+  return !loadingComponent ? (
     <StSection>
       <StH2>Inloggen</StH2>
 
       {state?.didPasswordReset && (
-        <StPasswordResetIndicator variant={"success"}>
+        <StPasswordResetIndicator variant="success">
           U heeft uw wachtwoord opnieuw ingesteld.
         </StPasswordResetIndicator>
       )}
@@ -127,11 +130,11 @@ const Login = () => {
 
       <StRegisterRedirect>
         {"Nog geen account?\n"}
-        <a href="#register" onClick={() => navigate("../aanmelden")}>
-          Klik hier om aan te melden!
-        </a>
+        <NavLink to="../aanmelden">Klik hier om aan te melden!</NavLink>
       </StRegisterRedirect>
     </StSection>
+  ) : (
+    <LoadingComponent />
   );
 };
 
