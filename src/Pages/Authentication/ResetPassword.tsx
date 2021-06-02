@@ -3,10 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { submitNewPassword } from "../../Api/AuthCalls";
-import { StH1, StSection, StP } from "../../Utils/HTMLComponents";
+import {
+  StH1,
+  StSection,
+  StP,
+  LoadingComponent,
+} from "../../Utils/HTMLComponents";
 import BaseInput from "../../Components/Input/BaseInput";
 import BaseButton from "../../Components/Button/BaseButton";
-
 
 const StResetPasswordContainer = styled(StSection)`
   & p {
@@ -27,35 +31,42 @@ const ResetPassword = () => {
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [loadingComponent, setLoadingComponent] = useState(false);
   const { token, email } = useParams();
- 
+
   const onResetPasswordSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    submitNewPassword(email, newPassword, confirmNewPassword, token).then(() =>
-      navigate("../../../inloggen", { state: { didPasswordReset: true } })
-    );
+    setLoadingComponent(true);
+
+    submitNewPassword(email, newPassword, confirmNewPassword, token)
+      .then(() =>
+        navigate("../../../inloggen", { state: { didPasswordReset: true } })
+      )
+      .catch(() => setLoadingComponent(false));
   };
 
-  return (
+  return !loadingComponent ? (
     <StResetPasswordContainer>
       <StH1>Reset wachtwoord</StH1>
       <StP variant={"primary"}>Stel een nieuwe wachtwoord voor uw account</StP>
 
       <BaseInput
-        label={"Nieuw wachtwoord:"}
+        label="Nieuw wachtwoord:"
         value={newPassword}
         type="password"
         onChange={(e) => setNewPassword(e.target.value)}
       />
       <BaseInput
-        label={"Nieuw wachtwoord opnieuw:"}
+        label="Nieuw wachtwoord opnieuw:"
         type="password"
         value={confirmNewPassword}
         onChange={(e) => setConfirmNewPassword(e.target.value)}
       />
-      <BaseButton label={"Reset wachtwoord"} onClick={onResetPasswordSubmit} />
+      <BaseButton label="Reset wachtwoord" onClick={onResetPasswordSubmit} />
     </StResetPasswordContainer>
+  ) : (
+    <LoadingComponent />
   );
 };
 

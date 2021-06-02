@@ -2,7 +2,12 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { sendResetPasswordEmail } from "../../Api/AuthCalls";
-import { StH2, StSection, StP } from "../../Utils/HTMLComponents";
+import {
+  LoadingComponent,
+  StH2,
+  StSection,
+  StP,
+} from "../../Utils/HTMLComponents";
 import BaseInput from "../../Components/Input/BaseInput";
 import BaseButton from "../../Components/Button/BaseButton";
 
@@ -19,16 +24,22 @@ const StForgotPasswordContainer = styled(StSection)`
 const ForgotPassword = () => {
   const [emailToRecover, setEmailToRecover] = useState("");
   const [emailStatus, setEmailStatus] = useState("default");
+  const [loadingComponent, setLoadingComponent] = useState(false);
 
   const onResetPasswordClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
+    setLoadingComponent(true);
+
     sendResetPasswordEmail(emailToRecover)
       .then(() => setEmailStatus("sent"))
-      .catch(() => setEmailStatus("error"));
+      .catch(() => {
+        setLoadingComponent(false);
+        setEmailStatus("error");
+      });
   };
 
-  return (
+  return !loadingComponent ? (
     <StForgotPasswordContainer>
       <StH2>Wachtwoord vergeten</StH2>
       <StP variant="default">
@@ -61,6 +72,8 @@ const ForgotPassword = () => {
         onClick={onResetPasswordClicked}
       />
     </StForgotPasswordContainer>
+  ) : (
+    <LoadingComponent />
   );
 };
 
