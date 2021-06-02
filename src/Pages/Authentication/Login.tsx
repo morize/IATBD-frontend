@@ -10,6 +10,7 @@ import {
   StLabel,
   StP,
   StForm,
+  StErrorMessage
 } from "../../Utils/HTMLComponents";
 import Variants from "../../Utils/Variants";
 import BaseInput from "../../Components/Input/BaseInput";
@@ -31,11 +32,6 @@ const StPasswordForgotAnchor = styled.a`
     text-decoration: underline;
     cursor: pointer;
   }
-`;
-
-const StErrorMessage = styled.p`
-  margin: -16px 0 30px 0;
-  color: ${Variants.danger};
 `;
 
 const StRegisterRedirect = styled.section`

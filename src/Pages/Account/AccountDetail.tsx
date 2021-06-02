@@ -35,7 +35,9 @@ const StSectionVerify = styled(StSection)`
 const AccountGegevens = () => {
   const navigate = useNavigate();
 
-  const userId = localStorage.getItem("userDetails") !== null && JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
+  const userId =
+    localStorage.getItem("userDetails") !== null &&
+    JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
   const { data: accountData, isValidating: isAccountDataLoaded } = useSWR(
     `api/user/${userId}`,
@@ -52,9 +54,7 @@ const AccountGegevens = () => {
   const onLogoutClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    logout().then(() => {
-      navigate("../../home");
-    });
+    logout().then(() => navigate("../../home"));
   };
 
   const userMediaValues = formatUserMedia(
@@ -84,7 +84,9 @@ const AccountGegevens = () => {
           </StP>
 
           <StLabel>Account Status:</StLabel>
-          <StP>{accountData?.status === "blocked" ? "Geblokkeerd" : "Actief"}</StP>
+          <StP>
+            {accountData?.status === "blocked" ? "Geblokkeerd" : "Actief"}
+          </StP>
         </StAccountDetails>
       </StSection>
 
