@@ -39,14 +39,12 @@ const Home = () => {
           pellentesque.
         </StP>
 
-        <NavLink to="../aanmelden">
-          <StCardFigure onClick={() => navigate("../aanmelden")}>
-            <CardButton
-              src="https://dogtime.com/assets/uploads/2018/10/how-to-get-pet-sitter-job.jpg"
-              buttonText="Meld je aan om te starten!"
-            />
-          </StCardFigure>
-        </NavLink>
+        <StCardFigure onClick={() => navigate("../aanmelden")}>
+          <CardButton
+            src="https://dogtime.com/assets/uploads/2018/10/how-to-get-pet-sitter-job.jpg"
+            buttonText="Meld je aan om te starten!"
+          />
+        </StCardFigure>
       </StSection>
 
       <StSection>
