@@ -12,29 +12,24 @@ const RootLayout = styled.section`
   min-height: 100vh;
   font-family: "Fira Sans", sans-serif;
 
-  @media (max-width: 800px) {
+  @media (max-width: 600px) {
     flex-direction: column;
   }
 `;
 
-const StContent = styled.section<{isAdmin: boolean}>`
+const StContent = styled.section<{ isAdmin: boolean }>`
   position: relative;
   display: flex;
   width: 100%;
   height: 100vh;
-  flex-direction: ${(props) => props.isAdmin ? "column": "row"};
-  padding: ${(props) => props.isAdmin ? "0": "6vh 0"};
+  flex-direction: ${(props) => (props.isAdmin ? "column" : "row")};
+  padding: ${(props) => (props.isAdmin ? "0" : "6vh 0")};
   background: url(${bgLayout});
   box-sizing: border-box;
   overflow-y: auto;
 `;
 
-const checkIfAuthenticationPage = (url: string) => {
-  if (url === "account") {
-    return true;
-  }
-  return false;
-};
+const checkIfAuthenticationPage = (url: string) => url === "account";
 
 const Layout = () => {
   const { pathname } = useLocation();

@@ -7,7 +7,6 @@ const StCardImg = styled.img`
   display: block;
   width: 100%;
   height: 80%;
-
   border-radius: 8px 8px 0 0;
   object-fit: cover;
 `;
@@ -17,7 +16,6 @@ const StCardFigcaption = styled.figcaption`
   justify-content: center;
   align-items: center;
   height: 20%;
-
   border-radius: 0 0 8px 8px;
   background: ${Variants.tertiary};
   color: #ffff;
