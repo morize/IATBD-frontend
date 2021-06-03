@@ -4,22 +4,20 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Variants, { TVariants } from "./Variants";
 
 export const StH1 = styled.h1`
-  margin: 0 0 32px 0;
+  margin: 0 0 3.4% 0;
   font-size: 2.2rem;
   color: ${Variants.default};
 `;
 
 export const StH2 = styled.h2`
-  margin: 12px 0 24px 0;
+  margin: 1.4% 0 2.8% 0;
   font-size: 1.8rem;
   color: ${Variants.default};
 `;
 
 export const StH3 = styled.h3`
-  margin: 0 0 24px 0;
-  font-size: 1.5rem;
-  font-weight: 500;
-  text-shadow: 0px 6px 6px rgba(0, 0, 0, 0.15);
+  margin: 0 0 2.8% 0;
+  font-size: 1.3rem;
   color: ${Variants.default};
 `;
 
@@ -30,8 +28,8 @@ interface IStP {
 
 export const StP = styled.p<IStP>`
   font-size: 1rem;
-  color: ${(props) => Variants[props.variant!]};
   font-weight: ${(props) => (props.bold ? 600 : 500)};
+  color: ${(props) => Variants[props.variant!]};
   white-space: pre-wrap;
 `;
 
@@ -41,36 +39,25 @@ export const StLabel = styled.label`
 `;
 
 export const StSection = styled.section`
-  margin: 24px 0;
+  margin: 2% 0;
 
   &:last-child {
-    margin: 24px 0 0 0;
+    margin: 2% 0 0 0;
   }
 `;
 
 export const StArticle = styled.article<{ admin?: boolean }>`
   display: flex;
   flex-direction: column;
-  width: 800px;
-  height: 100%;
+  width: clamp(600px, 50%, 800px);
   min-width: ${(props) => (props.admin ? "100%" : "auto")};
   margin: 0 auto;
   overflow: ${(props) => (props.admin ? "auto" : "unset")};
-
-  @media (max-width: 1280px) {
-    width: 700px;
-  }
-
-  // Workaround for padding-bottom bug while a container is inside an overflow auto parent.
-  &:after {
-    content: "";
-    min-height: 100px;
-  }
 `;
 
 export const StSubArticle = styled(StArticle)`
-  margin: 0 auto;
-  max-width: 800px;
+  width: clamp(400px, 50%, 740px);
+  margin: 3.8% auto;
 `;
 
 export const StForm = styled.form`
@@ -84,7 +71,7 @@ export const StForm = styled.form`
 `;
 
 export const StErrorMessage = styled.p`
-  margin: -16px 0 30px 0;
+  margin: -2% 0 4.5% 0;
   color: ${Variants.danger};
 `;
 
