@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
-import { getUserMedia } from "../../Api/UserCalls";
 import {
   StH2,
   StH3,
@@ -14,7 +13,6 @@ import {
 import { sendEmailVerificationLink, logout } from "../../Api/AuthCalls";
 import { getUserDetails } from "../../Api/UserCalls";
 import BaseButton from "../../Components/Button/BaseButton";
-import Showcase from "../../Components/Showcase/Showcase";
 
 const StAccountDetails = styled.section`
   display: flex;
@@ -45,19 +43,13 @@ const AccountGegevens = () => {
     { revalidateOnFocus: false }
   );
 
-  const { data: mediaData, isValidating: isMediaLoaded } = useSWR(
-    `api/users-media/${userId}`,
-    getUserMedia,
-    { revalidateOnFocus: false }
-  );
-
   const onLogoutClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     logout().then(() => navigate("../../home"));
   };
 
-  return !isAccountDataLoaded && !isMediaLoaded ? (
+  return !isAccountDataLoaded ? (
     <>
       <StH2>Algemeen</StH2>
 
@@ -82,19 +74,6 @@ const AccountGegevens = () => {
             {accountData?.status === "blocked" ? "Geblokkeerd" : "Actief"}
           </StP>
         </StAccountDetails>
-      </StSection>
-
-      <StSection>
-        <StH3>Profiel Showcase</StH3>
-        {mediaData ? (
-          <Showcase
-            image1={mediaData.image_1}
-            image2={mediaData.image_2}
-            video={mediaData.video_link}
-          />
-        ) : (
-          <StP variant="secondary">U heeft nog geen media in uw profiel</StP>
-        )}
       </StSection>
 
       <StSection>

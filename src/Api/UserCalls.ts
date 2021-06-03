@@ -1,7 +1,10 @@
 import { laravelApi, laravelApiUrl } from "./Api";
 
-const getYoutubeIdFromUrl = (url: string) =>
-  url.match(/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#]*).*/)![1];
+const getYoutubeIdFromUrl = (url: string) =>{
+  let id = url.match(/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#]*).*/);
+  return id !== null && id[1];
+}
+  
 
 export const formatUserMedia = (
   image1?: string,

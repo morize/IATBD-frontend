@@ -54,13 +54,13 @@ const AccountMedia = () => {
             trigger(`api/users-media/${userId}`)
           );
     } else {
-      setFormError(true);
+      !formError && setFormError(true);
     }
   };
 
   return !isMediaDataValidating ? (
     <>
-      <StH2>Media</StH2>
+      <StH2>Profiel media</StH2>
       <StSection>
         {mediaData && (
           <Showcase
@@ -71,7 +71,7 @@ const AccountMedia = () => {
         )}
 
         {mediaData ? (
-          <StH3>Bewerk Media</StH3>
+          <StH3>Bewerk profiel media</StH3>
         ) : (
           <StH3>Voeg fotos en youtube filmpjes van uw huis!</StH3>
         )}
@@ -103,7 +103,7 @@ const AccountMedia = () => {
 
           {formError && (
             <StErrorMessage>
-              U moet minstens een afbeelding of video toevoegen
+              U moet minstens een afbeelding of een video link toevoegen
             </StErrorMessage>
           )}
 
