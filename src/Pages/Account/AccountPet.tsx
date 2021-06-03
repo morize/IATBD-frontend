@@ -2,15 +2,20 @@ import useSWR from "swr";
 
 import { laravelApiUrl } from "../../Api/Api";
 import { getUserPets } from "../../Api/PetCalls";
-import { StH2, StSection } from "../../Utils/HTMLComponents";
+import { LoadingComponent, StH2, StSection } from "../../Utils/HTMLComponents";
 import PetCard, { PetCardItem } from "../../Components/Card/PetCard/PetCard";
 
 const AccountPet = () => {
-  const userId = localStorage.getItem("userDetails") !== null && JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
-  
-  const { data: userPetsData } = useSWR(`api/user/${userId}/pets`, getUserPets);
+  const userId =
+    localStorage.getItem("userDetails") !== null &&
+    JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
-  return (
+  const { data: userPetsData, isValidating: isUserPetsDataValidating } = useSWR(
+    `api/user/${userId}/pets`,
+    getUserPets
+  );
+
+  return !isUserPetsDataValidating ? (
     <>
       <StH2>Mijn huisdieren</StH2>
       <StSection>
@@ -29,6 +34,8 @@ const AccountPet = () => {
         </PetCard>
       </StSection>
     </>
+  ) : (
+    <LoadingComponent />
   );
 };
 

@@ -2,12 +2,13 @@ import { ReactNode } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import BaseButton from "../../Button/BaseButton";
 import dogPattern from "../../../Utils/Images/dog_pattern.jpg";
 
 const StPetCard = styled(NavLink)`
   display: flex;
   width: 100%;
-  height: 140px;
+  height: 160px;
   margin-bottom: 24px;
   border-radius: 8px;
   text-decoration: none;
@@ -63,7 +64,7 @@ const StPetCardContentDescription = styled(StPetCardContentHeader)`
 interface ISitterCardItem {
   petName: string;
   petImageUrl: string;
-  redirectTo: string;
+  redirectTo: number;
   owner: string;
   status: string;
 }
@@ -146,27 +147,27 @@ export const PetRequestCardItem = ({
 
 const StPetCardContainer = styled.section`
   padding: 8%;
-
-  box-sizing: border-box;
   border-radius: 8px;
   background-image: url(${dogPattern});
   background-position: center;
+  box-sizing: border-box;
+
+  & button {
+    height: 70px;
+    margin: 8px 0 0 0;
+    background: #a77326;
+  }
 `;
 
-const StAddPetButton = styled.button`
-  width: 100%;
-  height: 70px;
-  margin: 8px 0 0 0;
-  border: none;
+const StEmptyIndicator = styled.div`
+  padding: 20px;
+  background: #a46b36;
   border-radius: 8px;
-  background: #a77326;
-  font-size: 1rem;
-  font-weight: 600;
+  text-align: center;
   color: #ffff;
-  cursor: pointer;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  user-select: none;
+  box-sizing: border-box;
 `;
-
 export interface IPetCard {
   children?: ReactNode;
   cardVariant: "sitter" | "owner";
@@ -176,11 +177,11 @@ const PetCard = ({ children, cardVariant }: IPetCard) => {
   const navigate = useNavigate();
 
   const emptyCardList = !children && (
-    <div>
+    <StEmptyIndicator>
       {cardVariant === "sitter"
         ? "U heeft geen oppasaanvragen"
         : "U heeft geen aangemelde huisdieren"}
-    </div>
+    </StEmptyIndicator>
   );
 
   return (
@@ -189,9 +190,10 @@ const PetCard = ({ children, cardVariant }: IPetCard) => {
       {emptyCardList}
 
       {cardVariant === "owner" && (
-        <StAddPetButton onClick={() => navigate("nieuw-huisdier")}>
-          Huisdier toevoegen voor oppas
-        </StAddPetButton>
+        <BaseButton
+          label="Huisdier toevoegen voor oppas"
+          onClick={() => navigate("nieuw-huisdier")}
+        />
       )}
     </StPetCardContainer>
   );

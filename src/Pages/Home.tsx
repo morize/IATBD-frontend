@@ -32,11 +32,11 @@ const Home = () => (
         pellentesque.
       </StP>
 
-      <NavLink to="../overzicht">
+      <NavLink to="../aanmelden">
         <StCardFigure>
           <CardButton
             src="https://dogtime.com/assets/uploads/2018/10/how-to-get-pet-sitter-job.jpg"
-            buttonText="Neem een kijk naar onze huisdieren!"
+            buttonText="Meld je aan om te starten!"
           />
         </StCardFigure>
       </NavLink>

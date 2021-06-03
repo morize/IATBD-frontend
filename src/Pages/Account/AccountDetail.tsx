@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
-import { getUserMedia, formatUserMedia } from "../../Api/UserCalls";
 import {
   StH2,
   StH3,
@@ -14,7 +13,6 @@ import {
 import { sendEmailVerificationLink, logout } from "../../Api/AuthCalls";
 import { getUserDetails } from "../../Api/UserCalls";
 import BaseButton from "../../Components/Button/BaseButton";
-import Showcase from "../../Components/Showcase/Showcase";
 
 const StAccountDetails = styled.section`
   display: flex;
@@ -35,7 +33,9 @@ const StSectionVerify = styled(StSection)`
 const AccountGegevens = () => {
   const navigate = useNavigate();
 
-  const userId = localStorage.getItem("userDetails") !== null && JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
+  const userId =
+    localStorage.getItem("userDetails") !== null &&
+    JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
   const { data: accountData, isValidating: isAccountDataLoaded } = useSWR(
     `api/user/${userId}`,
@@ -43,27 +43,13 @@ const AccountGegevens = () => {
     { revalidateOnFocus: false }
   );
 
-  const { data: mediaData, isValidating: isMediaLoaded } = useSWR(
-    `api/users-media/${userId}`,
-    getUserMedia,
-    { revalidateOnFocus: false }
-  );
-
   const onLogoutClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    logout().then(() => {
-      navigate("../../home");
-    });
+    logout().then(() => navigate("../../home"));
   };
 
-  const userMediaValues = formatUserMedia(
-    mediaData?.image_1,
-    mediaData?.image_2,
-    mediaData?.video_link
-  );
-
-  return !isAccountDataLoaded && !isMediaLoaded ? (
+  return !isAccountDataLoaded ? (
     <>
       <StH2>Algemeen</StH2>
 
@@ -84,21 +70,10 @@ const AccountGegevens = () => {
           </StP>
 
           <StLabel>Account Status:</StLabel>
-          <StP>{accountData?.blocked === 1 ? "Geblokkeerd" : "Standaard"}</StP>
+          <StP>
+            {accountData?.status === "blocked" ? "Geblokkeerd" : "Actief"}
+          </StP>
         </StAccountDetails>
-      </StSection>
-
-      <StSection>
-        <StH3>Profiel Showcase</StH3>
-        {mediaData ? (
-          <Showcase
-            image1={userMediaValues.image1}
-            image2={userMediaValues.image2}
-            video={userMediaValues.youtube}
-          />
-        ) : (
-          <StP variant="secondary">U heeft nog geen media in uw profiel</StP>
-        )}
       </StSection>
 
       <StSection>

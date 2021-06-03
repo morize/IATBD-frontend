@@ -9,7 +9,12 @@ import {
   updatePetPreferences,
   getSitterRequests,
 } from "../../Api/SitterCalls";
-import { StH2, StH3, StSection } from "../../Utils/HTMLComponents";
+import {
+  LoadingComponent,
+  StH2,
+  StH3,
+  StSection,
+} from "../../Utils/HTMLComponents";
 import { translateStatus } from "../../Api/PetCalls";
 import PetPreferences from "./AccountSitter/SitterSettings";
 import PetCard, { SitterCardItem } from "../../Components/Card/PetCard/PetCard";
@@ -28,13 +33,12 @@ const AccountSitter = () => {
     localStorage.getItem("userDetails") !== null &&
     JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
 
-  const { data: sitterRequestsData } = useSWR(
-    `api/sitters/${userId}/requests`,
-    getSitterRequests,
-    {
-      revalidateOnFocus: false,
-    }
-  );
+  const {
+    data: sitterRequestsData,
+    isValidating: isSitterRequestsDataValidating,
+  } = useSWR(`api/sitters/${userId}/requests`, getSitterRequests, {
+    revalidateOnFocus: false,
+  });
 
   const onPetPreferencesSubmit = (
     e: React.FormEvent<HTMLFormElement>,
@@ -52,7 +56,7 @@ const AccountSitter = () => {
 
     create
       ? createSitter(sitterStatusData)
-      : updateSitterStatus(sitterStatusData).then(() => {
+      : updateSitterStatus(sitterStatusData, userId).then(() => {
           if (checkboxOptions) {
             let petPreferencesFormData = new FormData();
             petPreferencesFormData.append(
@@ -61,7 +65,7 @@ const AccountSitter = () => {
             );
             create
               ? createPetPreferences(petPreferencesFormData)
-              : updatePetPreferences(petPreferencesFormData);
+              : updatePetPreferences(petPreferencesFormData, userId);
           }
         });
 
@@ -75,17 +79,21 @@ const AccountSitter = () => {
         <StH3>Mijn oppasvragen</StH3>
 
         <PetCard cardVariant="sitter">
-          {sitterRequestsData &&
+        {!isSitterRequestsDataValidating ? (
+            sitterRequestsData && sitterRequestsData.length !== 0 &&
             sitterRequestsData.map((request, key) => (
               <SitterCardItem
                 petName={request.pet_name}
                 owner={request.owner_name}
                 status={translateStatus(request.request_status)}
                 petImageUrl={`${laravelApiUrl}/api/pets/${request.pet_id}/image`}
-                redirectTo={request.pet_id.toString()}
+                redirectTo={request.pet_id}
                 key={key}
               />
-            ))}
+            ))
+          ) : (
+            <LoadingComponent />
+          )}
         </PetCard>
       </StSection>
 

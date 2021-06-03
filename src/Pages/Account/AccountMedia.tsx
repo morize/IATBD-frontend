@@ -7,13 +7,13 @@ import {
   submitUserMedia,
   updateUserMedia,
   getUserMedia,
-  formatUserMedia
 } from "../../Api/UserCalls";
 import {
   StSection,
   StH2,
   StH3,
   StForm,
+  StErrorMessage,
   LoadingComponent,
 } from "../../Utils/HTMLComponents";
 import BaseButton from "../../Components/Button/BaseButton";
@@ -24,10 +24,13 @@ const AccountMedia = () => {
   const [formImage1, setFormImage1] = useState<File | null>(null);
   const [formImage2, setFormImage2] = useState<File | null>(null);
   const [formYoutubeUrl, setFormYoutubeUrl] = useState("");
+  const [formError, setFormError] = useState(false);
 
-  const userId = localStorage.getItem("userDetails") !== null && JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
-  
-  const { data: mediaData, isValidating } = useSWR(
+  const userId =
+    localStorage.getItem("userDetails") !== null &&
+    JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
+
+  const { data: mediaData, isValidating: isMediaDataValidating } = useSWR(
     `api/users-media/${userId}`,
     getUserMedia,
     { revalidateOnFocus: false }
@@ -43,28 +46,32 @@ const AccountMedia = () => {
       formImage2 && fData.append("sitter_image_2", formImage2);
       formYoutubeUrl && fData.append("sitter_video_link", formYoutubeUrl);
 
-      mediaData ? updateUserMedia(fData) : submitUserMedia(fData);
+      mediaData
+        ? updateUserMedia(fData, userId).then(() =>
+            trigger(`api/users-media/${userId}`)
+          )
+        : submitUserMedia(fData).then(() =>
+            trigger(`api/users-media/${userId}`)
+          );
+    } else {
+      !formError && setFormError(true);
     }
-
-    trigger(`api/users-media/${userId}`);
   };
 
-  const userMediaValues = formatUserMedia(mediaData?.image_1, mediaData?.image_2, mediaData?.video_link);
-
-  return !isValidating ? (
+  return !isMediaDataValidating ? (
     <>
-      <StH2>Media</StH2>
+      <StH2>Profiel media</StH2>
       <StSection>
         {mediaData && (
           <Showcase
-            image1={userMediaValues.image1}
-            image2={userMediaValues.image2}
-            video={userMediaValues.youtube}
+            image1={mediaData.image_1}
+            image2={mediaData.image_2}
+            video={mediaData.video_link}
           />
         )}
 
         {mediaData ? (
-          <StH3>Bewerk Media</StH3>
+          <StH3>Bewerk profiel media</StH3>
         ) : (
           <StH3>Voeg fotos en youtube filmpjes van uw huis!</StH3>
         )}
@@ -93,6 +100,12 @@ const AccountMedia = () => {
             icon={<VideoLibraryIcon />}
             onChange={(e) => setFormYoutubeUrl(e.target.value)}
           />
+
+          {formError && (
+            <StErrorMessage>
+              U moet minstens een afbeelding of een video link toevoegen
+            </StErrorMessage>
+          )}
 
           <BaseButton
             label={mediaData ? "Aanpassigen opslaan" : "Media opslaan"}

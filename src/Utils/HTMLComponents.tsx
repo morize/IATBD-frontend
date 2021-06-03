@@ -83,6 +83,11 @@ export const StForm = styled.form`
   }
 `;
 
+export const StErrorMessage = styled.p`
+  margin: -16px 0 30px 0;
+  color: ${Variants.danger};
+`;
+
 const StProgressContainer = styled.div`
   display: flex;
   justify-content: center;

@@ -1,16 +1,9 @@
 import { laravelApi, sleep } from "./Api";
+import { UserResponseType } from "./UserCalls";
+import { SitterRequestsResponseType } from "./SitterRequestCalls";
 
-export const getAllUsers = async (
-  url: string
-): Promise<
-  {
-    uuid: number;
-    email: string;
-    name: string;
-    role: string;
-    status: string;
-  }[]
-> =>
+// User
+export const getAllUsers = async (url: string): Promise<UserResponseType[]> =>
   await laravelApi
     .get(url)
     .then((response) => response.data)
@@ -22,17 +15,10 @@ export const updateUserStatus = async (userId: number, status: string) => {
   });
 };
 
+// Sitter Requests
 export const getAllSitterRequests = async (
   url: string
-): Promise<
-  {
-    id: number;
-    owner_name: string;
-    pet_name: string;
-    sitter_name: string;
-    request_status: string;
-  }[]
-> =>
+): Promise<SitterRequestsResponseType[]> =>
   await laravelApi
     .get(url)
     .then((response) => response.data)

@@ -1,14 +1,25 @@
 import { useState, forwardRef } from "react";
+import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
 import { createSitterRequest } from "../../../Api/SitterRequestCalls";
 import { getSitter } from "../../../Api/SitterCalls";
-import { StH3, StLabel, StP, StForm } from "../../../Utils/HTMLComponents";
+import {
+  LoadingComponent,
+  StH3,
+  StLabel,
+  StP,
+  StForm,
+} from "../../../Utils/HTMLComponents";
 import { StProfileDetailsSitter } from "./PetInfo";
 import TextArea from "../../../Components/Input/TextArea";
 import BaseButton from "../../../Components/Button/BaseButton";
 
+const StModalLabel = styled(StLabel)`
+  margin-bottom: 12px;
+  color: #ffff;
+`;
 const StModal = styled.div`
   position: absolute;
   top: 50%;
@@ -51,34 +62,32 @@ interface IPetProfileModal {
 }
 
 const SitterModal = forwardRef(
-  ({
-    pet_name,
-    sit_date_start,
-    sit_date_end,
-    sit_hourly_prize,
-    pet_owner,
-    pet_id,
-    user_id,
-    sitter_name,
-  }: IPetProfileModal, ref) => {
+  (
+    {
+      pet_name,
+      sit_date_start,
+      sit_date_end,
+      sit_hourly_prize,
+      pet_owner,
+      pet_id,
+      user_id,
+      sitter_name,
+    }: IPetProfileModal,
+    ref
+  ) => {
     const [sitterRemarks, setSitterRemarks] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
-    const { data: sitterData, isValidating: isSitterDataLoaded } = useSWR(
-      `api/sitters/${user_id}`,
-      getSitter,
-      { revalidateOnFocus: false }
-    );
+    const navigate = useNavigate();
+    const { data: sitterData } = useSWR(`api/sitters/${user_id}`, getSitter, {
+      revalidateOnFocus: false,
+    });
 
     const submitFormData = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      if (
-        sitterData &&
-        pet_owner &&
-        pet_name &&
-        !isSitterDataLoaded &&
-        sitter_name
-      ) {
+      if (sitterData && pet_owner && pet_name && sitter_name) {
+        setIsLoading(true);
         let fData = new FormData();
         fData.append("sitter_id", sitterData.id);
         fData.append("pet_id", pet_id);
@@ -87,57 +96,60 @@ const SitterModal = forwardRef(
         fData.append("sitter_name", sitter_name);
         sitterRemarks && fData.append("sitter_remarks", sitterRemarks);
 
-        createSitterRequest(fData).then(() => console.log("success"));
+        createSitterRequest(fData)
+          .then(() => navigate("../../../account/opasser"))
+          .catch(() => setIsLoading(false));
       }
     };
 
     return (
       <StModal>
-        <StH3>Reageer voor oppas</StH3>
-        <StLabel style={{ color: "#ffff", marginBottom: "12px" }}>
-          Oppas informatie:
-        </StLabel>
-        <SitterModalInfo>
-          {sit_date_start && (
-            <div>
-              <StLabel>Datum start:</StLabel>
-              <StP>{sit_date_start}</StP>
-            </div>
-          )}
+        {!isLoading ? (
+          <>
+            <StH3>Reageer voor oppas</StH3>
+            <StModalLabel>Oppas informatie:</StModalLabel>
+            <SitterModalInfo>
+              {sit_date_start && (
+                <div>
+                  <StLabel>Datum start:</StLabel>
+                  <StP>{sit_date_start}</StP>
+                </div>
+              )}
 
-          {sit_date_end && (
-            <div>
-              <StLabel>Datum eind:</StLabel>
-              <StP>{sit_date_end}</StP>
-            </div>
-          )}
+              {sit_date_end && (
+                <div>
+                  <StLabel>Datum eind:</StLabel>
+                  <StP>{sit_date_end}</StP>
+                </div>
+              )}
 
-          {sit_hourly_prize && (
-            <div>
-              <StLabel>Uurtarief:</StLabel>
-              <StP>{sit_hourly_prize.toString()} €</StP>
-            </div>
-          )}
+              {sit_hourly_prize && (
+                <div>
+                  <StLabel>Uurtarief:</StLabel>
+                  <StP>{sit_hourly_prize.toString()} €</StP>
+                </div>
+              )}
 
-          {pet_owner && (
-            <div>
-              <StLabel>Huisdier eigenaar:</StLabel>
-              <StP>{pet_owner}</StP>
-            </div>
-          )}
-        </SitterModalInfo>
+              {pet_owner && (
+                <div>
+                  <StLabel>Huisdier eigenaar:</StLabel>
+                  <StP>{pet_owner}</StP>
+                </div>
+              )}
+            </SitterModalInfo>
+            <StForm onSubmit={submitFormData}>
+              <StModalLabel>Uw opmerkingen:</StModalLabel>
+              <TextArea
+                value={sitterRemarks}
+                onChange={(e) => setSitterRemarks(e.target.value)}
+              />
 
-        <StForm onSubmit={submitFormData}>
-          <StLabel style={{ color: "#ffff", marginBottom: "12px" }}>
-            Uw opmerkingen:
-          </StLabel>
-          <TextArea
-            value={sitterRemarks}
-            onChange={(e) => setSitterRemarks(e.target.value)}
-          />
-
-          <BaseButton label="Stuur verzoek" type="submit" />
-        </StForm>
+              <BaseButton label="Stuur verzoek" type="submit" />
+            </StForm>
+          </>
+        ) : (
+          <LoadingComponent />
+        )}
       </StModal>
     );
   }

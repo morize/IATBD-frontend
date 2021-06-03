@@ -1,25 +1,9 @@
 import { laravelApi, sleep } from "./Api";
 
-export const getAllPets = async (
-  url: string
-): Promise<
-  {
-    id: number;
-    pet_name: string;
-    pet_kind: string;
-    pet_image: string;
-    sit_hourly_prize: number;
-  }[]
-> =>
-  await laravelApi
-    .get(url)
-    .then((response) => response.data)
-    .then((response) => sleep(response));
-
-export const getSpecificPet = async (
-  url: string
-): Promise<{
+export interface PetResponseType {
+  id: number;
   owner_id: number;
+  owner_name: string;
   pet_name: string;
   pet_breed: string;
   pet_kind: string;
@@ -28,7 +12,26 @@ export const getSpecificPet = async (
   sit_date_start: string;
   sit_date_end: string;
   sit_remarks: string;
-}> =>
+}
+
+export interface PetRequestResponseType {
+  id: number;
+  sitter_id: number;
+  pet_id: number;
+  owner_name: string;
+  pet_name: string;
+  sitter_name: string;
+  sitter_remarks: string;
+  request_status: string;
+}
+
+export const getAllPets = async (url: string): Promise<PetResponseType[]> =>
+  await laravelApi
+    .get(url)
+    .then((response) => response.data)
+    .then((response) => sleep(response));
+
+export const getSpecificPet = async (url: string): Promise<PetResponseType> =>
   await laravelApi
     .get(url)
     .then((response) => response.data)
@@ -49,17 +52,7 @@ export const getPetBreeds = async (url: string): Promise<string[]> =>
     .then((response) => response.data)
     .then((response) => sleep(response));
 
-export const getUserPets = async (
-  url: string
-): Promise<
-  {
-    id: string;
-    pet_name: string;
-    pet_breed: string;
-    pet_kind: string;
-    pet_image: string;
-  }[]
-> =>
+export const getUserPets = async (url: string): Promise<PetResponseType[]> =>
   await laravelApi
     .get(url)
     .then((response) => response.data)
@@ -67,18 +60,7 @@ export const getUserPets = async (
 
 export const getPetRequests = async (
   url: string
-): Promise<
-  {
-    id: number;
-    sitter_id: number;
-    pet_id: number;
-    owner_name: string;
-    pet_name: string;
-    sitter_name: string;
-    sitter_remarks: string;
-    request_status: string;
-  }[]
-> =>
+): Promise<PetRequestResponseType[]> =>
   await laravelApi
     .get(url)
     .then((response) => response.data)
@@ -93,6 +75,6 @@ export const translateStatus = (status: string) => {
     case "rejected":
       return "Afgewezen";
     default:
-      return "pending";
+      return "Default";
   }
 };
