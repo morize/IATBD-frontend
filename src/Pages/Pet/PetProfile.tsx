@@ -81,9 +81,6 @@ const StProfileParent = styled(StSection)`
 `;
 
 const PetProfile = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-
   const userDetails =
     localStorage.getItem("userDetails") !== null &&
     JSON.parse(localStorage.getItem("userDetails")!);
@@ -96,6 +93,9 @@ const PetProfile = () => {
   const [modalPetName, setModalPetName] = useState("");
   const [modalSitterName, setModalSitterName] = useState("");
   const [modalSitterRemarks, setModalSitterRemarks] = useState("");
+
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const { data: petProfileData, isValidating: isPetProfileDataValidating } =
     useSWR(`api/pets/${id}`, getSpecificPet, { revalidateOnFocus: false });
@@ -134,9 +134,8 @@ const PetProfile = () => {
           <BaseButton
             label="Aanvraag annuleren"
             variant="secondary"
-            onClick={() =>{
-              
-              deleteSitterRequest(parseInt(id)).then(() => navigate("../.."))}
+            onClick={() =>
+              deleteSitterRequest(parseInt(id)).then(() => navigate("../.."))
             }
           />
         )}
@@ -170,7 +169,7 @@ const PetProfile = () => {
                 onClose={() => setIsRequestModalOpen(false)}
               >
                 <SitterRequestModal
-                  reviewer_id={userDetails["uuid"]}
+                  reviewer_id={userDetails.uuid}
                   sitter_id={modalSitterId}
                   sitter_request_id={modalRequestId}
                   sitter_remarks={modalSitterRemarks}
@@ -183,7 +182,7 @@ const PetProfile = () => {
           )}
 
         {window.location.pathname.split("/")[2] === "profiel" &&
-          petProfileData?.owner_id !== userDetails["uuid"] && (
+          petProfileData?.owner_id !== userDetails.uuid && (
             <BaseButton
               label="Reageeren voor oppas"
               onClick={() => setIsModalOpen(true)}
@@ -194,13 +193,13 @@ const PetProfile = () => {
           <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
             <SitterModal
               pet_name={petProfileData.pet_name}
-              sitter_name={userDetails["name"]}
+              sitter_name={userDetails.username}
               sit_date_start={petProfileData.sit_date_start}
               sit_date_end={petProfileData.sit_date_end}
               sit_hourly_prize={petProfileData.sit_hourly_prize}
-              pet_owner={userDetails["name"]}
+              pet_owner={petProfileData.owner_name}
               pet_id={id}
-              user_id={userDetails["uuid"]}
+              user_id={userDetails.uuid}
             />
           </Modal>
         )}

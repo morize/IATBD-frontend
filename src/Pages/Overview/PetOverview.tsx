@@ -5,7 +5,8 @@ import styled from "styled-components";
 
 import { laravelApiUrl } from "../../Api/Api";
 import { getAllPets, getPetKinds } from "../../Api/PetCalls";
-import { StH1, StSection } from "../../Utils/HTMLComponents";
+
+import { LoadingComponent, StH1, StSection } from "../../Utils/HTMLComponents";
 import dogPattern from "../../Utils/Images/dog_pattern.jpg";
 import SelectButton from "../../Components/Select/Select";
 import PetOverviewCard from "../../Components/Card/PetCard/PetOverviewCard";
@@ -37,9 +38,10 @@ const PetOverview = () => {
   const { data: kindsOfPetData } = useSWR("api/pet-kinds", getPetKinds, {
     revalidateOnFocus: false,
   });
-  const { data: petOverviewData } = useSWR("api/pets", getAllPets, {
-    revalidateOnFocus: false,
-  });
+  const { data: petOverviewData, isValidating: isPetOverviewDataValidating } =
+    useSWR("api/pets", getAllPets, {
+      revalidateOnFocus: false,
+    });
 
   const [filterKind, setFilterKind] = useState({
     value: "",
@@ -78,7 +80,7 @@ const PetOverview = () => {
     }
     return petOverviewData;
   };
-  
+
   return (
     <>
       <StSection>
@@ -101,7 +103,7 @@ const PetOverview = () => {
                   label: "Uurtarief",
                 });
               }}
-              variant={"filter"}
+              variant="filter"
             />
             <SelectButton
               value={filterHourlyPay}
@@ -117,12 +119,13 @@ const PetOverview = () => {
                   label: "Huisdier Soort",
                 });
               }}
-              variant={"filter"}
+              variant="filter"
             />
           </StFilterHeader>
 
           <StOverviewGrid>
-            {petOverviewData &&
+            {!isPetOverviewDataValidating ? (
+              petOverviewData &&
               filteredPetOverviewData()?.map((item, key) => (
                 <PetOverviewCard
                   petName={item.pet_name}
@@ -132,7 +135,10 @@ const PetOverview = () => {
                   onClick={() => navigate(`profiel/${item.id}`)}
                   key={key}
                 />
-              ))}
+              ))
+            ) : (
+              <LoadingComponent />
+            )}
           </StOverviewGrid>
         </StOverview>
       </StSection>

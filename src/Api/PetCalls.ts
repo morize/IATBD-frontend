@@ -3,6 +3,7 @@ import { laravelApi, sleep } from "./Api";
 export interface PetResponseType {
   id: number;
   owner_id: number;
+  owner_name: string;
   pet_name: string;
   pet_breed: string;
   pet_kind: string;
