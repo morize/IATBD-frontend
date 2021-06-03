@@ -7,13 +7,13 @@ import dogPattern from "../../../Utils/Images/dog_pattern.jpg";
 const StPetCard = styled(NavLink)`
   display: flex;
   width: 100%;
-  height: 140px;
+  height: 160px;
   margin-bottom: 24px;
   border-radius: 8px;
   text-decoration: none;
   cursor: pointer;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
+  
   &:last-child {
     margin-bottom: 0;
   }
@@ -63,7 +63,7 @@ const StPetCardContentDescription = styled(StPetCardContentHeader)`
 interface ISitterCardItem {
   petName: string;
   petImageUrl: string;
-  redirectTo: string;
+  redirectTo: number;
   owner: string;
   status: string;
 }
@@ -146,11 +146,10 @@ export const PetRequestCardItem = ({
 
 const StPetCardContainer = styled.section`
   padding: 8%;
-
-  box-sizing: border-box;
   border-radius: 8px;
   background-image: url(${dogPattern});
   background-position: center;
+  box-sizing: border-box;
 `;
 
 const StAddPetButton = styled.button`
@@ -160,7 +159,6 @@ const StAddPetButton = styled.button`
   border: none;
   border-radius: 8px;
   background: #a77326;
-  font-size: 1rem;
   font-weight: 600;
   color: #ffff;
   cursor: pointer;
