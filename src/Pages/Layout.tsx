@@ -23,10 +23,15 @@ const StContent = styled.section<{ isAdmin: boolean }>`
   width: 100%;
   height: 100vh;
   flex-direction: ${(props) => (props.isAdmin ? "column" : "row")};
-  padding: ${(props) => (props.isAdmin ? "0" : "6vh 0")};
+  padding: ${(props) => (props.isAdmin ? "0" : "3% 0")};
   background: url(${bgLayout});
   box-sizing: border-box;
   overflow-y: auto;
+
+  @media (max-width: 600px) {
+    height: calc(100vh - 150px);
+    padding: 6% 0;
+  }
 `;
 
 const checkIfAuthenticationPage = (url: string) => url === "account";

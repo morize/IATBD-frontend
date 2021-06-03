@@ -10,7 +10,7 @@ import {
   StLabel,
   StP,
   StForm,
-  StErrorMessage
+  StErrorMessage,
 } from "../../Utils/HTMLComponents";
 import Variants from "../../Utils/Variants";
 import BaseInput from "../../Components/Input/BaseInput";
@@ -26,8 +26,7 @@ const StPasswordForgotAnchor = styled.a`
   right: 0;
 
   & label {
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: clamp(0.8rem, 0.9vw, 1rem);
     color: ${Variants.info};
     text-decoration: underline;
     cursor: pointer;
@@ -35,19 +34,24 @@ const StPasswordForgotAnchor = styled.a`
 `;
 
 const StRegisterRedirect = styled.section`
-  margin-top: 120px;
+  margin-top: 8%;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 4vw, 1.2rem);
   color: ${Variants.primary};
   white-space: pre-wrap;
 
   & a {
     display: block;
-    margin-top: 12px;
+    margin-top: 2%;
     font-weight: 600;
     color: ${Variants.primary};
     text-decoration: underline;
     cursor: pointer;
+  }
+
+  @media (max-width: 600px) {
+    margin-top: auto;
+    margin-bottom: clamp(2rem, 15%, 8rem);
   }
 `;
 
@@ -79,56 +83,58 @@ const Login = () => {
   };
 
   return !loadingComponent ? (
-    <StSection>
-      <StH2>Inloggen</StH2>
+    <>
+      <StSection>
+        <StH2>Inloggen</StH2>
 
-      {state?.didPasswordReset && (
-        <StPasswordResetIndicator variant="success">
-          U heeft uw wachtwoord opnieuw ingesteld.
-        </StPasswordResetIndicator>
-      )}
-
-      <StForm onSubmit={submitFormLoginData}>
-        <BaseInput
-          label="Email:"
-          placeholder="Voer uw email in"
-          onChange={(e) => setFormEmail(e.target.value)}
-        />
-        <StPasswordForgotAnchor
-          onClick={() => navigate("../wachtwoord-vergeten")}
-        >
-          <StLabel>Wachtwoord vergeten?</StLabel>
-        </StPasswordForgotAnchor>
-
-        <BaseInput
-          label="Wachtwoord:"
-          type="password"
-          placeholder="Voer uw wachtwoord in"
-          onChange={(e) => setFormPassword(e.target.value)}
-        />
-
-        {formStatus === "error" && (
-          <StErrorMessage>
-            De aanmelding is mislukt, probeer nogmaals.
-          </StErrorMessage>
+        {state?.didPasswordReset && (
+          <StPasswordResetIndicator variant="success">
+            U heeft uw wachtwoord opnieuw ingesteld.
+          </StPasswordResetIndicator>
         )}
 
-        <Checkbox
-          label="Ingelogd blijven"
-          margin="-24px 0 24px -8px"
-          value="login"
-          checked={rememberMeCheck}
-          onClick={() => setRememberMeCheck(!rememberMeCheck)}
-        />
+        <StForm onSubmit={submitFormLoginData}>
+          <BaseInput
+            label="Email:"
+            placeholder="Voer uw email in"
+            onChange={(e) => setFormEmail(e.target.value)}
+          />
+          <StPasswordForgotAnchor
+            onClick={() => navigate("../wachtwoord-vergeten")}
+          >
+            <StLabel>Wachtwoord vergeten?</StLabel>
+          </StPasswordForgotAnchor>
 
-        <BaseButton label="Inloggen" type="submit" />
-      </StForm>
+          <BaseInput
+            label="Wachtwoord:"
+            type="password"
+            placeholder="Voer uw wachtwoord in"
+            onChange={(e) => setFormPassword(e.target.value)}
+          />
+
+          {formStatus === "error" && (
+            <StErrorMessage>
+              De aanmelding is mislukt, probeer nogmaals.
+            </StErrorMessage>
+          )}
+
+          <Checkbox
+            label="Ingelogd blijven"
+            margin="-2% 0 2% -8px"
+            value="login"
+            checked={rememberMeCheck}
+            onClick={() => setRememberMeCheck(!rememberMeCheck)}
+          />
+
+          <BaseButton label="Inloggen" type="submit" />
+        </StForm>
+      </StSection>
 
       <StRegisterRedirect>
         {"Nog geen account?\n"}
         <NavLink to="../aanmelden">Klik hier om aan te melden!</NavLink>
       </StRegisterRedirect>
-    </StSection>
+    </>
   ) : (
     <LoadingComponent />
   );

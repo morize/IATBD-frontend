@@ -5,19 +5,19 @@ import Variants, { TVariants } from "./Variants";
 
 export const StH1 = styled.h1`
   margin: 0 0 3.4% 0;
-  font-size: clamp(2rem, 2vw, 3rem);
+  font-size: clamp(1.6rem, 2vw, 3rem);
   color: ${Variants.default};
 `;
 
 export const StH2 = styled.h2`
-  margin: 1.4% 0 2.8% 0;
-  font-size: clamp(1.6rem, 1.5vw, 2.4rem);
+  margin: 2% 0 3% 0;
+  font-size: clamp(1.3rem, 1.5vw, 2.4rem);
   color: ${Variants.default};
 `;
 
 export const StH3 = styled.h3`
   margin: 0 0 2.8% 0;
-  font-size: clamp(1.2rem, 1.2vw, 2rem);
+  font-size: clamp(1rem, 1.2vw, 2rem);
   color: ${Variants.default};
 `;
 
@@ -34,11 +34,17 @@ export const StP = styled.p<IStP>`
 `;
 
 export const StLabel = styled.label`
-  font-size: clamp(1rem, 1vw, 2rem);
+  display: block;
+  font-size: clamp(0.9rem, 0.9vw, 1rem);
   color: ${Variants.primary};
+  font-weight: 600;
+  color: ${Variants.primary};
+  user-select: none;
 `;
 
 export const StSection = styled.section`
+  display: flex;
+  flex-direction: column;
   margin: 2% 0;
 
   &:last-child {
@@ -54,16 +60,9 @@ export const StArticle = styled.article<{ admin?: boolean }>`
   margin: 0 auto;
   overflow: ${(props) => (props.admin ? "auto" : "unset")};
 
-  // Workaround for padding-bottom bug while a container is inside an overflow auto parent.
-  &:after {
-    content: "";
-    min-height: 4vh;
-  }
-
   @media (max-width: 600px) {
-    width: 100%;
-    height: 100vh;
     padding: 0 12vw;
+    overflow-y: auto;
   }
 `;
 

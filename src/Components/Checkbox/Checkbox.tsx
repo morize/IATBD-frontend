@@ -36,7 +36,7 @@ const StCheckboxContainer = styled(FormControlLabel)<{ margin: string }>`
   }
 
   & .MuiFormControlLabel-label {
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
     font-family: "Fira Sans", sans-serif;
     color: ${({ disabled }) => (disabled ? "#b3b3c2" : Variants.primary)};
   }

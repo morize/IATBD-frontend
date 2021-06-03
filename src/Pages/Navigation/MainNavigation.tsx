@@ -30,11 +30,11 @@ const StNavigation = styled.nav`
   box-sizing: border-box;
   box-shadow: inset 0 0 0 2000px rgba(39, 30, 8, 0.6);
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 600px) {
     position: sticky;
     top: 0;
     width: 100vw;
-    height: 160px;
+    height: 150px;
   }
 `;
 
@@ -56,7 +56,7 @@ const StLogoFigure = styled.figure`
     white-space: pre-wrap;
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 600px) {
     width: 100%;
     height: 55%;
     margin: 0;
@@ -103,7 +103,7 @@ const StNavigationItems = styled.ul`
     }
   }
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 600px) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -161,7 +161,7 @@ const StNavigationBottom = styled.section`
     cursor: pointer;
   }
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 600px) {
     display: none;
   }
 `;
