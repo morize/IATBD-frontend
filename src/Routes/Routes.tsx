@@ -45,12 +45,13 @@ const PODRoutes = () => (
           path="huisdieren/nieuw-huisdier"
           element={<PetCreate />}
         />
-        <PrivateRoute
-          path="huisdieren/oppaser/profiel/:id"
-          element={<AccountProfile />}
-        />
         <PrivateRoute path="huisdieren/profiel/:id" element={<PetProfile />} />
       </Route>
+
+      <PrivateRoute
+          path="oppaser/profiel/:id"
+          element={<AccountProfile />}
+        />
 
       <PrivateRoute path="overzicht" element={<Outlet />}>
         <PrivateRoute element={<PetOverview />} />

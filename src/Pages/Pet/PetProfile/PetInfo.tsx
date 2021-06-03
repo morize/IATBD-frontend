@@ -75,9 +75,9 @@ const StProfileBottomTitle = styled.div`
 `;
 
 interface IProfilePet {
-  name: string;
-  kind: string;
-  breed: string;
+  name?: string;
+  kind?: string;
+  breed?: string;
 }
 
 export const PetInfo = ({ name, kind, breed }: IProfilePet) => (
@@ -96,10 +96,10 @@ export const PetInfo = ({ name, kind, breed }: IProfilePet) => (
 );
 
 interface IProfileSitter {
-  dstart: string;
-  dend: string;
-  payment: string;
-  remarks: string;
+  dstart?: string;
+  dend?: string;
+  payment?: string;
+  remarks?: string;
 }
 
 export const SitterInfo = ({

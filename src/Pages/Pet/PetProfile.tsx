@@ -9,7 +9,6 @@ import {
   getPetRequests,
   translateStatus,
 } from "../../Api/PetCalls";
-import { getUserDetails } from "../../Api/UserCalls";
 import {
   StH2,
   StH3,
@@ -81,14 +80,14 @@ const StProfileParent = styled(StSection)`
 `;
 
 const PetProfile = () => {
-  const { id } = useParams();
+  const { id: petId } = useParams();
 
-  const userId =
+  const userDetails =
     localStorage.getItem("userDetails") !== null &&
-    JSON.parse(localStorage.getItem("userDetails")!)["uuid"];
+    JSON.parse(localStorage.getItem("userDetails")!);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [modalSitterId, setModalSitterId] = useState<number>();
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
   const [modalRequestId, setModalRequestId] = useState<number>();
   const [modalRequestStatus, setModalRequestStatus] = useState("");
@@ -96,62 +95,44 @@ const PetProfile = () => {
   const [modalSitterName, setModalSitterName] = useState("");
   const [modalSitterRemarks, setModalSitterRemarks] = useState("");
 
-  const { data: petProfileData, isValidating: isPetProfileDataLoaded } = useSWR(
-    `api/pets/${id}`,
-    getSpecificPet,
-    { revalidateOnFocus: false }
-  );
+  const { data: petProfileData, isValidating: isPetProfileDataValidating } =
+    useSWR(`api/pets/${petId}`, getSpecificPet, { revalidateOnFocus: false });
 
-  const { data: userData, isValidating: isUserDataLoaded } = useSWR(
-    `api/user/${petProfileData?.owner_id}`,
-    getUserDetails,
-    { revalidateOnFocus: false }
-  );
+  const { data: petRequestData, isValidating: isPetRequestDataValidating } =
+    useSWR(`api/pets/${petId}/requests`, getPetRequests, {
+      revalidateOnFocus: false,
+    });
 
-  const { data: petRequestData } = useSWR(
-    `api/pets/${id}/requests`,
-    getPetRequests,
-    { revalidateOnFocus: false }
-  );
-
-  return !isPetProfileDataLoaded && !isUserDataLoaded ? (
+  return !isPetProfileDataValidating && !isPetRequestDataValidating ? (
     <>
-      <StH2>{`Huisdier profiel: ${
-        petProfileData ? petProfileData.pet_name : "-"
-      }`}</StH2>
+      <StH2>{`Huisdier profiel: ${petProfileData?.pet_name}`}</StH2>
 
       <StProfileParent>
         <figure>
           <img
             alt="Afbeelding van een huisdier"
-            src={`${laravelApiUrl}/api/pets/${id}/image`}
+            src={`${laravelApiUrl}/api/pets/${petId}/image`}
           />
-          <figcaption>
-            {petProfileData ? petProfileData.pet_name : "-"}
-          </figcaption>
+          <figcaption>{petProfileData?.pet_name}</figcaption>
         </figure>
 
         <PetInfo
-          name={petProfileData ? petProfileData.pet_name : "-"}
-          kind={petProfileData ? petProfileData.pet_kind : "-"}
-          breed={petProfileData ? petProfileData.pet_breed : "-"}
+          name={petProfileData?.pet_name}
+          kind={petProfileData?.pet_kind}
+          breed={petProfileData?.pet_breed}
         />
         <SitterInfo
-          dstart={petProfileData ? petProfileData.sit_date_start : "-"}
-          dend={petProfileData ? petProfileData.sit_date_end : "-"}
-          payment={
-            petProfileData
-              ? `${petProfileData.sit_hourly_prize.toString()} €`
-              : "-"
-          }
-          remarks={petProfileData ? petProfileData.sit_remarks : "-"}
+          dstart={petProfileData?.sit_date_start}
+          dend={petProfileData?.sit_date_end}
+          payment={`${petProfileData?.sit_hourly_prize.toString()} €`}
+          remarks={petProfileData?.sit_remarks}
         />
 
         {window.location.pathname.split("/")[2] === "opasser" && (
           <BaseButton
             label="Aanvraag annuleren"
             variant="secondary"
-            onClick={() => setIsModalOpen(true)}
+            //onClick={() => delete request from database}
           />
         )}
 
@@ -167,6 +148,7 @@ const PetProfile = () => {
                     sitter_name={request.sitter_name}
                     key={key}
                     onClick={() => {
+                      setModalSitterId(request.sitter_id);
                       setModalRequestId(request.id);
                       setModalPetName(request.pet_name);
                       setModalRequestStatus(request.request_status);
@@ -177,12 +159,14 @@ const PetProfile = () => {
                   />
                 ))}
               </StRequestsContainer>
+
               <Modal
                 open={isRequestModalOpen}
                 onClose={() => setIsRequestModalOpen(false)}
               >
                 <SitterRequestModal
-                  reviewer_id={userId}
+                  reviewer_id={userDetails["uuid"]}
+                  sitter_id={modalSitterId}
                   sitter_request_id={modalRequestId}
                   sitter_remarks={modalSitterRemarks}
                   pet_name={modalPetName}
@@ -194,27 +178,27 @@ const PetProfile = () => {
           )}
 
         {window.location.pathname.split("/")[2] === "profiel" &&
-          petProfileData?.owner_id !== userId && (
+          petProfileData?.owner_id !== userDetails["uuid"] && (
             <BaseButton
               label="Reageeren voor oppas"
               onClick={() => setIsModalOpen(true)}
             />
           )}
-
-        <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <SitterModal
-            pet_name={petProfileData?.pet_name}
-            sitter_name={
-              JSON.parse(localStorage.getItem("userDetails")!).username
-            }
-            sit_date_start={petProfileData?.sit_date_start}
-            sit_date_end={petProfileData?.sit_date_end}
-            sit_hourly_prize={petProfileData?.sit_hourly_prize}
-            pet_owner={userData?.name}
-            pet_id={id}
-            user_id={userId}
-          />
-        </Modal>
+          
+        {petProfileData && (
+          <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            <SitterModal
+              pet_name={petProfileData.pet_name}
+              sitter_name={userDetails["name"]}
+              sit_date_start={petProfileData.sit_date_start}
+              sit_date_end={petProfileData.sit_date_end}
+              sit_hourly_prize={petProfileData.sit_hourly_prize}
+              pet_owner={userDetails["name"]}
+              pet_id={petId}
+              user_id={userDetails["uuid"]}
+            />
+          </Modal>
+        )}
       </StProfileParent>
     </>
   ) : (

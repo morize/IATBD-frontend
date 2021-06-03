@@ -1,10 +1,17 @@
 import { forwardRef, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Rating from "@material-ui/lab/Rating";
 
 import { createSitterReview } from "../../../Api/SitterCalls";
 import { updateSitterRequest } from "../../../Api/SitterRequestCalls";
-import { StH3, StLabel, StP, StForm } from "../../../Utils/HTMLComponents";
+import {
+  LoadingComponent,
+  StH3,
+  StLabel,
+  StP,
+  StForm,
+} from "../../../Utils/HTMLComponents";
 import { StProfileDetailsSitter } from "./PetInfo";
 import BaseButton from "../../../Components/Button/BaseButton";
 import TextArea from "../../../Components/Input/TextArea";
@@ -18,12 +25,11 @@ const StWhiteLabel = styled(StLabel)`
   color: #ffff;
 `;
 
-const StUserRedirect = styled(StWhiteLabel)`
+const StNavLink = styled(NavLink)`
   display: block;
   margin: 8px 0 24px 0;
   font-size: 1rem;
-  text-decoration: underline;
-  cursor: pointer;
+  color: #ffff;
 `;
 
 const StModal = styled.div`
@@ -34,7 +40,8 @@ const StModal = styled.div`
   flex-direction: column;
   justify-content: center;
   transform: translate(-50%, -50%);
-  max-height: 800px;
+  min-height: 700px;
+
   width: 600px;
   padding: 40px 60px;
   background: #be8b4e;
@@ -62,6 +69,7 @@ const SitterModalInfo = styled(StProfileDetailsSitter)`
 
 interface IPetProfileModal {
   reviewer_id?: number;
+  sitter_id?: number;
   sitter_request_id?: number;
   sitter_remarks?: string;
   sitter_name?: string;
@@ -73,6 +81,7 @@ const SitterRequestModal = forwardRef(
   (
     {
       reviewer_id,
+      sitter_id,
       sitter_request_id,
       sitter_name,
       sitter_remarks,
@@ -81,11 +90,15 @@ const SitterRequestModal = forwardRef(
     }: IPetProfileModal,
     ref
   ) => {
+    const navigate = useNavigate();
     const [ratingValue, setRatingValue] = useState<number>(3);
     const [reviewInputValue, setReviewInputValue] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const submitRating = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+
+      setIsLoading(true);
 
       if (ratingValue && reviewInputValue && sitter_request_id && reviewer_id) {
         let fData = new FormData();
@@ -94,73 +107,93 @@ const SitterRequestModal = forwardRef(
         fData.append("sitter_rating", ratingValue.toString());
         fData.append("sitter_review", reviewInputValue);
 
-        createSitterReview(fData);
+        createSitterReview(fData)
+          .then(() => navigate("../.."))
+          .catch(() => setIsLoading(false));
       }
     };
 
     return (
       <StModal>
-        <StH3>Voor huisdier: {pet_name}</StH3>
-        <StUserRedirect>Profiel bekijken van {sitter_name}</StUserRedirect>
-        <StWhiteLabel>Aanvraag verzoek:</StWhiteLabel>
-
-        <SitterModalInfo>
-          {sitter_name && (
-            <div>
-              <StLabel>Van opasser:</StLabel>
-              <StP>{sitter_name}</StP>
-            </div>
-          )}
-
-          {sitter_remarks && (
-            <div>
-              <StLabel>Oppas opmerkingen:</StLabel>
-              <StP>{sitter_remarks}</StP>
-            </div>
-          )}
-        </SitterModalInfo>
-
-        {request_status === "accepted" && (
-          <StForm onSubmit={submitRating}>
-            <StWhiteLabel>Laat een review voor de opasser</StWhiteLabel>
-            <Rating
-              name="yes"
-              value={ratingValue}
-              onChange={(e, newValue) => newValue && setRatingValue(newValue)}
-            />
-            <StTextArea
-              value={reviewInputValue}
-              onChange={(e) => setReviewInputValue(e.target.value)}
-            />
-            <BaseButton label="Rate" type="submit" />
-          </StForm>
-        )}
-
-        {request_status === "pending" && (
+        {!isLoading ? (
           <>
-            <BaseButton
-              label="Accepteren"
-              variant="success"
-              onClick={() =>
-                sitter_request_id &&
-                updateSitterRequest(
-                  { requestStatus: "accepted" },
-                  sitter_request_id
-                )
-              }
-            />
-            <BaseButton
-              label="Weigeren"
-              variant="secondary"
-              onClick={() =>
-                sitter_request_id &&
-                updateSitterRequest(
-                  { requestStatus: "rejected" },
-                  sitter_request_id
-                )
-              }
-            />
+            <StH3>Voor huisdier: {pet_name}</StH3>
+            <StNavLink to={`../../../../oppaser/profiel/${sitter_id}`}>
+              Profiel bekijken van opasser: {sitter_name}
+            </StNavLink>
+            <StWhiteLabel>Aanvraag verzoek:</StWhiteLabel>
+
+            <SitterModalInfo>
+              {sitter_name && (
+                <div>
+                  <StLabel>Van opasser:</StLabel>
+                  <StP>{sitter_name}</StP>
+                </div>
+              )}
+
+              {sitter_remarks && (
+                <div>
+                  <StLabel>Oppas opmerkingen:</StLabel>
+                  <StP>{sitter_remarks}</StP>
+                </div>
+              )}
+            </SitterModalInfo>
+
+            {request_status === "accepted" && (
+              <StForm onSubmit={submitRating}>
+                <StWhiteLabel>Laat een review voor de opasser</StWhiteLabel>
+                <Rating
+                  name="rating-component"
+                  value={ratingValue}
+                  onChange={(e, newValue) =>
+                    newValue && setRatingValue(newValue)
+                  }
+                />
+                <StTextArea
+                  value={reviewInputValue}
+                  onChange={(e) => setReviewInputValue(e.target.value)}
+                />
+                <BaseButton label="Rate" type="submit" />
+              </StForm>
+            )}
+
+            {request_status === "pending" && (
+              <>
+                <BaseButton
+                  label="Accepteren"
+                  variant="success"
+                  onClick={() => {
+                    setIsLoading(true);
+
+                    sitter_request_id &&
+                      updateSitterRequest(
+                        { requestStatus: "accepted" },
+                        sitter_request_id
+                      )
+                        .then(() => navigate("../.."))
+                        .catch(() => setIsLoading(false));
+                  }}
+                />
+                <BaseButton
+                  label="Weigeren"
+                  variant="secondary"
+                  onClick={() => {
+                    setIsLoading(true);
+
+                    sitter_request_id &&
+                      updateSitterRequest(
+                        { requestStatus: "rejected" },
+                        sitter_request_id
+                      )
+                        .then(() => navigate("../.."))
+                        .catch(() => setIsLoading(false));
+                  }}
+                />
+              </>
+            )}
           </>
+        ) : (
+          <LoadingComponent />
         )}
       </StModal>
     );
