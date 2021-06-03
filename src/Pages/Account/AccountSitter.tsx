@@ -79,8 +79,8 @@ const AccountSitter = () => {
         <StH3>Mijn oppasvragen</StH3>
 
         <PetCard cardVariant="sitter">
-          {!isSitterRequestsDataValidating ? (
-            sitterRequestsData &&
+        {!isSitterRequestsDataValidating ? (
+            sitterRequestsData && sitterRequestsData.length !== 0 &&
             sitterRequestsData.map((request, key) => (
               <SitterCardItem
                 petName={request.pet_name}

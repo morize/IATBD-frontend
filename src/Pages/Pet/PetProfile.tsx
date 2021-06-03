@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import styled from "styled-components";
 
@@ -9,6 +9,7 @@ import {
   getPetRequests,
   translateStatus,
 } from "../../Api/PetCalls";
+import { deleteSitterRequest } from "../../Api/AdminCalls";
 import {
   StH2,
   StH3,
@@ -80,7 +81,8 @@ const StProfileParent = styled(StSection)`
 `;
 
 const PetProfile = () => {
-  const { id: petId } = useParams();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const userDetails =
     localStorage.getItem("userDetails") !== null &&
@@ -96,10 +98,10 @@ const PetProfile = () => {
   const [modalSitterRemarks, setModalSitterRemarks] = useState("");
 
   const { data: petProfileData, isValidating: isPetProfileDataValidating } =
-    useSWR(`api/pets/${petId}`, getSpecificPet, { revalidateOnFocus: false });
+    useSWR(`api/pets/${id}`, getSpecificPet, { revalidateOnFocus: false });
 
   const { data: petRequestData, isValidating: isPetRequestDataValidating } =
-    useSWR(`api/pets/${petId}/requests`, getPetRequests, {
+    useSWR(`api/pets/${id}/requests`, getPetRequests, {
       revalidateOnFocus: false,
     });
 
@@ -111,7 +113,7 @@ const PetProfile = () => {
         <figure>
           <img
             alt="Afbeelding van een huisdier"
-            src={`${laravelApiUrl}/api/pets/${petId}/image`}
+            src={`${laravelApiUrl}/api/pets/${id}/image`}
           />
           <figcaption>{petProfileData?.pet_name}</figcaption>
         </figure>
@@ -132,7 +134,10 @@ const PetProfile = () => {
           <BaseButton
             label="Aanvraag annuleren"
             variant="secondary"
-            //onClick={() => delete request from database}
+            onClick={() =>{
+              
+              deleteSitterRequest(parseInt(id)).then(() => navigate("../.."))}
+            }
           />
         )}
 
@@ -184,7 +189,7 @@ const PetProfile = () => {
               onClick={() => setIsModalOpen(true)}
             />
           )}
-          
+
         {petProfileData && (
           <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
             <SitterModal
@@ -194,7 +199,7 @@ const PetProfile = () => {
               sit_date_end={petProfileData.sit_date_end}
               sit_hourly_prize={petProfileData.sit_hourly_prize}
               pet_owner={userDetails["name"]}
-              pet_id={petId}
+              pet_id={id}
               user_id={userDetails["uuid"]}
             />
           </Modal>

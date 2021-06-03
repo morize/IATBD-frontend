@@ -138,6 +138,7 @@ const SitterSettings = ({ onSubmit }: IPetPreferences) => {
         checked={isSitterActive}
         onChange={() => setIsSitterActive(!isSitterActive)}
       />
+      
       {isSitterActive && (
         <>
           <StP variant="primary">Dierenvoorkeur voor oppas:</StP>
