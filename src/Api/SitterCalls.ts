@@ -49,3 +49,17 @@ export const createSitterReview = async (fData: FormData) =>
   await laravelApi
     .post(`api/sitter-reviews`, fData)
     .then((response) => response.data);
+
+export interface SitterResponseType {
+  id: number;
+  sitter_id: number;
+  reviewer_id: number;
+  rating: number;
+  review: string;
+}
+
+export const getSitterReviews = async (url: string): Promise<SitterResponseType[]> =>
+  await laravelApi
+    .get(url)
+    .then((response) => response.data)
+    .then((response) => sleep(response));
