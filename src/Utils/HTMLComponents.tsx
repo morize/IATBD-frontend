@@ -49,7 +49,7 @@ export const StSection = styled.section`
 export const StArticle = styled.article<{ admin?: boolean }>`
   display: flex;
   flex-direction: column;
-  width: clamp(500px, 50%, 800px);
+  width: clamp(500px, 50%, 750px);
   min-width: ${(props) => (props.admin ? "100%" : "auto")};
   margin: 0 auto;
   overflow: ${(props) => (props.admin ? "auto" : "unset")};
@@ -68,7 +68,7 @@ export const StArticle = styled.article<{ admin?: boolean }>`
 `;
 
 export const StSubArticle = styled(StArticle)`
-  width: clamp(400px, 50%, 740px);
+  width: clamp(400px, 50%, 700px);
   margin: 2vh auto 0 auto;
 `;
 

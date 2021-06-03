@@ -6,17 +6,21 @@ import CardButton from "../Components/Button/CardButton/CardButton";
 
 const StCardFigure = styled.figure`
   width: 100%;
-  height: clamp(200px, 40vh, 500px);
+  height: clamp(300px, 40vh, 600px);
   margin: 32px 0;
-  
+
+  @media (max-width: 600px) {
+    height: clamp(200px, 30vh, 600px);
+  }
+
   & figcaption {
-    font-size: clamp(0.9rem, 1.1vw, 2rem);
+    font-size: clamp(0.9rem, 1vw, 2rem);
   }
 `;
 
 const Home = () => {
   const navigate = useNavigate();
-  
+
   return (
     <>
       <StSection>
