@@ -1,4 +1,4 @@
-import { StH1, StH3, StP, StSection } from "../Utils/HTMLComponents";
+import { StH1, StH2, StP, StSection } from "../Utils/HTMLComponents";
 import BaseButton from "../Components/Button/BaseButton";
 import BaseInput from "../Components/Input/BaseInput";
 import Textarea from "../Components/Input/TextArea";
@@ -15,7 +15,7 @@ const Contact = () => (
     </StSection>
 
     <StSection>
-      <StH3>Stuur ons een mail</StH3>
+      <StH2>Stuur ons een mail</StH2>
       <BaseInput label="Uw naam:" />
       <Textarea label="Uw bericht:" placeholder="Dit werkt nog niet" />
       <BaseButton label="Stuur bericht" type="submit" />

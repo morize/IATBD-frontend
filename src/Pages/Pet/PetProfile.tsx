@@ -31,14 +31,13 @@ const StRequestsContainer = styled.div`
   background: #dfc28b;
   border-radius: 8px;
   box-sizing: border-box;
-  
+
   & h3 {
     margin-bottom: 6%;
     color: #744226;
 
     @media (max-width: 600px) {
       text-align: center;
-     
     }
   }
 `;
@@ -208,9 +207,6 @@ const PetProfile = () => {
             <SitterModal
               pet_name={petProfileData.pet_name}
               sitter_name={userDetails.username}
-              sit_date_start={petProfileData.sit_date_start}
-              sit_date_end={petProfileData.sit_date_end}
-              sit_hourly_prize={petProfileData.sit_hourly_prize}
               pet_owner={petProfileData.owner_name}
               pet_id={id}
               user_id={userDetails.uuid}

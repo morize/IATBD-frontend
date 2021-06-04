@@ -7,12 +7,19 @@ export const StH1 = styled.h1`
   margin: 0 0 3.4% 0;
   font-size: clamp(1.6rem, 2vw, 3rem);
   color: ${Variants.default};
+  @media (max-width: 600px) {
+    text-align: center;
+  }
 `;
 
 export const StH2 = styled.h2`
-  margin: 2% 0 3% 0;
+  margin: 2% 0 4% 0;
   font-size: clamp(1.3rem, 1.5vw, 2.4rem);
   color: ${Variants.default};
+
+  @media (max-width: 600px) {
+    text-align: center;
+  }
 `;
 
 export const StH3 = styled.h3`
@@ -65,6 +72,13 @@ export const StArticle = styled.article<{ admin?: boolean }>`
     margin: 4vh auto 0 auto;
     padding: 0 8vw;
     overflow-y: auto;
+  }
+
+  @media (min-width: 600px) {
+    &::after {
+      min-height: 8vh;
+      content: "";
+    }
   }
 `;
 

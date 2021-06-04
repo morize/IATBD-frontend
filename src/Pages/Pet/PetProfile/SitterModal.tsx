@@ -9,10 +9,8 @@ import {
   LoadingComponent,
   StH3,
   StLabel,
-  StP,
   StForm,
 } from "../../../Utils/HTMLComponents";
-import { StProfileDetailsSitter } from "./PetInfo";
 import TextArea from "../../../Components/Input/TextArea";
 import BaseButton from "../../../Components/Button/BaseButton";
 
@@ -28,9 +26,9 @@ const StModal = styled.div`
   flex-direction: column;
   justify-content: center;
   transform: translate(-50%, -50%);
-  height: 720px;
-  width: 600px;
-  padding: 40px 60px;
+  height: clamp(200px, 50vh, 600px);
+  width: clamp(240px, 80vw, 600px);
+  padding: 2% 4%;
   background: #be8b4e;
   border-radius: 8px;
   box-sizing: border-box;
@@ -38,25 +36,16 @@ const StModal = styled.div`
   & h3 {
     color: #ffff;
   }
-`;
 
-const SitterModalInfo = styled(StProfileDetailsSitter)`
-  display: flex;
-  min-height: 200px;
-  height: auto;
-  max-height: 300px;
-  margin-bottom: 24px;
-  border-radius: 8px;
-  overflow: auto;
+  @media (max-width: 600px) {
+    padding: 6% 8%;
+  }
 `;
 
 interface IPetProfileModal {
   pet_id: string;
   pet_name?: string;
   user_id?: number;
-  sit_hourly_prize?: number;
-  sit_date_start?: string;
-  sit_date_end?: string;
   pet_owner?: string;
   sitter_name?: string;
 }
@@ -65,9 +54,6 @@ const SitterModal = forwardRef(
   (
     {
       pet_name,
-      sit_date_start,
-      sit_date_end,
-      sit_hourly_prize,
       pet_owner,
       pet_id,
       user_id,
@@ -107,36 +93,7 @@ const SitterModal = forwardRef(
         {!isLoading ? (
           <>
             <StH3>Reageer voor oppas</StH3>
-            <StModalLabel>Oppas informatie:</StModalLabel>
-            <SitterModalInfo>
-              {sit_date_start && (
-                <div>
-                  <StLabel>Datum start:</StLabel>
-                  <StP>{sit_date_start}</StP>
-                </div>
-              )}
 
-              {sit_date_end && (
-                <div>
-                  <StLabel>Datum eind:</StLabel>
-                  <StP>{sit_date_end}</StP>
-                </div>
-              )}
-
-              {sit_hourly_prize && (
-                <div>
-                  <StLabel>Uurtarief:</StLabel>
-                  <StP>{sit_hourly_prize.toString()} €</StP>
-                </div>
-              )}
-
-              {pet_owner && (
-                <div>
-                  <StLabel>Huisdier eigenaar:</StLabel>
-                  <StP>{pet_owner}</StP>
-                </div>
-              )}
-            </SitterModalInfo>
             <StForm onSubmit={submitFormData}>
               <StModalLabel>Uw opmerkingen:</StModalLabel>
               <TextArea

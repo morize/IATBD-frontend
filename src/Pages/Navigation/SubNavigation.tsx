@@ -38,7 +38,7 @@ const SubNavigationContainer = styled.section`
       margin-bottom: 60px;
       border-radius: 8px;
       color: ${Variants.default};
-
+      font-size: clamp(0.8rem, 1.4vw, 1.2rem);
       &.subnavigation-active {
         background: #59a83d;
         color: #ffff;
@@ -55,7 +55,6 @@ const SubNavigationContainer = styled.section`
     padding: 4% 8%;
     background: #986d3a;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-size: clamp(0.8rem, 1.4vh, 1rem);
     z-index: 5;
 
     & ul {

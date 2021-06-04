@@ -62,9 +62,7 @@ const StModal = styled.div`
 
 const SitterModalInfo = styled(StProfileDetailsSitter)`
   display: flex;
-
   height: clamp(100px, 30%, 200px);
-
   margin-bottom: 24px;
   border-radius: 8px;
   overflow: auto;

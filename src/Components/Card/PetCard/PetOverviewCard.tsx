@@ -23,6 +23,7 @@ const StPetOverviewCard = styled.figure`
     background: #be8b4e;
     color: #ffff;
     border-radius: 0 0 8px 8px;
+    font-size: clamp(0.8rem, 0.9vw, 1.1rem);
   }
 `;
 
@@ -38,7 +39,7 @@ const StPayIndicator = styled.span`
   border-radius: 50%;
   background: #a75d5d;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: clamp(0.7rem, 0.7vw, 1rem);
   color: #ffff;
   white-space: pre-wrap;
 `;
