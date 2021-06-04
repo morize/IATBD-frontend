@@ -62,7 +62,7 @@ export const StArticle = styled.article<{ admin?: boolean }>`
   overflow: ${(props) => (props.admin ? "auto" : "unset")};
 
   @media (max-width: 600px) {
-    padding: 0 12vw;
+    padding: 0 8vw;
     overflow-y: auto;
   }
 `;

@@ -5,7 +5,7 @@ import Variants, { TVariants } from "../../Utils/Variants";
 
 const StButton = styled.button<{ variant: TVariants }>`
   width: 100%;
-  height: clamp(30px, 8vh, 60px);
+  height: clamp(40px, 7vh, 80px);
   border: none;
   border-radius: 8px;
   background: ${(props) => Variants[props.variant]};
