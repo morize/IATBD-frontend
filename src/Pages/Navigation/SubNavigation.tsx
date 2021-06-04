@@ -25,7 +25,7 @@ const SubNavigationContainer = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 64px 0 0 0;
+    margin: 16% 0 0 0;
     padding: 0;
     user-select: none;
 
@@ -33,13 +33,15 @@ const SubNavigationContainer = styled.section`
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 80px;
-      width: 180px;
-      margin-bottom: 60px;
+      height: clamp(50px, 10vh, 80px);
+      width: clamp(40px, 12vw, 180px);
+
+      margin-bottom: 14%;
       border-radius: 8px;
       color: ${Variants.default};
-      font-size: clamp(0.8rem, 1.4vw, 1.2rem);
-      &.subnavigation-active {
+      font-size: clamp(0.8rem, 0.9vw, 1.4rem);
+
+      &.subnavigation__option--active {
         background: #59a83d;
         color: #ffff;
         text-decoration: none;
@@ -96,11 +98,11 @@ const SubNavigation = () => {
       <ul>
         {subNavigationObject.options.map((option: string, index, key) => (
           <NavLink
-            activeClassName="subnavigation-active"
+            activeClassName="subnavigation__option--active"
             to={`${pathname.split("/")[1]}/${option.toLowerCase()}`}
             className={
               index === 0 && !pathname.split("/")[2]
-                ? "subnavigation-active"
+                ? "subnavigation__option--active"
                 : ""
             }
             key={key[index]}

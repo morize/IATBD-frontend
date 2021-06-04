@@ -40,7 +40,7 @@ const StNavigationOptions = styled.div`
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   }
 
-  & .aSubnavigation-active {
+  & .asubnavigation__option--active {
     background: #9b6310;
   }
 `;
@@ -54,12 +54,12 @@ const ASubNavigation = () => {
       <StNavigationOptions>
         <NavLink
           to="admin/gebruikers"
-          activeClassName="aSubnavigation-active"
-          className={pathname.split("/")[2] ? "" : "aSubnavigation-active"}
+          activeClassName="asubnavigation__option--active"
+          className={pathname.split("/")[2] ? "" : "asubnavigation__option--active"}
         >
           Gebruikers
         </NavLink>
-        <NavLink to="admin/aanvragen" activeClassName="aSubnavigation-active">
+        <NavLink to="admin/aanvragen" activeClassName="asubnavigation__option--active">
           Oppas aanvragen
         </NavLink>
       </StNavigationOptions>

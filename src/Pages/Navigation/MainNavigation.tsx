@@ -97,7 +97,7 @@ const StNavigationItems = styled.ul`
       height: 100%;
       white-space: pre-wrap;
 
-      &.main__navigation__active {
+      &.mainnavigation__option--active {
         background: rgba(77, 46, 0, 0.7);
 
         @media (max-width: 600px) {
@@ -174,7 +174,7 @@ const NavigationItem = (props: INavigationItem) => (
   <li>
     <StNavigationAnchor
       to={props.routeTo}
-      activeClassName="main__navigation__active"
+      activeClassName="mainnavigation__option--active"
     >
       {props.portrait === "desktop" ? props.name : props.icon}
     </StNavigationAnchor>

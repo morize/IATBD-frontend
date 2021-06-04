@@ -7,6 +7,7 @@ export const StH1 = styled.h1`
   margin: 0 0 3.4% 0;
   font-size: clamp(1.6rem, 2vw, 3rem);
   color: ${Variants.default};
+
   @media (max-width: 600px) {
     text-align: center;
   }
@@ -63,7 +64,7 @@ export const StSection = styled.section`
 export const StArticle = styled.article<{ admin?: boolean }>`
   display: flex;
   flex-direction: column;
-  width: clamp(500px, 70%, 900px);
+  width: clamp(500px, 50%, 800px);
   min-width: ${(props) => (props.admin ? "100%" : "auto")};
   margin: 0 auto;
   overflow: ${(props) => (props.admin ? "auto" : "unset")};
@@ -83,7 +84,7 @@ export const StArticle = styled.article<{ admin?: boolean }>`
 `; 
 
 export const StSubArticle = styled(StArticle)`
-  width: clamp(400px, 60%, 800px);
+  width: clamp(400px, 50%, 800px);
   margin: 2vh auto 0 auto;
 `;
 

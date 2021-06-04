@@ -8,7 +8,7 @@ import dogPattern from "../../../Utils/Images/dog_pattern.jpg";
 const StPetCard = styled(NavLink)`
   display: flex;
   width: 100%;
-  height: clamp(60px, 14vh, 220px);
+  height: clamp(60px, 16vh, 200px);
   margin-bottom: 24px;
   border-radius: 8px;
   text-decoration: none;
