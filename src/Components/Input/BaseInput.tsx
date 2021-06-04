@@ -38,12 +38,12 @@ const StInputContainer = styled.div`
     & svg {
       width: 34px;
       height: 34px;
-    }
-  }
 
-  & input[type="file"] {
-    line-height: 30px;
-    cursor: pointer;
+      @media (max-width: 600px) {
+        width: 30px;
+        height: 30px;
+      }
+    }
   }
 
   & input[type="file"] + span {

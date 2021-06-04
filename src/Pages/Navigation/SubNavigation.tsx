@@ -53,10 +53,10 @@ const SubNavigationContainer = styled.section`
     height: 110px;
     margin: 0;
     padding: 4% 8%;
-    z-index: 3;
-    background: #986D3A;
+    background: #986d3a;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-size: clamp(0.8rem, 1.4vh, 1rem);
+    z-index: 5;
 
     & ul {
       display: flex;
