@@ -9,6 +9,9 @@ import Switch from "../../../Components/Switch/Switch";
 import Checkbox from "../../../Components/Checkbox/Checkbox";
 import BaseButton from "../../../Components/Button/BaseButton";
 
+const StPetPreferencesContainer = styled.div`
+  margin: 3% 0;
+`
 const StFormSettings = styled(StForm)`
   & button {
     &:last-child {
@@ -20,8 +23,8 @@ const StFormSettings = styled(StForm)`
 const StOptionsContainer = styled.section`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 32px 84px;
-  margin: 32px 0;
+  grid-gap: 16%;
+  margin: 2% 0;
 
   & label {
     border-radius: 14px;
@@ -29,6 +32,10 @@ const StOptionsContainer = styled.section`
     &:hover {
       background: rgba(72, 72, 72, 0.15);
     }
+  }
+
+  @media(max-width: 600px){
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 
@@ -53,7 +60,7 @@ const replaceArrayInstance = (
   return array;
 };
 
-export interface IPetPreferences {
+export interface ISitterPreferences {
   onSubmit: (
     e: React.FormEvent<HTMLFormElement>,
     isSitterActive: boolean,
@@ -62,7 +69,7 @@ export interface IPetPreferences {
   ) => void;
 }
 
-const SitterSettings = ({ onSubmit }: IPetPreferences) => {
+const SitterPreferences = ({ onSubmit }: ISitterPreferences) => {
   const [isSitterActive, setIsSitterActive] = useState(false);
   const [kindPreferences, setKindPreferences] =
     useState<{ kind: string; checked: boolean }[] | undefined>();
@@ -140,7 +147,7 @@ const SitterSettings = ({ onSubmit }: IPetPreferences) => {
       />
       
       {isSitterActive && (
-        <>
+        <StPetPreferencesContainer>
           <StP variant="primary">Dierenvoorkeur voor oppas:</StP>
           <StOptionsContainer>
             {kindPreferences?.map((kind, key) => (
@@ -157,7 +164,7 @@ const SitterSettings = ({ onSubmit }: IPetPreferences) => {
               />
             ))}
           </StOptionsContainer>
-        </>
+        </StPetPreferencesContainer>
       )}
 
       <BaseButton label="Instellingen opslaan" type="submit" />
@@ -167,4 +174,4 @@ const SitterSettings = ({ onSubmit }: IPetPreferences) => {
   );
 };
 
-export default SitterSettings;
+export default SitterPreferences;

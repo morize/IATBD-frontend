@@ -8,7 +8,7 @@ import dogPattern from "../../../Utils/Images/dog_pattern.jpg";
 const StPetCard = styled(NavLink)`
   display: flex;
   width: 100%;
-  height: 160px;
+  height: clamp(60px, 14vh, 220px);
   margin-bottom: 24px;
   border-radius: 8px;
   text-decoration: none;
@@ -43,7 +43,7 @@ const StPetCardContentHeader = styled.div`
   height: 40%;
   border-radius: 0 8px 0 0;
   background: #bc9d61;
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 0.9vw, 1.2rem);
   color: #ffff;
 `;
 
@@ -52,11 +52,11 @@ const StPetCardContentDescription = styled(StPetCardContentHeader)`
   height: 60%;
   border-radius: 0 0 8px 0;
   background: #e9ce88;
-  font-size: 1rem;
+  font-size: clamp(0.8rem, 0.9vw, 1.1rem);
   color: #744226;
 
   & p {
-    margin: 0 0 6px 0;
+    margin: 0 0 4px 0;
     color: #744226;
   }
 `;
@@ -153,21 +153,22 @@ const StPetCardContainer = styled.section`
   box-sizing: border-box;
 
   & button {
-    height: 70px;
-    margin: 8px 0 0 0;
+    margin: 2% 0 0 0;
     background: #a77326;
   }
 `;
 
 const StEmptyIndicator = styled.div`
-  padding: 20px;
+  padding: 5%;
   background: #a46b36;
+  font-size: clamp(0.9rem, 0.9vw, 1.2rem);
   border-radius: 8px;
   text-align: center;
   color: #ffff;
   user-select: none;
   box-sizing: border-box;
 `;
+
 export interface IPetCard {
   children?: ReactNode;
   cardVariant: "sitter" | "owner";

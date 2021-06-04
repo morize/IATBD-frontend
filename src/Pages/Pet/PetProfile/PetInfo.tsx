@@ -53,6 +53,12 @@ const StProfileContent = styled.div`
   width: 45%;
   background: #dfc28b;
   border-radius: 8px;
+
+  @media(max-width: 600px){
+    width: 100%;
+    height: 200px;
+    margin-top: 4%;
+  }
 `;
 
 const StProfileContentSitter = styled(StProfileContent)`
@@ -72,6 +78,7 @@ const StProfileBottomTitle = styled.div`
   border-radius: 0 0 8px 8px;
   background: #be8b4e;
   color: #ffff;
+  font-size: clamp(0.9rem, 0.9vw, 1rem);
 `;
 
 interface IProfilePet {

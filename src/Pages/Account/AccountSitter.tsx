@@ -16,16 +16,12 @@ import {
   StSection,
 } from "../../Utils/HTMLComponents";
 import { translateStatus } from "../../Api/PetCalls";
-import PetPreferences from "./AccountSitter/SitterSettings";
+import SitterPreferences from "./AccountSitter/SitterPreferences";
 import PetCard, { SitterCardItem } from "../../Components/Card/PetCard/PetCard";
 
 const StOptionsSection = styled(StSection)`
   display: flex;
   flex-direction: column;
-
-  & p {
-    margin: 24px 0 -12px 0;
-  }
 `;
 
 const AccountSitter = () => {
@@ -79,8 +75,9 @@ const AccountSitter = () => {
         <StH3>Mijn oppasvragen</StH3>
 
         <PetCard cardVariant="sitter">
-        {!isSitterRequestsDataValidating ? (
-            sitterRequestsData && sitterRequestsData.length !== 0 &&
+          {!isSitterRequestsDataValidating ? (
+            sitterRequestsData &&
+            sitterRequestsData.length !== 0 &&
             sitterRequestsData.map((request, key) => (
               <SitterCardItem
                 petName={request.pet_name}
@@ -100,7 +97,7 @@ const AccountSitter = () => {
       <StOptionsSection>
         <StH3>Oppas instellingen</StH3>
 
-        <PetPreferences onSubmit={onPetPreferencesSubmit} />
+        <SitterPreferences onSubmit={onPetPreferencesSubmit} />
       </StOptionsSection>
     </>
   );

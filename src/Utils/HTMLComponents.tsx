@@ -28,7 +28,7 @@ interface IStP {
 
 export const StP = styled.p<IStP>`
   margin: 0;
-  font-size: clamp(0.9rem, 0.9vw, 1.3rem);
+  font-size: clamp(0.9rem, 0.9vw, 1.1rem);
   font-weight: ${(props) => (props.bold ? 600 : 500)};
   color: ${(props) => Variants[props.variant!]};
   white-space: pre-wrap;
@@ -36,7 +36,7 @@ export const StP = styled.p<IStP>`
 
 export const StLabel = styled.label`
   display: block;
-  font-size: clamp(0.9rem, 0.9vw, 1rem);
+  font-size: clamp(0.9rem, 0.9vw, 1.2rem);
   color: ${Variants.primary};
   font-weight: 600;
   color: ${Variants.primary};
@@ -62,6 +62,7 @@ export const StArticle = styled.article<{ admin?: boolean }>`
   overflow: ${(props) => (props.admin ? "auto" : "unset")};
 
   @media (max-width: 600px) {
+    margin: 4vh auto 0 auto;
     padding: 0 8vw;
     overflow-y: auto;
   }
