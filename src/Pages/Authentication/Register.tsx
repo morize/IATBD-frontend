@@ -23,8 +23,8 @@ const Register = () => {
 
   const [formUsername, setFormUsername] = useState("");
   const [formEmail, setFormEmail] = useState("");
-  const [formPassword, setFormPassword] = useState("Password123.");
-  const [formConfPassword, setFormConfPassword] = useState("Password123.");
+  const [formPassword, setFormPassword] = useState("");
+  const [formConfPassword, setFormConfPassword] = useState("");
   const [loadingComponent, setLoadingComponent] = useState(false);
   const [error, setError] = useState(false);
 

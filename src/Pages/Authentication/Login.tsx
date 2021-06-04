@@ -63,8 +63,8 @@ const Login = () => {
   const navigate = useNavigate();
   const { state }: LocationState = useLocation();
 
-  const [formEmail, setFormEmail] = useState("ayyylmao985@gmail.com");
-  const [formPassword, setFormPassword] = useState("Password123.");
+  const [formEmail, setFormEmail] = useState("");
+  const [formPassword, setFormPassword] = useState("");
   const [formStatus, setFormStatus] = useState("default");
   const [loadingComponent, setLoadingComponent] = useState(false);
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
