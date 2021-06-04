@@ -32,7 +32,7 @@ const StAccountDetails = styled.section`
 const StSectionVerify = styled(StSection)`
   margin-bottom: 4%;
   text-align: center;
-  
+
   & p {
     margin-bottom: 4%;
   }
@@ -94,12 +94,11 @@ const AccountGegevens = () => {
         {!accountData?.email_verified_at && (
           <StSectionVerify>
             <StP variant="info" bold={true}>
-              {
-                "Verifieer uw account om verder gebruik te maken van Passen op je Dier.\nU ontvangt zo een verificatielink op uw geregistreerde email."
-              }
+              Verifieer uw account om verder gebruik te maken van Passen op je
+              Dier.
             </StP>
             <BaseButton
-              label="Emailverificatie opnieuw sturen"
+              label="Emailverificatie sturen"
               variant="primary"
               onClick={() => sendEmailVerificationLink()}
             />
