@@ -14,6 +14,7 @@ import {
   StH2,
   StH3,
   StSection,
+  StBackAnchor,
   LoadingComponent,
 } from "../../Utils/HTMLComponents";
 import BaseButton from "../../Components/Button/BaseButton";
@@ -121,7 +122,7 @@ const PetProfile = () => {
   return !isPetProfileDataValidating && !isPetRequestDataValidating ? (
     <>
       <StH2>{`Huisdier profiel: ${petProfileData?.pet_name}`}</StH2>
-
+      
       <StProfileParent>
         <figure>
           <img
@@ -219,6 +220,8 @@ const PetProfile = () => {
           </Modal>
         )}
       </StProfileParent>
+
+      <StBackAnchor onClick={() => navigate("../..")}>Terug</StBackAnchor>
     </>
   ) : (
     <LoadingComponent />

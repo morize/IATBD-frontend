@@ -63,7 +63,7 @@ interface IPetOverviewCard {
 
 const PetOverviewCard = (props: IPetOverviewCard) => (
   <StPetOverviewCard onClick={props.onClick}>
-    <img alt="Afbeelding van een huisdier." srcSet={props.petImgUrl} />
+    <img alt="Afbeelding van een huisdier." src={props.petImgUrl} />
     <figcaption>{props.petName}</figcaption>
     <StPayIndicator>{`${props.sitterHourlyPrize}€\np/uur`}</StPayIndicator>
     <StKindIndicator>{props.petKind}</StKindIndicator>

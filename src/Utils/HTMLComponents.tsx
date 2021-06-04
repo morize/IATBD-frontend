@@ -110,6 +110,14 @@ const StProgressContainer = styled.div`
   height: 100%;
 `;
 
+export const StBackAnchor = styled.div`
+margin-top: 4%;
+font-size: clamp(0.9rem, 1.2vw, 1.2rem);
+text-align: center;
+text-decoration: underline;
+cursor: pointer;
+`
+
 export const LoadingComponent = () => (
   <StProgressContainer>
     <CircularProgress />

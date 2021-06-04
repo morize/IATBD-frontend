@@ -13,7 +13,13 @@ import BaseDatepicker from "../../Components/Datepicker/BaseDatepicker";
 
 import Variants from "../../Utils/Variants";
 import { getPetKinds, getPetBreeds, submitNewPet } from "../../Api/PetCalls";
-import { StH2, StH3, StForm, StSection } from "../../Utils/HTMLComponents";
+import {
+  StBackAnchor,
+  StH2,
+  StH3,
+  StForm,
+  StSection,
+} from "../../Utils/HTMLComponents";
 
 const DoubleInputContainer = styled.section`
   display: flex;
@@ -32,7 +38,7 @@ const StErrorMessage = styled.p`
 
 const CreatePet = () => {
   const navigate = useNavigate();
-  
+
   const [name, setName] = useState("");
   const [kindOption, setKindOption] =
     useState<{ label: string; value: string }>();
@@ -41,7 +47,7 @@ const CreatePet = () => {
 
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const [startDate, setStartDate] = useState<Date | undefined>(); 
+  const [startDate, setStartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
 
   const [hourlyPay, setHourlyPay] = useState("");
@@ -168,9 +174,12 @@ const CreatePet = () => {
             onChange={(e) => setHourlyPay(e.target.value)}
           />
 
-          <TextArea label="Uw opmerkingen:" value={remarks} onChange={(e) => setRemarks(e.target.value)} />
-         
-          
+          <TextArea
+            label="Uw opmerkingen:"
+            value={remarks}
+            onChange={(e) => setRemarks(e.target.value)}
+          />
+
           {error && (
             <StErrorMessage>
               U heeft een van de velden niet ingevuld.
@@ -179,6 +188,8 @@ const CreatePet = () => {
           <BaseButton label="Bewaar huisdier" type="submit" />
         </StSection>
       </StForm>
+
+      <StBackAnchor onClick={() => navigate("..")}>Terug</StBackAnchor>
     </>
   );
 };
