@@ -4,10 +4,24 @@ import Select from "react-select";
 import Variants from "../../Utils/Variants";
 
 const StSelect = styled(Select)`
-  min-width: 200px;
+  width: 100%;
+  margin-right: 4%;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @media (max-width: 600px) {
+    margin-right: 0%;
+    margin-bottom: 6%;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 
   & .react-select__control {
-    padding: 12px;
+    padding: 4% 2%;
     border: none;
     background: #be8b4e;
     text-align: center;

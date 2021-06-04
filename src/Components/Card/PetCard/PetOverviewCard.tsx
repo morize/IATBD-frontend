@@ -4,7 +4,7 @@ const StPetOverviewCard = styled.figure`
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 220px;
+  height: clamp(140px, 30vh, 220px);
   margin: 0;
   cursor: pointer;
 
