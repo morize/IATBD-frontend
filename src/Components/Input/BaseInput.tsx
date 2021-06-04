@@ -1,20 +1,13 @@
 import { InputHTMLAttributes, ReactNode } from "react";
 import styled from "styled-components";
 
+import { StLabel } from "../../Utils/HTMLComponents";
 import Variants from "../../Utils/Variants";
-
-const StInputLabel = styled.label`
-  display: block;
-  margin-bottom: 12px;
-  font-weight: 600;
-  color: ${Variants.primary};
-  user-select: none;
-`;
 
 const StInput = styled.input`
   width: 100%;
   height: 100%;
-  padding: 8px;
+  padding: 16px 8px;
   border: 0;
   background: none;
   font-family: "Fira Sans", sans-serif;
@@ -32,9 +25,8 @@ const StInputContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  height: 50px;
   border: 1px solid #b3b3c2;
-  border-radius: 5px;
+  border-radius: 6px;
   background: #ffff;
   box-sizing: border-box;
   user-select: none;
@@ -46,12 +38,12 @@ const StInputContainer = styled.div`
     & svg {
       width: 34px;
       height: 34px;
-    }
-  }
 
-  & input[type="file"] {
-    line-height: 30px;
-    cursor: pointer;
+      @media (max-width: 600px) {
+        width: 30px;
+        height: 30px;
+      }
+    }
   }
 
   & input[type="file"] + span {
@@ -62,10 +54,18 @@ const StInputContainer = styled.div`
 `;
 
 const InputParent = styled.div`
-  margin-bottom: 24px;
+  margin-bottom: 3%;
+
+  & label {
+    margin-bottom: 2%;
+  }
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  @media (max-width: 600px) {
+    margin-bottom: clamp(6px, 4%, 12px);
   }
 `;
 
@@ -76,7 +76,7 @@ export interface IBaseInput extends InputHTMLAttributes<HTMLInputElement> {
 
 const BaseInput = ({ label, icon, ...rest }: IBaseInput) => (
   <InputParent>
-    {label && <StInputLabel>{label}</StInputLabel>}
+    {label && <StLabel>{label}</StLabel>}
     <StInputContainer>
       <StInput {...rest} />
       {icon && <span>{icon}</span>}

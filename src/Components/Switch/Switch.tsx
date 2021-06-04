@@ -47,7 +47,7 @@ const StyledSwitchLabel = styled.label<{ disabled?: boolean }>`
   display: inline-block;
   margin: 0;
   padding: 0;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 0.9vw, 1.2rem);
   font-weight: 600;
   line-height: 18px;
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};

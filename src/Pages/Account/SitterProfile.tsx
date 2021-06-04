@@ -26,14 +26,21 @@ const StReviewContainer = styled.div`
     margin-left: 24px;
   }
 `;
-const StAccountDetails = styled.section`
-  display: flex;
-  flex-direction: column;
-  margin: 24px 0;
 
-  & p {
-    margin-top: -22px;
-    margin-left: auto;
+const StAccountDetails = styled.section`
+  margin-bottom: 4%;
+
+  & div {
+    display: flex;
+    margin-bottom: 2%;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    & p {
+      margin-left: auto;
+    }
   }
 `;
 
@@ -61,7 +68,7 @@ const SitterProfile = () => {
     getUserMedia,
     { revalidateOnFocus: false }
   );
-  
+
   return !isAccountDataValidating &&
     !isSitterReviewDataValidating &&
     !isMediaDataValidating ? (
@@ -70,11 +77,15 @@ const SitterProfile = () => {
 
       <StAccountDetails>
         <StH2>Over de opasser</StH2>
-        <StLabel>Naam opasser:</StLabel>
-        <StP>{accountData?.name}</StP>
+        <div>
+          <StLabel>Naam opasser:</StLabel>
+          <StP>{accountData?.name}</StP>
+        </div>
 
-        <StLabel>Contact Email:</StLabel>
-        <StP>{accountData?.email}</StP>
+        <div>
+          <StLabel>Contact Email:</StLabel>
+          <StP>{accountData?.email}</StP>
+        </div>
       </StAccountDetails>
 
       <StH2>Huisfoto's en video</StH2>
@@ -103,9 +114,7 @@ const SitterProfile = () => {
           </StReviewContainer>
         ))
       ) : (
-        <StInfoP>
-          Dit gebruiker heeft nog geen reviews ontvangen
-        </StInfoP>
+        <StInfoP>Dit gebruiker heeft nog geen reviews ontvangen</StInfoP>
       )}
     </>
   ) : (

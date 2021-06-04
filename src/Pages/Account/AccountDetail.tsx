@@ -15,19 +15,27 @@ import { getUserDetails } from "../../Api/UserCalls";
 import BaseButton from "../../Components/Button/BaseButton";
 
 const StAccountDetails = styled.section`
-  display: flex;
-  flex-direction: column;
-  margin: 32px 0;
+  & div {
+    display: flex;
+    margin-bottom: 2%;
 
-  & p {
-    margin-top: -22px;
-    margin-left: auto;
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    & p {
+      margin-left: auto;
+    }
   }
 `;
 
 const StSectionVerify = styled(StSection)`
-  margin-bottom: 32px;
+  margin-bottom: 4%;
   text-align: center;
+  
+  & p {
+    margin-bottom: 4%;
+  }
 `;
 
 const AccountGegevens = () => {
@@ -56,23 +64,28 @@ const AccountGegevens = () => {
       <StSection>
         <StH3>Account Gegevens</StH3>
         <StAccountDetails>
-          <StLabel>Gebruikersnaam:</StLabel>
-          <StP>{accountData?.name ? accountData.name : "-"}</StP>
-
-          <StLabel>Email:</StLabel>
-          <StP>{accountData?.email ? accountData.email : "-"}</StP>
-
-          <StLabel>Email Status:</StLabel>
-          <StP>
-            {accountData?.email_verified_at
-              ? "Geverifieerd"
-              : "Niet geverifieerd"}
-          </StP>
-
-          <StLabel>Account Status:</StLabel>
-          <StP>
-            {accountData?.status === "blocked" ? "Geblokkeerd" : "Actief"}
-          </StP>
+          <div>
+            <StLabel>Gebruikersnaam:</StLabel>
+            <StP>{accountData?.name ? accountData.name : "-"}</StP>
+          </div>
+          <div>
+            <StLabel>Email:</StLabel>
+            <StP>{accountData?.email ? accountData.email : "-"}</StP>
+          </div>
+          <div>
+            <StLabel>Email Status:</StLabel>
+            <StP>
+              {accountData?.email_verified_at
+                ? "Geverifieerd"
+                : "Niet geverifieerd"}
+            </StP>
+          </div>
+          <div>
+            <StLabel>Account Status:</StLabel>
+            <StP>
+              {accountData?.status === "blocked" ? "Geblokkeerd" : "Actief"}
+            </StP>
+          </div>
         </StAccountDetails>
       </StSection>
 

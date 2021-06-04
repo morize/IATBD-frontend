@@ -9,14 +9,19 @@ const StMediaVideo = styled.iframe`
   width: 600px;
   height: 480px;
   margin: 0 auto;
+
+  @media (max-width: 600px) {
+    width: clamp(100px, 60%, 600px);
+    height: clamp(100px, 60%, 600px);
+  }
 `;
 
 const StImageGalleryContainer = styled.div`
   margin-bottom: 32px;
 
   & .image-gallery-image {
-    width: 600px;
-    height: 480px;
+    width: clamp(100px, 60%, 600px);
+    height: clamp(100px, 60%, 600px);
     border-radius: 8px;
   }
 
@@ -69,6 +74,7 @@ const Showcase = ({ image1, image2, video }: IShowcase) => {
       <ImageGallery
         showPlayButton={false}
         showFullscreenButton={false}
+        showNav={false}
         items={getImages()}
       />
     </StImageGalleryContainer>

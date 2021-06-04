@@ -15,23 +15,38 @@ const StOverview = styled(StSection)`
   display: flex;
   flex-direction: column;
   min-height: 300px;
-  padding: 40px;
+  padding: 6%;
   background: url(${dogPattern});
   border-radius: 8px;
   box-sizing: border-box;
+
+  @media(max-width: 600px){
+    padding: 4%;
+  }
 `;
 
 const StFilterHeader = styled.div`
   display: flex;
-  justify-content: space-around;
-  margin: 20px 60px;
+  justify-content: space-between;
+  margin: 4% 12%;
+
+  @media(max-width: 600px){
+    flex-direction: column;
+
+    
+  }
 `;
 
 const StOverviewGrid = styled(StSection)`
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(auto-fit, 200px);
+  grid-template-columns: repeat(auto-fit, clamp(180px, 40%, 220px));
   grid-gap: 60px;
+
+  @media(max-width: 600px){
+    grid-template-columns: repeat(auto-fit, 70%);
+    grid-gap: 30px;
+  }
 `;
 
 const PetOverview = () => {

@@ -30,11 +30,11 @@ const StNavigation = styled.nav`
   box-sizing: border-box;
   box-shadow: inset 0 0 0 2000px rgba(39, 30, 8, 0.6);
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 600px) {
     position: sticky;
     top: 0;
     width: 100vw;
-    height: 160px;
+    height: 150px;
   }
 `;
 
@@ -42,6 +42,7 @@ const StLogoFigure = styled.figure`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin: 2vh 0;
   user-select: none;
 
@@ -56,21 +57,20 @@ const StLogoFigure = styled.figure`
     white-space: pre-wrap;
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 600px) {
     width: 100%;
     height: 55%;
     margin: 0;
     padding: 0;
-    border-bottom: none;
     flex-direction: row;
 
     & img {
-      width: 16vw;
+      width: 14vw;
     }
 
     & figcaption {
-      margin-left: 16px;
-      font-size: 18px;
+      margin-left: 8px;
+      font-size: clamp(0.9rem, 1vw, 1.3rem);
     }
   }
 `;
@@ -99,33 +99,30 @@ const StNavigationItems = styled.ul`
 
       &.main__navigation__active {
         background: rgba(77, 46, 0, 0.7);
+
+        @media (max-width: 600px) {
+          border-radius: 50%;
+        }
       }
     }
   }
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 600px) {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    bottom: 0;
-    margin: 0;
     height: 45%;
+    margin: auto 0 0 0;
     background: #844f00;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 
     & li {
-      display: inline-flex;
       width: 50px;
       height: 50px;
-      margin: 0 6px;
+      margin: 0 8px;
       border-radius: 50%;
       background-color: #a86f18;
       filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-
-      & ${StNavigationAnchor} {
-        width: 100%;
-      }
     }
   }
 `;
@@ -161,7 +158,7 @@ const StNavigationBottom = styled.section`
     cursor: pointer;
   }
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 600px) {
     display: none;
   }
 `;
@@ -177,7 +174,7 @@ const NavigationItem = (props: INavigationItem) => (
   <li>
     <StNavigationAnchor
       to={props.routeTo}
-      activeClassName={"main__navigation__active"}
+      activeClassName="main__navigation__active"
     >
       {props.portrait === "desktop" ? props.name : props.icon}
     </StNavigationAnchor>
@@ -191,17 +188,14 @@ const Navigation = () => {
   const localUserDetails = JSON.parse(localStorage.getItem("userDetails")!);
 
   const checkIfDifferentViewport = useCallback(() => {
-    let detectedViewport = window.innerWidth <= 800 ? "mobile" : "desktop";
-
+    let detectedViewport = window.innerWidth <= 600 ? "mobile" : "desktop";
     detectedViewport !== currentDevice && setCurrentDevice(detectedViewport);
   }, [currentDevice]);
 
   const onLogoutClicked = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    logout().then(() => {
-      navigate("../../home");
-    });
+    logout().then(() => navigate("../../home"));
   };
 
   useEffect(() => {

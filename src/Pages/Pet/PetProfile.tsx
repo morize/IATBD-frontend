@@ -27,13 +27,18 @@ import dogPattern from "../../Utils/Images/dog_pattern.jpg";
 const StRequestsContainer = styled.div`
   width: 100%;
   margin: 32px 0;
-  padding: 40px;
+  padding: 8%;
   background: #dfc28b;
   border-radius: 8px;
   box-sizing: border-box;
 
   & h3 {
+    margin-bottom: 6%;
     color: #744226;
+
+    @media (max-width: 600px) {
+      text-align: center;
+    }
   }
 `;
 
@@ -41,9 +46,13 @@ const StProfileParent = styled(StSection)`
   display: flex;
   flex-flow: wrap;
   justify-content: space-between;
-  padding: 40px;
+  padding: 8%;
   background: url(${dogPattern});
   border-radius: 8px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 
   & button {
     margin-top: 4%;
@@ -74,8 +83,12 @@ const StProfileParent = styled(StSection)`
       height: 22%;
       background: #be8b4e;
       color: #ffff;
-      font-size: 16px;
       border-radius: 0 0 8px 8px;
+    }
+
+    @media (max-width: 600px) {
+      width: 100%;
+      height: clamp(200px, 20vh, 220px);
     }
   }
 `;
@@ -130,15 +143,20 @@ const PetProfile = () => {
           remarks={petProfileData?.sit_remarks}
         />
 
-        {window.location.pathname.split("/")[2] === "opasser" && (
-          <BaseButton
-            label="Aanvraag annuleren"
-            variant="secondary"
-            onClick={() =>
-              deleteSitterRequest(parseInt(id)).then(() => navigate("../.."))
-            }
-          />
-        )}
+        {window.location.pathname.split("/")[2] === "opasser" &&
+          petRequestData && (
+            <BaseButton
+              label="Aanvraag annuleren"
+              variant="secondary"
+              onClick={() =>
+                deleteSitterRequest(
+                  petRequestData.filter(
+                    (request) => request.pet_id === parseInt(id)
+                  )[0].id
+                ).then(() => navigate("../.."))
+              }
+            />
+          )}
 
         {window.location.pathname.split("/")[2] === "huisdieren" &&
           petRequestData && (
@@ -194,9 +212,6 @@ const PetProfile = () => {
             <SitterModal
               pet_name={petProfileData.pet_name}
               sitter_name={userDetails.username}
-              sit_date_start={petProfileData.sit_date_start}
-              sit_date_end={petProfileData.sit_date_end}
-              sit_hourly_prize={petProfileData.sit_hourly_prize}
               pet_owner={petProfileData.owner_name}
               pet_id={id}
               user_id={userDetails.uuid}

@@ -28,7 +28,7 @@ const StWhiteLabel = styled(StLabel)`
 const StNavLink = styled(NavLink)`
   display: block;
   margin: 8px 0 24px 0;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 0.9vw, 1.2rem);
   color: #ffff;
 `;
 
@@ -40,28 +40,29 @@ const StModal = styled.div`
   flex-direction: column;
   justify-content: center;
   transform: translate(-50%, -50%);
-  min-height: 700px;
-
-  width: 600px;
-  padding: 40px 60px;
+  height: clamp(400px, 70vh, 800px);
+  width: clamp(240px, 80vw, 600px);
+  padding: 2% 4%;
   background: #be8b4e;
   border-radius: 8px;
   box-sizing: border-box;
+
+  @media (max-width: 600px) {
+    padding: 6% 8%;
+  }
 
   & h3 {
     color: #ffff;
   }
 
   & button {
-    margin-bottom: 24px;
+    margin-bottom: 4%;
   }
 `;
 
 const SitterModalInfo = styled(StProfileDetailsSitter)`
   display: flex;
-  min-height: 200px;
-  height: auto;
-  max-height: 300px;
+  height: clamp(100px, 30%, 200px);
   margin-bottom: 24px;
   border-radius: 8px;
   overflow: auto;
@@ -121,24 +122,27 @@ const SitterRequestModal = forwardRef(
             <StNavLink to={`../../../../oppaser/profiel/${sitter_id}`}>
               Profiel bekijken van opasser: {sitter_name}
             </StNavLink>
-            <StWhiteLabel>Aanvraag verzoek:</StWhiteLabel>
+            {request_status !== "accepted" && (
+              <>
+                <StWhiteLabel>Aanvraag verzoek:</StWhiteLabel>
 
-            <SitterModalInfo>
-              {sitter_name && (
-                <div>
-                  <StLabel>Van opasser:</StLabel>
-                  <StP>{sitter_name}</StP>
-                </div>
-              )}
+                <SitterModalInfo>
+                  {sitter_name && (
+                    <div>
+                      <StLabel>Van opasser:</StLabel>
+                      <StP>{sitter_name}</StP>
+                    </div>
+                  )}
 
-              {sitter_remarks && (
-                <div>
-                  <StLabel>Oppas opmerkingen:</StLabel>
-                  <StP>{sitter_remarks}</StP>
-                </div>
-              )}
-            </SitterModalInfo>
-
+                  {sitter_remarks && (
+                    <div>
+                      <StLabel>Oppas opmerkingen:</StLabel>
+                      <StP>{sitter_remarks}</StP>
+                    </div>
+                  )}
+                </SitterModalInfo>
+              </>
+            )}
             {request_status === "accepted" && (
               <StForm onSubmit={submitRating}>
                 <StWhiteLabel>Laat een review voor de opasser</StWhiteLabel>

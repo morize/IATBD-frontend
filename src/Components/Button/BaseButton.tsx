@@ -5,12 +5,12 @@ import Variants, { TVariants } from "../../Utils/Variants";
 
 const StButton = styled.button<{ variant: TVariants }>`
   width: 100%;
-  height: 4rem;
+  height: clamp(40px, 7vh, 80px);
   border: none;
   border-radius: 8px;
   background: ${(props) => Variants[props.variant]};
   font-family: "Fira Sans", sans-serif;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 4vw, 1.1rem);
   color: #ffffff;
   cursor: pointer;
   user-select: none;
