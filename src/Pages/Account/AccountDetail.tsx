@@ -17,6 +17,11 @@ import BaseButton from "../../Components/Button/BaseButton";
 const StAccountDetails = styled.section`
   & div {
     display: flex;
+    margin-bottom: 2%;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     & p {
       margin-left: auto;
@@ -25,12 +30,12 @@ const StAccountDetails = styled.section`
 `;
 
 const StSectionVerify = styled(StSection)`
+  margin-bottom: 4%;
+  text-align: center;
+  
   & p {
     margin-bottom: 4%;
   }
-  
-  margin-bottom: 4%;
-  text-align: center;
 `;
 
 const AccountGegevens = () => {

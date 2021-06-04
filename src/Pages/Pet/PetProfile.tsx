@@ -143,15 +143,20 @@ const PetProfile = () => {
           remarks={petProfileData?.sit_remarks}
         />
 
-        {window.location.pathname.split("/")[2] === "opasser" && (
-          <BaseButton
-            label="Aanvraag annuleren"
-            variant="secondary"
-            onClick={() =>
-              deleteSitterRequest(parseInt(id)).then(() => navigate("../.."))
-            }
-          />
-        )}
+        {window.location.pathname.split("/")[2] === "opasser" &&
+          petRequestData && (
+            <BaseButton
+              label="Aanvraag annuleren"
+              variant="secondary"
+              onClick={() =>
+                deleteSitterRequest(
+                  petRequestData.filter(
+                    (request) => request.pet_id === parseInt(id)
+                  )[0].id
+                ).then(() => navigate("../.."))
+              }
+            />
+          )}
 
         {window.location.pathname.split("/")[2] === "huisdieren" &&
           petRequestData && (
