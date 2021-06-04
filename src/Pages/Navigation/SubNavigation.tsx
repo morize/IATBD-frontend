@@ -1,20 +1,24 @@
 import styled from "styled-components";
 import { useLocation, NavLink } from "react-router-dom";
 
+import { StH1 } from "../../Utils/HTMLComponents";
 import Variants from "../../Utils/Variants";
 
 const SubNavigationContainer = styled.section`
   position: sticky;
   top: 0;
-  width: 16vw;
-  margin: 0 32px;
+  width: 20vw;
+  padding: 32px;
+  background: none;
+  box-sizing: border-box;
 
   & h1 {
-    margin: 0;
-    font-size: 2.4rem;
-    color: ${Variants.default};
     text-align: center;
     text-transform: capitalize;
+
+    @media (max-width: 600px) {
+      display: none;
+    }
   }
 
   & ul {
@@ -43,6 +47,32 @@ const SubNavigationContainer = styled.section`
       }
     }
   }
+
+  @media (max-width: 600px) {
+    width: 100vw;
+    height: 110px;
+    margin: 0;
+    padding: 4% 8%;
+    z-index: 3;
+    background: #986D3A;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: clamp(0.8rem, 1.4vh, 1rem);
+
+    & ul {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin: 0;
+
+      & a {
+        height: 40px;
+        width: 100px;
+        margin-bottom: 0;
+        color: #fff;
+      }
+    }
+  }
 `;
 
 const getSubNavigationOptions = (path: string) => {
@@ -63,7 +93,7 @@ const SubNavigation = () => {
 
   return (
     <SubNavigationContainer>
-      <h1>{pathname.split("/")[1]}</h1>
+      <StH1>{pathname.split("/")[1]}</StH1>
       <ul>
         {subNavigationObject.options.map((option: string, index, key) => (
           <NavLink

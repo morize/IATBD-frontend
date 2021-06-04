@@ -68,7 +68,7 @@ export const StArticle = styled.article<{ admin?: boolean }>`
 `;
 
 export const StSubArticle = styled(StArticle)`
-  width: clamp(400px, 50%, 700px);
+  width: clamp(400px, 60%, 800px);
   margin: 2vh auto 0 auto;
 `;
 

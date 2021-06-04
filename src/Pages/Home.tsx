@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { StH1, StH2, StP, StSection } from "../Utils/HTMLComponents";
@@ -9,12 +9,12 @@ const StCardFigure = styled.figure`
   height: clamp(300px, 40vh, 600px);
   margin: 32px 0;
 
-  @media (max-width: 600px) {
-    height: clamp(200px, 30vh, 600px);
-  }
-
   & figcaption {
     font-size: clamp(0.9rem, 1vw, 2rem);
+  }
+
+  @media (max-width: 600px) {
+    height: clamp(200px, 30vh, 600px);
   }
 `;
 

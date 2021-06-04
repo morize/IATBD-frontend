@@ -29,8 +29,9 @@ const StContent = styled.section<{ isAdmin: boolean }>`
   overflow-y: auto;
 
   @media (max-width: 600px) {
+    flex-wrap: wrap;
     height: calc(100vh - 150px);
-    padding: 6% 0;
+    padding: 0 0 6vh 0;
   }
 `;
 
@@ -48,8 +49,9 @@ const Layout = () => {
       <Navigation />
 
       <StContent isAdmin={pathname.split("/")[1] === "admin"}>
-        {pathname?.split("/")[1] === "admin" && <ASubNavigation />}
         {inAuthenticationPage && <SubNavigation />}
+        {pathname?.split("/")[1] === "admin" && <ASubNavigation />}
+
         {inAuthenticationPage ? (
           <StSubArticle>
             <Outlet />
